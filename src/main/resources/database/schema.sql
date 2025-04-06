@@ -11,6 +11,21 @@ CREATE TABLE student (
     PRIMARY KEY (stud_id)
 );
 
+-- Table User (To store login details)
+CREATE TABLE user(
+    user_id INT AUTO_INCREMENT,
+    stud_id VARCHAR(50) NOT NULL,
+    username VARCHAR(200) NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (stud_id) REFERENCES student(stud_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 -- Table Subject
 CREATE TABLE subject (
     sub_id VARCHAR(6) NOT NULL,
