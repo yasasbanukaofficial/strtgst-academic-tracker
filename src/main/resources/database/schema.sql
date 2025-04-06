@@ -38,20 +38,6 @@ CREATE TABLE assignment (
         ON DELETE CASCADE
 );
 
--- Table Homework
-CREATE TABLE homework (
-    homework_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(6) NOT NULL,
-    homework_name VARCHAR(255) NOT NULL,
-    homework_description VARCHAR(500),
-    due_date DATE,
-    homework_status ENUM('pending', 'completed', 'overdue') DEFAULT 'pending',
-    PRIMARY KEY (homework_id),
-    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);
-
 -- Table Grade
 CREATE TABLE grade (
     grade_id INT AUTO_INCREMENT,
