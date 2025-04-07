@@ -15,8 +15,8 @@ CREATE TABLE student (
 CREATE TABLE user(
     user_id INT AUTO_INCREMENT,
     stud_id VARCHAR(50) NOT NULL,
-    username VARCHAR(200) NOT NULL, -- add to er
-    email VARCHAR(200) NOT NULL, -- add to er
+    username VARCHAR(200) NOT NULL,
+    email VARCHAR(200) NOT NULL,
     password VARCHAR(200) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
