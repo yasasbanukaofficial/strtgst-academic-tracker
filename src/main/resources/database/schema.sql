@@ -4,18 +4,19 @@ USE Strtgst;
 
 -- Table Student
 CREATE TABLE student (
-    stud_id VARCHAR(6) NOT NULL,
+    stud_id VARCHAR(6) AUTO_INCREMENT,
     stud_name VARCHAR(50) NOT NULL,
     profile_picture MEDIUMBLOB,
-    date_of_birth DATE NOT NULL,
+    date_of_birth DATE NOT NULL DEFAULT CURRENT_DATE,
     PRIMARY KEY (stud_id)
 );
 
--- Table User (To store login details)
+-- Table User (To store login details, user -> student)
 CREATE TABLE user(
     user_id INT AUTO_INCREMENT,
     stud_id VARCHAR(50) NOT NULL,
-    username VARCHAR(200) NOT NULL,
+    username VARCHAR(200) NOT NULL, -- add to er
+    email VARCHAR(200) NOT NULL, -- add to er
     password VARCHAR(200) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

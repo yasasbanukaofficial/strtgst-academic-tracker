@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="1020.0" prefWidth="1980.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.SignUpPageController">
+   <children>
+      <HBox layoutX="-9.0" layoutY="38.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="1020.0" prefWidth="850.0">
+               <children>
+                  <ImageView fitHeight="555.0" fitWidth="833.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/teenagers.jpg" />
+                     </image>
+                     <VBox.margin>
+                        <Insets left="127.0" top="262.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fitHeight="305.0" fitWidth="650.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/palm-tree-4453182%201.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
