@@ -19,7 +19,7 @@ CREATE TABLE student(
 
 -- Table Subject
 CREATE TABLE subject (
-    sub_id VARCHAR(6) NOT NULL,
+    sub_id INT NOT NULL,
     stud_id INT AUTO_INCREMENT,
     sub_name VARCHAR(50) NOT NULL,
     total_marks INT,
@@ -32,7 +32,7 @@ CREATE TABLE subject (
 -- Table Assignment
 CREATE TABLE assignment (
     assignment_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(6) NOT NULL,
+    sub_id INT NOT NULL,
     assignment_name VARCHAR(255) NOT NULL,
     assignment_description VARCHAR(500),
     due_date DATE,
@@ -54,7 +54,7 @@ CREATE TABLE grade (
 -- Table Lecture
 CREATE TABLE lecture (
     lec_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(6) NOT NULL,
+    sub_id INT NOT NULL,
     date DATE NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE lecture (
 -- Table Exam
 CREATE TABLE exam (
     exam_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(6) NOT NULL,
+    sub_id INT NOT NULL,
     date DATE NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE event (
 -- Table Subject_Scores (Subject -> Grade) -> Grade History/Updating
 CREATE TABLE subject_scores (
     score_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(6) NOT NULL,
+    sub_id INT NOT NULL,
     grade_id INT,
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
