@@ -16,9 +16,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="signUpAnc" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.SignUpPageController">
+<AnchorPane fx:id="signUpAnc" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.SignUpPageController">
    <children>
-      <VBox layoutX="46.0" layoutY="33.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="46.0" layoutY="33.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff; visibility: true;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <StackPane alignment="TOP_RIGHT" prefHeight="255.0" prefWidth="1600.0">
                <children>
@@ -80,12 +80,12 @@
                            <children>
                               <Label text="Username">
                                  <font>
-                                    <Font name="Poppins Bold" size="20.0" />
+                                    <Font name="Poppins Bold" size="16.0" />
                                  </font>
                               </Label>
                               <TextField prefHeight="45.0" prefWidth="430.0" promptText="grandmaster12">
                                  <font>
-                                    <Font name="Poppins Regular" size="20.0" />
+                                    <Font name="Poppins Regular" size="16.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets top="7.0" />
@@ -97,12 +97,12 @@
                            <children>
                               <Label text="Email">
                                  <font>
-                                    <Font name="Poppins Bold" size="20.0" />
+                                    <Font name="Poppins Bold" size="16.0" />
                                  </font>
                               </Label>
                               <TextField prefHeight="45.0" prefWidth="430.0" promptText="johndoe@gmail.com">
                                  <font>
-                                    <Font name="Poppins Regular" size="20.0" />
+                                    <Font name="Poppins Regular" size="16.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets top="7.0" />
@@ -117,12 +117,12 @@
                            <children>
                               <Label text="Password">
                                  <font>
-                                    <Font name="Poppins Bold" size="20.0" />
+                                    <Font name="Poppins Bold" size="16.0" />
                                  </font>
                               </Label>
                               <PasswordField prefHeight="45.0" prefWidth="430.0" promptText="john@123">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Poppins Regular" size="16.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets top="7.0" />
