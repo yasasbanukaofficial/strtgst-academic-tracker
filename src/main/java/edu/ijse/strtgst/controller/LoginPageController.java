@@ -15,8 +15,8 @@ public class LoginPageController {
     public void navigateTo(String path){
         try{
             loginAnc.getChildren().clear();
-            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/" + path));
-            loginAnc.getChildren().add(anchorPane);
+            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
+            loginAnc.getChildren().add(load);
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Cant Identify the url path");
             e.printStackTrace();

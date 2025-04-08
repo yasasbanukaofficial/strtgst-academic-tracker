@@ -16,7 +16,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="signUpAnc" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="signUpAnc" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.SignUpPageController">
    <children>
       <VBox layoutX="46.0" layoutY="33.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -153,7 +153,7 @@
                                     </DropShadow>
                                  </effect>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="430.0" style="-fx-background-color: #ffffff; -fx-border-radius: 20px; -fx-background-radius: 20px; -fx-border-color: #212529; -fx-border-width: 3px;" text="🔥 Login">
+                              <Button mnemonicParsing="false" onAction="#visitLoginPage" prefHeight="41.0" prefWidth="430.0" style="-fx-background-color: #ffffff; -fx-border-radius: 20px; -fx-background-radius: 20px; -fx-border-color: #212529; -fx-border-width: 3px;" text="🔥 Login">
                                  <font>
                                     <Font name="Poppins Bold" size="20.0" />
                                  </font>
