@@ -29,7 +29,7 @@
             </StackPane>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox prefHeight="489.0" prefWidth="800.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="489.0" prefWidth="800.0">
                      <children>
                         <HBox prefHeight="57.0" prefWidth="800.0">
                            <children>
