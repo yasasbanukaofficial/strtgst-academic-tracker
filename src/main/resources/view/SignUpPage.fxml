@@ -4,7 +4,6 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -83,7 +82,7 @@
                                     <Font name="Poppins Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <TextField prefHeight="45.0" prefWidth="430.0" promptText="grandmaster12">
+                              <TextField prefHeight="45.0" prefWidth="430.0" promptText="grandmaster12" style="-fx-border-color: #000000; -fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 2px;">
                                  <font>
                                     <Font name="Poppins Regular" size="20.0" />
                                  </font>
@@ -100,7 +99,7 @@
                                     <Font name="Poppins Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <TextField prefHeight="45.0" prefWidth="430.0" promptText="johndoe@gmail.com">
+                              <TextField prefHeight="45.0" prefWidth="430.0" promptText="johndoe@gmail.com" style="-fx-border-color: #000000; -fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 2px;">
                                  <font>
                                     <Font name="Poppins Regular" size="20.0" />
                                  </font>
@@ -120,14 +119,14 @@
                                     <Font name="Poppins Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <PasswordField prefHeight="45.0" prefWidth="430.0" promptText="john@123">
+                              <TextField prefHeight="45.0" prefWidth="430.0" promptText="john@123" style="-fx-border-color: #000000; -fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 2px;">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Poppins Regular" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets top="7.0" />
                                  </VBox.margin>
-                              </PasswordField>
+                              </TextField>
                            </children>
                            <VBox.margin>
                               <Insets top="20.0" />
