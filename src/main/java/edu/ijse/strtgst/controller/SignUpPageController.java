@@ -16,6 +16,8 @@ public class SignUpPageController{
         try{
             signUpAnc.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
+            load.prefWidthProperty().bind(signUpAnc.widthProperty());
+            load.prefHeightProperty().bind(signUpAnc.heightProperty());
             signUpAnc.getChildren().add(load);
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Cant Identify the url path");
