@@ -13,7 +13,7 @@ public class LoginPageController {
     }
 
     public void visitDashboard(ActionEvent actionEvent) {
-        navigateTo("DashboardPage.fxml");
+        navigateTo("MainPage.fxml");
     }
 
     public void navigateTo(String path){
