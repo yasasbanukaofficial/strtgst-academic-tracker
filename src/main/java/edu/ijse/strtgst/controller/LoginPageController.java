@@ -12,6 +12,10 @@ public class LoginPageController {
         navigateTo("SignUpPage.fxml");
     }
 
+    public void visitDashboard(ActionEvent actionEvent) {
+        navigateTo("MainPage.fxml");
+    }
+
     public void navigateTo(String path){
         try{
             loginAnc.getChildren().clear();
