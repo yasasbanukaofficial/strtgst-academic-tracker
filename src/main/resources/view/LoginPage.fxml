@@ -97,7 +97,7 @@
                         </VBox>
                         <VBox prefHeight="162.0" prefWidth="428.0">
                            <children>
-                              <Button maxWidth="800.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="428.0" style="-fx-background-color: #212529; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="🔥 Login" textFill="WHITE" VBox.vgrow="ALWAYS">
+                              <Button maxWidth="800.0" mnemonicParsing="false" onAction="#visitDashboard" prefHeight="41.0" prefWidth="428.0" style="-fx-background-color: #212529; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="🔥 Login" textFill="WHITE" VBox.vgrow="ALWAYS">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
