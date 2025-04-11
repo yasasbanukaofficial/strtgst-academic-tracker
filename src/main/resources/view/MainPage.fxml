@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.MainPageController">
    <children>
       <VBox layoutX="173.0" layoutY="199.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F2F6FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -29,7 +28,7 @@
                                     <Insets left="59.0" top="37.0" />
                                  </VBox.margin>
                               </ImageView>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" minWidth="83.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" minWidth="83.0" onMouseClicked="#visitDashboardPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <VBox.margin>
                                     <Insets right="55.0" top="75.0" />
                                  </VBox.margin>
@@ -88,7 +87,7 @@
                                           <Image url="@../images/mdi_clipboard-tick.jpg" />
                                        </image>
                                     </ImageView>
-                                    <Label text="To-Do List">
+                                    <Label text="Tasks">
                                        <font>
                                           <Font name="Poppins Regular" size="24.0" />
                                        </font>

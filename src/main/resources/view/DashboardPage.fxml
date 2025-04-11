@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancDashboard" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.DashboardPageController">
+   <children>
+      <VBox layoutX="241.0" layoutY="215.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F2F6FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="599.0">
+               <children>
+                  <VBox prefHeight="45.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="45.0" prefWidth="203.0" text="Dashboard">
+                           <font>
+                              <Font name="Poppins Regular" size="32.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="84.0" top="64.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="45.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="May 19">
+                           <font>
+                              <Font name="Poppins Regular" size="32.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="-476.0" top="64.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="229.0" prefWidth="1133.0" spacing="128.0">
+               <children>
+                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitTasksPage" prefHeight="229.0" prefWidth="251.0" style="-fx-background-color: #BBF4D3; -fx-background-radius: 34px; -fx-border-radius: 34px;">
+                     <HBox.margin>
+                        <Insets left="84.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label text="Total Tasks">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="93.0" prefWidth="53.0" text="0" textFill="#5fda92">
+                           <font>
+                              <Font name="Poppins Bold" size="90.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="225.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitEventsPage" prefHeight="229.0" prefWidth="243.0" style="-fx-background-color: #FCE4CC; -fx-background-radius: 34px; -fx-border-radius: 34px;">
+                     <children>
+                        <Label text="Events Today">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f7a27e">
+                           <font>
+                              <Font name="Poppins Bold" size="90.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="225.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitAssignmentsPage" prefHeight="229.0" prefWidth="278.0" style="-fx-background-color: #FFD3E2; -fx-background-radius: 34px; -fx-border-radius: 34px;">
+                     <children>
+                        <Label text="Total Assignments">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f79cc2">
+                           <font>
+                              <Font name="Poppins Bold" size="90.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="254.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitGradesPage" prefHeight="229.0" prefWidth="245.0" style="-fx-background-color: #D4EDEB; -fx-background-radius: 34px; -fx-border-radius: 34px;">
+                     <children>
+                        <Label text="GPA Calculation">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="93.0" prefWidth="53.0" text="0" textFill="#86d7dc">
+                           <font>
+                              <Font name="Poppins Bold" size="90.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="225.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="80.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="61.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
