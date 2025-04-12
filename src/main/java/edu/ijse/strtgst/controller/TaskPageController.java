@@ -13,12 +13,12 @@ public class TaskPageController implements Initializable {
     public AnchorPane ancTaskContainer;
 
     public void addNewTask(MouseEvent mouseEvent) {
-        navigateTo("addNewTask.fxml");
+        navigateTo("AddNewTask.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("defaultTaskDisplay.fxml");
+        navigateTo("DefaultTaskDisplay.fxml");
     }
 
     public void navigateTo(String path){
