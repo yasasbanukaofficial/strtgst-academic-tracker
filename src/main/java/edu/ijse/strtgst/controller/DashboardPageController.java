@@ -9,7 +9,7 @@ public class DashboardPageController {
     public AnchorPane ancDashboard;
 
     public void visitTasksPage(MouseEvent mouseEvent) {
-        navigateTo("TasksPage.fxml");
+        navigateTo("TaskPage.fxml");
     }
 
     public void visitEventsPage(MouseEvent mouseEvent) {

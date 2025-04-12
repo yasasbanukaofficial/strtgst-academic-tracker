@@ -12,13 +12,17 @@ import java.util.ResourceBundle;
 public class MainPageController implements Initializable {
     public AnchorPane ancTabDisplay;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        navigateTo("DashboardPage.fxml");
+    }
+
     public void visitDashboardPage(MouseEvent mouseEvent) {
         navigateTo("DashboardPage.fxml");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("DashboardPage.fxml");
+    public void visitTaskPage(MouseEvent mouseEvent) {
+        navigateTo("TaskPage.fxml");
     }
 
     public void navigateTo(String path){
