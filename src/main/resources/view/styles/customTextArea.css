@@ -1,0 +1,10 @@
+.custom-text-area {
+    -fx-border-radius: 0px;
+    -fx-backgorund-radius: 0px;
+    -fx-border-width: 2px 0px 2px 0px;
+    -fx-border-color:  #DBDBDB;
+    -fx-background-color:  #ffffff;
+}
+.custom-text-area .content{
+    -fx-background-color: #ffffff;
+}

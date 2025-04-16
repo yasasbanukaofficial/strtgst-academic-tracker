@@ -18,43 +18,82 @@
    <children>
       <VBox layoutX="138.0" layoutY="154.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-radius: 63px 0 0 0; -fx-background-radius: 63px 0 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Add New Task:" textFill="#03004c">
-               <font>
-                  <Font name="Poppins Bold" size="22.0" />
-               </font>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="161.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
                   <Insets left="29.0" top="41.0" />
-               </VBox.margin>
-            </Label>
-            <TextField prefHeight="46.0" prefWidth="411.0" promptText="Task Name (Required)" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-width: 2px;">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="29.0" right="36.0" top="64.0" />
-               </VBox.margin>
-            </TextField>
-            <TextArea prefHeight="200.0" prefWidth="411.0" promptText="Description (Optional)" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-width: 2px;">
-               <font>
-                  <Font name="Poppins Regular" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="29.0" right="36.0" top="22.0" />
-               </VBox.margin>
-            </TextArea>
-            <HBox prefHeight="64.0" prefWidth="476.0">
+               </padding>
                <children>
-                  <Label opacity="0.52" text="Due Date:">
+                  <Label text="Add New Task:" textFill="#03004c">
+                     <font>
+                        <Font name="Poppins Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label text="* Required" textFill="#b20404">
+                     <font>
+                        <Font name="Poppins Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox prefHeight="148.0" prefWidth="476.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Task Name *" textFill="#03004c">
+                     <font>
+                        <Font name="Poppins Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="29.0" top="41.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField prefHeight="45.0" prefWidth="441.0" promptText="Complete practcing algebra" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-width: 2px 0px 2px 0px;">
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="19.0" right="16.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="10.0" right="3.0" />
+                     </padding>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Description" textFill="#03004c">
+                     <font>
+                        <Font name="Poppins Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="29.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea prefHeight="200.0" prefWidth="411.0" promptText="Cover it up using past papers." style="-fx-border-width: 2px 0px 2px 0px;" styleClass="custom-text-area" stylesheets="@styles/customTextArea.css">
+                     <font>
+                        <Font name="Poppins Regular" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="19.0" right="16.0" />
+                     </VBox.margin>
+                  </TextArea>
+               </children>
+            </VBox>
+            <HBox prefHeight="64.0" prefWidth="476.0">
+               <children>
+                  <Label text="Due Date:" textFill="#03004c">
+                     <font>
+                        <Font name="Poppins Bold" size="18.0" />
+                     </font>
                      <HBox.margin>
-                        <Insets left="45.0" top="26.0" />
+                        <Insets left="32.0" top="27.0" />
                      </HBox.margin>
                   </Label>
-                  <DatePicker prefHeight="28.0" prefWidth="284.0" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-radius: 10px;">
+                  <DatePicker fx:id="datePicker" prefHeight="33.0" prefWidth="284.0" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-radius: 10px;" styleClass="date-picker" stylesheets="@styles/datePicker.css">
                      <HBox.margin>
-                        <Insets left="28.0" top="26.0" />
+                        <Insets bottom="30.0" left="28.0" top="26.0" />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -62,14 +101,14 @@
                   </DatePicker>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <HBox prefHeight="397.0" prefWidth="476.0" VBox.vgrow="ALWAYS">
                <children>
                   <Button mnemonicParsing="false" onAction="#cancelTask" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20.5px; -fx-border-radius: 20.5px; -fx-border-width: 2px;" text="Cancel">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="25.0" top="323.0" />
+                        <Insets left="25.0" top="313.0" />
                      </HBox.margin>
                      <effect>
                         <DropShadow offsetY="6.0" spread="0.1">
@@ -87,7 +126,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="29.0" top="323.0" />
+                        <Insets left="29.0" top="313.0" />
                      </HBox.margin>
                      <effect>
                         <DropShadow offsetY="6.0" spread="0.1">
