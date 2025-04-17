@@ -25,6 +25,10 @@ public class MainPageController implements Initializable {
         navigateTo("TaskPage.fxml");
     }
 
+    public void visitSettingsPage(MouseEvent mouseEvent) {
+        navigateTo("SettingsPage.fxml");
+    }
+
     public void navigateTo(String path){
         try {
             ancTabDisplay.getChildren().clear();

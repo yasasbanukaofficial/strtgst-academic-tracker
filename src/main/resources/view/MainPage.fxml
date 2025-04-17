@@ -158,7 +158,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" onMouseClicked="#visitSettingsPage" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
