@@ -45,4 +45,8 @@ public class MainPageController implements Initializable {
     public void visitSettingsPage(MouseEvent mouseEvent) {
         navigateTo("SettingsPage.fxml");
     }
+
+    public void visitGradesPage(MouseEvent mouseEvent) {
+        navigateTo("GradesPage.fxml");
+    }
 }

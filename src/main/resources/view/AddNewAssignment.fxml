@@ -127,7 +127,7 @@
                 </HBox>
             <HBox minWidth="-Infinity" prefHeight="71.0" prefWidth="476.0">
                <children>
-                  <Label text="Status" textFill="#03004c">
+                  <Label text="Status   *" textFill="#03004c">
                      <font>
                         <Font name="Poppins Bold" size="18.0" />
                      </font>
@@ -137,7 +137,7 @@
                   </Label>
                   <ComboBox prefHeight="38.0" prefWidth="284.0" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-radius: 10px; -fx-background-radius: 10px;" styleClass="status-picker" stylesheets="@styles/statusPicker.css">
                      <HBox.margin>
-                        <Insets bottom="30.0" left="58.0" top="26.0" />
+                        <Insets bottom="30.0" left="34.0" top="26.0" />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
