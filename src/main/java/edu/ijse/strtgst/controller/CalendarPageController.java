@@ -1,15 +1,10 @@
 package edu.ijse.strtgst.controller;
 
-import com.calendarfx.model.Calendar;
-import com.calendarfx.model.Entry;
 import com.calendarfx.view.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -20,11 +15,6 @@ import java.util.ResourceBundle;
 public class CalendarPageController implements Initializable {
     public VBox ancTimeline;
 
-    public void navigateTo(Node node){
-        ancTimeline.getChildren().clear();
-        ancTimeline.getChildren().add(node);
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DetailedWeekView detailedWeekView = new DetailedWeekView();
@@ -32,30 +22,13 @@ public class CalendarPageController implements Initializable {
         double height = ancTimeline.getPrefHeight() - 20.0;
         detailedWeekView.setPrefSize(width, height);
 
-        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
-            @Override
-            public void run() {
-                while (true) {
-                    Platform.runLater(() -> {
-                        detailedWeekView.setToday(LocalDate.now());
-                        detailedWeekView.setTime(LocalTime.now());
-                    });
-
-                    try {
-                        // update every 10 seconds
-                        sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-
-        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
-        updateTimeThread.setDaemon(true);
-        updateTimeThread.start();
+        Thread thread = UpdateThread.getUpdateTimeThread(detailedWeekView);
         navigateTo(detailedWeekView);
+    }
+
+    public void navigateTo(Node node){
+        ancTimeline.getChildren().clear();
+        ancTimeline.getChildren().add(node);
     }
 
     public void showWeekView(ActionEvent actionEvent) {
@@ -68,29 +41,7 @@ public class CalendarPageController implements Initializable {
         double height = ancTimeline.getPrefHeight() - 20.0;
         detailedDayView.setPrefSize(width, height);
 
-        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
-            @Override
-            public void run() {
-                while (true) {
-                    Platform.runLater(() -> {
-                        detailedDayView.setToday(LocalDate.now());
-                        detailedDayView.setTime(LocalTime.now());
-                    });
-
-                    try {
-                        // update every 10 seconds
-                        sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-
-        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
-        updateTimeThread.setDaemon(true);
-        updateTimeThread.start();
+        Thread thread = UpdateThread.getUpdateTimeThread(detailedDayView);
         navigateTo(detailedDayView);
     }
 
@@ -100,29 +51,7 @@ public class CalendarPageController implements Initializable {
         double height = ancTimeline.getPrefHeight() - 20.0;
         monthView.setPrefSize(width, height);
 
-        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
-            @Override
-            public void run() {
-                while (true) {
-                    Platform.runLater(() -> {
-                        monthView.setToday(LocalDate.now());
-                        monthView.setTime(LocalTime.now());
-                    });
-
-                    try {
-                        // update every 10 seconds
-                        sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-
-        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
-        updateTimeThread.setDaemon(true);
-        updateTimeThread.start();
+        Thread thread = UpdateThread.getUpdateTimeThread(monthView);
         navigateTo(monthView);
     }
 
@@ -132,29 +61,56 @@ public class CalendarPageController implements Initializable {
         double height = ancTimeline.getPrefHeight() - 20.0;
         yearView.setPrefSize(width, height);
 
-        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
-            @Override
-            public void run() {
-                while (true) {
-                    Platform.runLater(() -> {
-                        yearView.setToday(LocalDate.now());
-                        yearView.setTime(LocalTime.now());
-                    });
-
-                    try {
-                        // update every 10 seconds
-                        sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-
-        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
-        updateTimeThread.setDaemon(true);
-        updateTimeThread.start();
+        Thread thread = UpdateThread.getUpdateTimeThread(yearView);
         navigateTo(yearView);
+    }
+}
+
+class UpdateThread{
+    private static Thread updateTimeThread;
+
+    public static Thread getUpdateTimeThread(DetailedDayView view) {
+        return startThread(view);
+    }
+
+    public static Thread getUpdateTimeThread(DetailedWeekView view) {
+        return startThread(view);
+    }
+
+    public static Thread getUpdateTimeThread(MonthView view) {
+        return startThread(view);
+    }
+
+    public static Thread getUpdateTimeThread(YearView view) {
+        return startThread(view);
+    }
+
+    private static Thread startThread(DateControl control) {
+        if (updateTimeThread == null){
+            updateTimeThread = new Thread("Calendar: Update Time Thread") {
+                @Override
+                public void run() {
+                    while (true) {
+                        Platform.runLater(() -> {
+                            control.setToday(LocalDate.now());
+                            control.setTime(LocalTime.now());
+                        });
+
+                        try {
+                            // update every 10 seconds
+                            sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            };
+
+            updateTimeThread.setPriority(Thread.MIN_PRIORITY);
+            updateTimeThread.setDaemon(true);
+            updateTimeThread.start();
+        }
+        return updateTimeThread;
     }
 }
