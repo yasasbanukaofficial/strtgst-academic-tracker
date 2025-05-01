@@ -26,6 +26,7 @@ public class MainPageController implements Initializable {
     }
 
     public void visitAssignmentPage(MouseEvent mouseEvent) {
+        UpdateThread.stopThread();
         navigateTo("AssignmentPage.fxml");
     }
 
@@ -35,22 +36,27 @@ public class MainPageController implements Initializable {
     }
 
     public void visitDashboardPage(MouseEvent mouseEvent) {
+        UpdateThread.stopThread();
         navigateTo("DashboardPage.fxml");
     }
 
     public void visitTaskPage(MouseEvent mouseEvent) {
+        UpdateThread.stopThread();
         navigateTo("TaskPage.fxml");
     }
 
     public void visitSettingsPage(MouseEvent mouseEvent) {
+        UpdateThread.stopThread();
         navigateTo("SettingsPage.fxml");
     }
 
     public void visitGradesPage(MouseEvent mouseEvent) {
+        UpdateThread.stopThread();
         navigateTo("GradesPage.fxml");
     }
 
     public void visitCalendarPage(MouseEvent mouseEvent) {
+        UpdateThread.stopThread();
         navigateTo("CalendarPage.fxml");
     }
 }
