@@ -54,7 +54,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitCalendarPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
