@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1000.0" prefWidth="1600.0" style="-fx-background-color: #F2F6FF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.CalendarPageController">
+   <children>
+      <VBox layoutX="189.0" layoutY="109.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F2F6FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="0.0" prefWidth="1600.0" spacing="200.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="141.0" text="Calendar">
+                     <font>
+                        <Font name="Poppins Bold" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="86.0" top="51.0" />
+                     </HBox.margin>
+                  </Label>
+                  <HBox prefHeight="97.0" prefWidth="734.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#showWeekView" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 20px; -fx-background-color: #F2F6FF; -fx-border-radius: 20px 0px 0px 20px; -fx-border-color: #03004c; -fx-border-width: 2px;" text="Week View" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#showDayView" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 20px; -fx-background-color: #F2F6FF; -fx-border-color: #03004c; -fx-border-width: 2px;" text="Day View" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#showMonthView" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 20px; -fx-background-color: #F2F6FF; -fx-border-color: #03004c; -fx-border-width: 2px;" text="Month View" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#showYearView" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 20px; -fx-background-color: #F2F6FF; -fx-border-radius: 0px 20px 20px 0px; -fx-border-color: #03004c; -fx-border-width: 2px;" text="Year View" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" top="46.0" />
+                     </padding>
+                  </HBox>
+                  <Label prefHeight="63.0" prefWidth="154.0" text="May 19" textFill="#03004c" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="Poppins Bold" size="44.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="34.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox fx:id="ancTimeline" prefHeight="833.0" prefWidth="1430.0" style="-fx-background-color: white; -fx-border-radius: 25px; -fx-background-radius: 25px;" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="30.0" left="90.0" right="80.0" top="40.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -32,7 +32,7 @@ CREATE TABLE subject (
 -- Table Assignment
 CREATE TABLE assignment (
     assignment_id INT AUTO_INCREMENT,
-    sub_id INT NOT NULL,
+    sub_id INT,
     assignment_name VARCHAR(255) NOT NULL,
     assignment_description VARCHAR(500),
     due_date DATE,

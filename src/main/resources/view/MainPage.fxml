@@ -18,7 +18,7 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox maxWidth="362.0" minWidth="335.0" prefHeight="1000.0" prefWidth="335.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 40px 40px 0; -fx-border-radius: 40px;">
+                        <VBox maxWidth="362.0" minWidth="335.0" prefHeight="1000.0" prefWidth="335.0" style="-fx-background-color: white; -fx-background-radius: 0 40px 40px 0; -fx-border-radius: 40px;">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -28,7 +28,7 @@
                                     <Insets left="59.0" top="37.0" />
                                  </VBox.margin>
                               </ImageView>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" minWidth="83.0" onMouseClicked="#visitDashboardPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" minWidth="83.0" onMouseClicked="#visitDashboardPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <VBox.margin>
                                     <Insets right="55.0" top="75.0" />
                                  </VBox.margin>
@@ -54,7 +54,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitCalendarPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -80,7 +80,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitTaskPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitTaskPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -106,14 +106,14 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitAssignmentPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/material-symbols_assignment.jpg" />
                                        </image>
                                     </ImageView>
-                                    <Label text="Assignment">
+                                    <Label prefHeight="35.0" prefWidth="160.0" text="Assignment">
                                        <font>
                                           <Font name="Poppins Regular" size="24.0" />
                                        </font>
@@ -123,7 +123,7 @@
                                     </Label>
                                  </children>
                                  <padding>
-                                    <Insets left="62.0" right="26.0" top="12.0" />
+                                    <Insets left="62.0" right="6.0" top="12.0" />
                                  </padding>
                                  <VBox.margin>
                                     <Insets right="55.0" top="35.0" />
@@ -132,7 +132,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitGradesPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -158,7 +158,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" onMouseClicked="#visitSettingsPage" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -199,9 +199,9 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
-                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: darken;">
                                        <image>
                                           <Image url="@../images/majesticons_logout.jpg" />
                                        </image>

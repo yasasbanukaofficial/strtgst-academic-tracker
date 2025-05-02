@@ -12,6 +12,23 @@ import java.util.ResourceBundle;
 public class MainPageController implements Initializable {
     public AnchorPane ancTabDisplay;
 
+    public void navigateTo(String path){
+        try {
+            ancTabDisplay.getChildren().clear();
+            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
+            load.prefWidthProperty().bind(ancTabDisplay.widthProperty());
+            load.prefHeightProperty().bind(ancTabDisplay.heightProperty());
+            ancTabDisplay.getChildren().add(load);
+        } catch (Exception e){
+            new Alert(Alert.AlertType.ERROR, "Error finding the path");
+            e.printStackTrace();
+        }
+    }
+
+    public void visitAssignmentPage(MouseEvent mouseEvent) {
+        navigateTo("AssignmentPage.fxml");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         navigateTo("DashboardPage.fxml");
@@ -25,16 +42,15 @@ public class MainPageController implements Initializable {
         navigateTo("TaskPage.fxml");
     }
 
-    public void navigateTo(String path){
-        try {
-            ancTabDisplay.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
-            load.prefWidthProperty().bind(ancTabDisplay.widthProperty());
-            load.prefHeightProperty().bind(ancTabDisplay.heightProperty());
-            ancTabDisplay.getChildren().add(load);
-        } catch (Exception e){
-            new Alert(Alert.AlertType.ERROR, "Error finding the path");
-            e.printStackTrace();
-        }
+    public void visitSettingsPage(MouseEvent mouseEvent) {
+        navigateTo("SettingsPage.fxml");
+    }
+
+    public void visitGradesPage(MouseEvent mouseEvent) {
+        navigateTo("GradesPage.fxml");
+    }
+
+    public void visitCalendarPage(MouseEvent mouseEvent) {
+        navigateTo("CalendarPage.fxml");
     }
 }

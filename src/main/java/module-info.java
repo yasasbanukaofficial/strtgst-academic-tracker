@@ -1,8 +1,7 @@
 module edu.ijse.strtgst {
-    requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires java.desktop;
+    requires com.calendarfx.view;
 
 
     opens edu.ijse.strtgst.controller to javafx.fxml;
