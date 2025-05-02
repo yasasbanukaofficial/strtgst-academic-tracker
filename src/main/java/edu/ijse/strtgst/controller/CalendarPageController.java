@@ -29,57 +29,34 @@ public class CalendarPageController implements Initializable {
         ancTimeline.getChildren().add(node);
     }
 
-//    public void popOver(DateControl dateControl){
-//        try{
-//            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/AddNewEvent.fxml"));
-//            dateControl.setEntryDetailsPopOverContentCallback(param -> load);
-//        } catch (Exception e) {
-//            new Alert(Alert.AlertType.ERROR, "Error when using custom popup").show();
-//            e.printStackTrace();
-//        }
-//    }
-
-    public void showWeekView(ActionEvent actionEvent) {
+    public void setupView(DateControl view){
         ancTimeline.getStylesheets().add(getClass().getResource("/view/styles/popOver.css").toExternalForm());
-        DetailedWeekView detailedWeekView = new DetailedWeekView();
         double width = ancTimeline.getPrefWidth() - 20.0;
         double height = ancTimeline.getPrefHeight() - 20.0;
-        detailedWeekView.setPrefSize(width, height);
+        view.setPrefSize(width, height);
 
-//        popOver(detailedWeekView);
+        Thread thread = UpdateThread.startThread(view);
+        navigateTo(view);
+    }
 
-        Thread thread = UpdateThread.getUpdateTimeThread(detailedWeekView);
-        navigateTo(detailedWeekView);
+    public void showWeekView(ActionEvent actionEvent) {
+        DetailedWeekView detailedWeekView = new DetailedWeekView();
+        setupView(detailedWeekView);
     }
 
     public void showDayView(ActionEvent actionEvent) {
         DetailedDayView detailedDayView = new DetailedDayView();
-        double width = ancTimeline.getPrefWidth() - 20.0;
-        double height = ancTimeline.getPrefHeight() - 20.0;
-        detailedDayView.setPrefSize(width, height);
-
-        Thread thread = UpdateThread.getUpdateTimeThread(detailedDayView);
-        navigateTo(detailedDayView);
+        setupView(detailedDayView);
     }
 
     public void showMonthView(ActionEvent actionEvent) {
         MonthView monthView = new MonthView();
-        double width = ancTimeline.getPrefWidth() - 20.0;
-        double height = ancTimeline.getPrefHeight() - 20.0;
-        monthView.setPrefSize(width, height);
-
-        Thread thread = UpdateThread.getUpdateTimeThread(monthView);
-        navigateTo(monthView);
+        setupView(monthView);
     }
 
     public void showYearView(ActionEvent actionEvent) {
         YearView yearView = new YearView();
-        double width = ancTimeline.getPrefWidth() - 20.0;
-        double height = ancTimeline.getPrefHeight() - 20.0;
-        yearView.setPrefSize(width, height);
-
-        Thread thread = UpdateThread.getUpdateTimeThread(yearView);
-        navigateTo(yearView);
+        setupView(yearView);
     }
 }
 
@@ -88,23 +65,7 @@ class UpdateThread{
     private static volatile boolean running = false;
     private static DateControl currentControl;
 
-    public static Thread getUpdateTimeThread(DetailedDayView view) {
-        return startThread(view);
-    }
-
-    public static Thread getUpdateTimeThread(DetailedWeekView view) {
-        return startThread(view);
-    }
-
-    public static Thread getUpdateTimeThread(MonthView view) {
-        return startThread(view);
-    }
-
-    public static Thread getUpdateTimeThread(YearView view) {
-        return startThread(view);
-    }
-
-    private static Thread startThread(DateControl control) {
+    public static Thread startThread(DateControl control) {
         currentControl = control;
         if (updateTimeThread == null){
             running = true;
@@ -113,8 +74,10 @@ class UpdateThread{
                 public void run() {
                     while (running){
                         Platform.runLater(() -> {
-                            currentControl.setDate(LocalDate.now());
-                            currentControl.setTime(LocalTime.now());
+                            if (currentControl != null && currentControl.getScene() != null){
+                                currentControl.setDate(LocalDate.now());
+                                currentControl.setTime(LocalTime.now());
+                            }
                         });
 
                         try{
