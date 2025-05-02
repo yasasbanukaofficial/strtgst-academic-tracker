@@ -8,9 +8,13 @@ public class DBConnection {
     private static DBConnection dbConnection;
     private Connection connection;
 
+    private final String url = "jdbc:mysql://localhost:3306/Strtgst";
+    private final String user = "root";
+    private final String password = "Mysql@123";
+
     private DBConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Strtgst", "root", "Mysql@123");
+        connection = DriverManager.getConnection(url, user, password);
     }
 
     public static DBConnection getInstance() throws ClassNotFoundException, SQLException {

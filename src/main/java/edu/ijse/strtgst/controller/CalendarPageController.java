@@ -3,21 +3,21 @@ package edu.ijse.strtgst.controller;
 import com.calendarfx.view.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class CalendarPageController implements Initializable {
     public VBox ancTimeline;
+    private DetailedWeekView detailedWeekView;
+    private DetailedDayView detailedDayView;
+    private MonthView monthView;
+    private YearView yearView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,22 +40,30 @@ public class CalendarPageController implements Initializable {
     }
 
     public void showWeekView(ActionEvent actionEvent) {
-        DetailedWeekView detailedWeekView = new DetailedWeekView();
+        if (detailedWeekView == null){
+            detailedWeekView = new DetailedWeekView();
+        }
         setupView(detailedWeekView);
     }
 
     public void showDayView(ActionEvent actionEvent) {
-        DetailedDayView detailedDayView = new DetailedDayView();
+        if (detailedDayView == null){
+            detailedDayView = new DetailedDayView();
+        }
         setupView(detailedDayView);
     }
 
     public void showMonthView(ActionEvent actionEvent) {
-        MonthView monthView = new MonthView();
+        if (monthView == null){
+            monthView = new MonthView();
+        }
         setupView(monthView);
     }
 
     public void showYearView(ActionEvent actionEvent) {
-        YearView yearView = new YearView();
+        if (yearView == null){
+            yearView = new YearView();
+        }
         setupView(yearView);
     }
 }
@@ -83,7 +91,6 @@ class UpdateThread{
                         try{
                             sleep(10000);
                         } catch (InterruptedException e) {
-                            new Alert(Alert.AlertType.ERROR, "Error when running the thread").show();
                             e.printStackTrace();
                         }
                     }
