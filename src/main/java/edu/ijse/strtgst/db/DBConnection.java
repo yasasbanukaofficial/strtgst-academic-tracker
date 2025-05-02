@@ -12,16 +12,12 @@ public class DBConnection {
     private final String user = "root";
     private final String password = "Mysql@123";
 
-    private DBConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+    private DBConnection() throws SQLException {
         connection = DriverManager.getConnection(url, user, password);
     }
 
-    public static DBConnection getInstance() throws ClassNotFoundException, SQLException {
-        if (dbConnection == null){
-            dbConnection = new DBConnection();
-        }
-        return dbConnection;
+    public static DBConnection getInstance() throws SQLException {
+        return dbConnection == null ? new DBConnection() : dbConnection;
     }
 
     public Connection getConnection() {
