@@ -3,9 +3,11 @@ package edu.ijse.strtgst.controller;
 import com.calendarfx.view.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -27,11 +29,24 @@ public class CalendarPageController implements Initializable {
         ancTimeline.getChildren().add(node);
     }
 
+//    public void popOver(DateControl dateControl){
+//        try{
+//            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/AddNewEvent.fxml"));
+//            dateControl.setEntryDetailsPopOverContentCallback(param -> load);
+//        } catch (Exception e) {
+//            new Alert(Alert.AlertType.ERROR, "Error when using custom popup").show();
+//            e.printStackTrace();
+//        }
+//    }
+
     public void showWeekView(ActionEvent actionEvent) {
+        ancTimeline.getStylesheets().add(getClass().getResource("/view/styles/popOver.css").toExternalForm());
         DetailedWeekView detailedWeekView = new DetailedWeekView();
         double width = ancTimeline.getPrefWidth() - 20.0;
         double height = ancTimeline.getPrefHeight() - 20.0;
         detailedWeekView.setPrefSize(width, height);
+
+//        popOver(detailedWeekView);
 
         Thread thread = UpdateThread.getUpdateTimeThread(detailedWeekView);
         navigateTo(detailedWeekView);
