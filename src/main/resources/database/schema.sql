@@ -4,7 +4,7 @@ USE Strtgst;
 
 -- Table Student
 CREATE TABLE student(
-    stud_id INT AUTO_INCREMENT,
+    stud_id INT,
     stud_name VARCHAR(50),
     username VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL,

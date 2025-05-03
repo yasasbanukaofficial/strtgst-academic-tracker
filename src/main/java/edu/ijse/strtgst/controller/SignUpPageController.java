@@ -75,7 +75,7 @@ public class SignUpPageController{
         }
         if (!isValidEmail) {
             txtEmail.setStyle("-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-            errorMessage.append("• Email must be valid (e.g., name@example.com).\n");
+            errorMessage.append("• Email must be a valid one (e.g., name@example.com).\n");
             isValid = false;
         }
         if (!isValidPassword) {
