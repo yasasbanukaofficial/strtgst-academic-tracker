@@ -21,4 +21,10 @@ public class StudentDto {
     private Date dateOfBirth;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+
+    public StudentDto(String username, String email, String password){
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 }
