@@ -16,7 +16,7 @@ public class StudentModel {
             String lastIdNumString = lastId.substring(1);
             int lastIdNumber = Integer.parseInt(lastIdNumString);
             int nextIdNumber = lastIdNumber + 1;
-            String nextIdString = String.format(firstCharacter + "%03d" + nextIdNumber);
+            String nextIdString = String.format(firstCharacter + "%03d", nextIdNumber);
             return nextIdString;
         }
         return firstCharacter + "001";
