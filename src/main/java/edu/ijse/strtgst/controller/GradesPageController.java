@@ -1,8 +1,8 @@
 package edu.ijse.strtgst.controller;
 
-import javafx.fxml.FXMLLoader;
+import edu.ijse.strtgst.util.Navigation;
+import edu.ijse.strtgst.util.View;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -14,23 +14,10 @@ public class GradesPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("DefaultGradeDisplay.fxml");
+        Navigation.navigateTo(ancAddGrade, View.DEFAULT_GRADE);
     }
 
     public void addNewGrade(MouseEvent mouseEvent) {
-        navigateTo("AddNewGrade.fxml");
-    }
-
-    public void navigateTo(String path){
-        try {
-            ancAddGrade.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
-            load.prefHeightProperty().bind(ancAddGrade.heightProperty());
-            load.prefWidthProperty().bind(ancAddGrade.widthProperty());
-            ancAddGrade.getChildren().add(load);
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Unable to identify the path");
-            e.printStackTrace();
-        }
+        Navigation.navigateTo(ancAddGrade, View.ADD_GRADE);
     }
 }

@@ -146,7 +146,7 @@
                         <Insets />
                      </HBox.margin>
                   </VBox>
-                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitGradesPage" prefHeight="212.0" prefWidth="252.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 34px; -fx-border-radius: 34px;">
+                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitLecturesPage" prefHeight="212.0" prefWidth="252.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 34px; -fx-border-radius: 34px;">
                      <children>
                         <Label text="Lectures Today">
                            <font>

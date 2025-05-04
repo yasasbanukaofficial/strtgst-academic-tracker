@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.MainPageController">
+<AnchorPane fx:id="ancMainPage" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.MainPageController">
    <children>
       <VBox layoutX="173.0" layoutY="199.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F2F6FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -199,7 +199,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitLoginPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: darken;">
                                        <image>

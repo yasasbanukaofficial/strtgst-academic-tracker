@@ -2,8 +2,9 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.dto.StudentDto;
 import edu.ijse.strtgst.model.StudentModel;
+import edu.ijse.strtgst.util.Navigation;
+import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -26,19 +27,7 @@ public class SignUpPageController{
 
 
     public void visitLoginPage(ActionEvent actionEvent) {
-        navigateTo("LoginPage.fxml");
-    }
-
-    public void navigateTo(String path){
-        try{
-            signUpAnc.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
-            load.prefWidthProperty().bind(signUpAnc.widthProperty());
-            load.prefHeightProperty().bind(signUpAnc.heightProperty());
-            signUpAnc.getChildren().add(load);
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Cant Identify the url path");
-        }
+        Navigation.navigateTo(signUpAnc, View.LOGIN);
     }
 
     public void signUpStudent(ActionEvent event) {
@@ -53,7 +42,7 @@ public class SignUpPageController{
                 boolean isSaved = studentModel.addStudent(studentDto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Successfully Saved user").show();
-                    navigateTo("MainPage.fxml");
+                    Navigation.navigateTo(signUpAnc, View.MAIN);
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed when saving user").show();
                 }
