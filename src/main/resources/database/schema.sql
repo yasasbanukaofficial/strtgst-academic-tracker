@@ -4,7 +4,7 @@ USE Strtgst;
 
 -- Table Student
 CREATE TABLE student(
-    stud_id INT AUTO_INCREMENT,
+    stud_id VARCHAR(4),
     stud_name VARCHAR(50),
     username VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE student(
 -- Table Subject
 CREATE TABLE subject (
     sub_id INT NOT NULL,
-    stud_id INT AUTO_INCREMENT,
+    stud_id VARCHAR(4),
     sub_name VARCHAR(50) NOT NULL,
     total_marks INT,
     PRIMARY KEY (sub_id),
@@ -82,7 +82,7 @@ CREATE TABLE exam (
 -- Table TodoList
 CREATE TABLE todo_list (
     todo_id INT AUTO_INCREMENT,
-    stud_id INT NOT NULL,
+    stud_id VARCHAR(4),
     task_name VARCHAR(255) NOT NULL,
     task_description VARCHAR(500),
     due_date DATE,
@@ -106,7 +106,7 @@ CREATE TABLE study_session (
 -- Table Events
 CREATE TABLE event (
     event_id INT AUTO_INCREMENT,
-    stud_id INT NOT NULL,
+    stud_id VARCHAR(4),
     event_name VARCHAR(255) NOT NULL,
     event_description VARCHAR(500),
     date DATE NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE subject_scores (
 -- Table Student Study Sessions (Student -> Study Sessions)
 CREATE TABLE student_study_sessions (
     stud_ss_id INT AUTO_INCREMENT,
-    stud_id INT NOT NULL,
+    stud_id VARCHAR(4),
     ss_id INT,
     PRIMARY KEY (stud_ss_id),
     FOREIGN KEY (stud_id) REFERENCES student(stud_id)
@@ -154,7 +154,7 @@ CREATE TABLE student_study_sessions (
 -- Table Subject Study Sessions (Subject -> Study Sessions)
 CREATE TABLE subject_study_sessions (
     subject_ss_id INT AUTO_INCREMENT,
-    stud_id INT NOT NULL,
+    stud_id VARCHAR(4),
     ss_id INT,
     PRIMARY KEY (subject_ss_id),
     FOREIGN KEY (stud_id) REFERENCES student(stud_id)
