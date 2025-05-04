@@ -29,52 +29,56 @@ public class CalendarPageController implements Initializable {
         ancTimeline.getChildren().add(node);
     }
 
-    public void setupView(DateControl view){
+    public void setupView(String type){
+        DateControl view;
+        switch (type){
+            case "week":
+                view = new DetailedWeekView();
+                break;
+            case "month":
+                view = new MonthView();
+                break;
+            case "year":
+                view = new YearView();
+                break;
+            default:
+                view = new DetailedDayView();
+                break;
+        }
+
         ancTimeline.getStylesheets().add(getClass().getResource("/view/styles/popOver.css").toExternalForm());
         double width = ancTimeline.getPrefWidth() - 20.0;
         double height = ancTimeline.getPrefHeight() - 20.0;
         view.setPrefSize(width, height);
 
-        Thread thread = UpdateThread.startThread(view);
+        UpdateThread.startThread(view);
         navigateTo(view);
     }
 
     public void showWeekView(ActionEvent actionEvent) {
-        if (detailedWeekView == null){
-            detailedWeekView = new DetailedWeekView();
-        }
-        setupView(detailedWeekView);
+        setupView("week");
     }
 
     public void showDayView(ActionEvent actionEvent) {
-        if (detailedDayView == null){
-            detailedDayView = new DetailedDayView();
-        }
-        setupView(detailedDayView);
+        setupView("day");
     }
 
     public void showMonthView(ActionEvent actionEvent) {
-        if (monthView == null){
-            monthView = new MonthView();
-        }
-        setupView(monthView);
+        setupView("month");
     }
 
     public void showYearView(ActionEvent actionEvent) {
-        if (yearView == null){
-            yearView = new YearView();
-        }
-        setupView(yearView);
+        setupView("year");
     }
 }
 
 class UpdateThread{
     private static Thread updateTimeThread;
     private static volatile boolean running = false;
-    private static DateControl currentControl;
+    private static DateControl currentView;
 
-    public static Thread startThread(DateControl control) {
-        currentControl = control;
+    public static Thread startThread(DateControl view) {
+        currentView = view;
         if (updateTimeThread == null){
             running = true;
             updateTimeThread = new Thread("Calendar: Update Time"){
@@ -82,9 +86,9 @@ class UpdateThread{
                 public void run() {
                     while (running){
                         Platform.runLater(() -> {
-                            if (currentControl != null && currentControl.getScene() != null){
-                                currentControl.setDate(LocalDate.now());
-                                currentControl.setTime(LocalTime.now());
+                            if (currentView != null && currentView.getScene() != null){
+                                currentView.setDate(LocalDate.now());
+                                currentView.setTime(LocalTime.now());
                             }
                         });
 
