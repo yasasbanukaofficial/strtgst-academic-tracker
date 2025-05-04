@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.SQLException;
+
 public class SignUpPageController{
     public AnchorPane signUpAnc;
     public TextField txtUsername;
@@ -40,10 +42,11 @@ public class SignUpPageController{
     }
 
     public void signUpStudent(ActionEvent event) {
+        String studentId = loadNextId();
         String username = txtUsername.getText();
         String email = txtEmail.getText();
         String password = txtPassword.getText();
-        StudentDto studentDto = new StudentDto(username, email, password);
+        StudentDto studentDto = new StudentDto(studentId, username, email, password);
 
         if (validateInputs(username, email, password)) {
             try {
@@ -59,6 +62,16 @@ public class SignUpPageController{
                 new Alert(Alert.AlertType.ERROR, "Failed when saving user").show();
             }
         }
+    }
+
+    public String loadNextId() {
+        try {
+            return studentModel.getNextID();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Error when loading a Student ID");
+            e.printStackTrace();
+        }
+        return "S001";
     }
 
     private boolean validateInputs (String username, String email, String password) {

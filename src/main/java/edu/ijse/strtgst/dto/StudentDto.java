@@ -12,7 +12,7 @@ import java.util.Arrays;
 @Setter
 @ToString
 public class StudentDto {
-    private int studId;
+    private String studId;
     private String studName;
     private String username;
     private String email;
@@ -22,7 +22,8 @@ public class StudentDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public StudentDto(String username, String email, String password){
+    public StudentDto(String studId, String username, String email, String password) {
+        this.studId = studId;
         this.username = username;
         this.email = email;
         this.password = password;

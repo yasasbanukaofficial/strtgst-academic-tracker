@@ -24,7 +24,8 @@ public class StudentModel {
 
     public boolean addStudent(StudentDto studentDto) throws SQLException{
         return CrudUtil.execute(
-                "INSERT INTO Student (username, email, password) VALUES (?,?,?)",
+                "INSERT INTO Student (stud_id, username, email, password) VALUES (?,?,?,?)",
+                studentDto.getStudId(),
                 studentDto.getUsername(),
                 studentDto.getEmail(),
                 studentDto.getPassword()
