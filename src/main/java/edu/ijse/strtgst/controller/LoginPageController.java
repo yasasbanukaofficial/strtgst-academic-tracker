@@ -15,39 +15,44 @@ public class LoginPageController {
     public TextField txtUsername;
     public PasswordField txtPassword;
 
+    private final Authorization authorization = new Authorization();
+
     public void visitSignUpPage() {
         Navigation.navigateTo(loginAnc, View.SIGNUP);
     }
 
     public void visitDashboard(ActionEvent actionEvent) {
-        String username = txtUsername.getText();
-        String password = txtPassword.getText();
+        String username = txtUsername.getText().trim();
+        String password = txtPassword.getText().trim();
 
-        if (validateInputs(username, password)) Navigation.navigateTo(loginAnc, View.MAIN);
-    }
-
-    private boolean validateInputs (String username, String password) {
-        String errorStyle = "-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
-        boolean isPasswordMatches = false;
-        boolean isUsernameExisting = false;
+        if (username.equals("") || password.equals("")){
+            new Alert(Alert.AlertType.ERROR,"Please enter username and password.").show();
+            return;
+        }
 
         try {
-            StudentDto studentDto = StudentModel.getStudent(username);
-            if (studentDto != null){
-                isUsernameExisting = true;
-                isPasswordMatches = password.equals(studentDto.getPassword());
+            if (authorization.validateCredentials(username, password)){
+                Navigation.navigateTo(loginAnc, View.MAIN);
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Invalid username or password. Please Try again!").show();
+                showLoginError();
             }
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Something went wrong while trying to log in.").show();
-            return false;
+            e.printStackTrace();
         }
+    }
 
-        if (!isUsernameExisting || !isPasswordMatches) {
-            txtUsername.setStyle(errorStyle);
-            txtPassword.setStyle(errorStyle);
-            new Alert(Alert.AlertType.ERROR, "Invalid username or password. Please Try again!").show();
-        }
-        return isUsernameExisting && isPasswordMatches;
+    private void showLoginError() {
+        String errorStyle = "-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
+        txtUsername.setStyle(errorStyle);
+        txtPassword.setStyle(errorStyle);
+    }
+}
+
+class Authorization {
+    public boolean validateCredentials(String username, String password) throws Exception {
+        StudentDto studentDto = StudentModel.getStudent(username);
+        return studentDto != null && password.equals(studentDto.getPassword());
     }
 }
