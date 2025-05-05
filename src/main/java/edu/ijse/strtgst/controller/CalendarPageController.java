@@ -14,10 +14,10 @@ import java.util.ResourceBundle;
 
 public class CalendarPageController implements Initializable {
     public VBox ancTimeline;
-    private DetailedWeekView detailedWeekView;
-    private DetailedDayView detailedDayView;
-    private MonthView monthView;
-    private YearView yearView;
+    private final DetailedWeekView weekView = new DetailedWeekView();
+    private final DetailedDayView dayView = new DetailedDayView();
+    private final MonthView monthView = new MonthView();
+    private final YearView yearView = new YearView();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,23 +29,7 @@ public class CalendarPageController implements Initializable {
         ancTimeline.getChildren().add(node);
     }
 
-    public void setupView(String type){
-        DateControl view;
-        switch (type){
-            case "week":
-                view = new DetailedWeekView();
-                break;
-            case "month":
-                view = new MonthView();
-                break;
-            case "year":
-                view = new YearView();
-                break;
-            default:
-                view = new DetailedDayView();
-                break;
-        }
-
+    public void setupView(DateControl view){
         ancTimeline.getStylesheets().add(getClass().getResource("/view/styles/popOver.css").toExternalForm());
         double width = ancTimeline.getPrefWidth() - 20.0;
         double height = ancTimeline.getPrefHeight() - 20.0;
@@ -56,19 +40,19 @@ public class CalendarPageController implements Initializable {
     }
 
     public void showWeekView(ActionEvent actionEvent) {
-        setupView("week");
+        setupView(weekView);
     }
 
     public void showDayView(ActionEvent actionEvent) {
-        setupView("day");
+        setupView(dayView);
     }
 
     public void showMonthView(ActionEvent actionEvent) {
-        setupView("month");
+        setupView(monthView);
     }
 
     public void showYearView(ActionEvent actionEvent) {
-        setupView("year");
+        setupView(yearView);
     }
 }
 

@@ -31,4 +31,17 @@ public class StudentModel {
                 studentDto.getPassword()
         );
     }
+
+    public static StudentDto getStudent(String username) throws SQLException{
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Student WHERE username = ?", username);
+        if (rst.next()){
+             return new StudentDto(
+                     rst.getString(1),
+                     rst.getString(3),
+                     rst.getString(4),
+                     rst.getString(5)
+             );
+        }
+        return null;
+    }
 }
