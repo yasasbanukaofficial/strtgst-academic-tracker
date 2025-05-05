@@ -13,11 +13,11 @@ import javafx.scene.layout.AnchorPane;
 import java.sql.SQLException;
 
 public class SignUpPageController{
-    public AnchorPane signUpAnc;
-    public TextField txtUsername;
-    public TextField txtEmail;
-    public TextField txtPassword;
-    public Button btnSignUp;
+    private AnchorPane signUpAnc;
+    private TextField txtUsername;
+    private TextField txtEmail;
+    private TextField txtPassword;
+    private Button btnSignUp;
 
     private final StudentModel studentModel = new StudentModel();
 

@@ -11,9 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 public class LoginPageController {
-    public AnchorPane loginAnc;
-    public TextField txtUsername;
-    public PasswordField txtPassword;
+    private AnchorPane loginAnc;
+    private TextField txtUsername;
+    private PasswordField txtPassword;
 
     private final Authorization authorization = new Authorization();
 
