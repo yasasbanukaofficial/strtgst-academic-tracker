@@ -13,7 +13,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class CalendarPageController implements Initializable {
-    private VBox ancTimeline;
+    public VBox ancTimeline;
     private final DetailedWeekView weekView = new DetailedWeekView();
     private final DetailedDayView dayView = new DetailedDayView();
     private final MonthView monthView = new MonthView();

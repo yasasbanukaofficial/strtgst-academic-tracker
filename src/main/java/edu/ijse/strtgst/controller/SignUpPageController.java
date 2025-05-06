@@ -13,17 +13,17 @@ import javafx.scene.layout.AnchorPane;
 import java.sql.SQLException;
 
 public class SignUpPageController{
-    private AnchorPane signUpAnc;
-    private TextField txtUsername;
-    private TextField txtEmail;
-    private TextField txtPassword;
-    private Button btnSignUp;
+    public AnchorPane signUpAnc;
+    public TextField txtUsername;
+    public TextField txtEmail;
+    public TextField txtPassword;
+    public Button btnSignUp;
 
     private final StudentModel studentModel = new StudentModel();
 
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
-    private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{3,}$";
+    private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{6,}$";
 
 
     public void visitLoginPage(ActionEvent actionEvent) {
@@ -82,7 +82,7 @@ public class SignUpPageController{
         }
         if (!isValidPassword) {
             txtPassword.setStyle("-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-            errorMessage.append("• Password must be more than 3 characters and should include one uppercase, lowercase, number, and special character.\n");
+            errorMessage.append("• Password must be more than 6 characters and should include one uppercase, lowercase, number, and special character.\n");
             isValid = false;
         }
 

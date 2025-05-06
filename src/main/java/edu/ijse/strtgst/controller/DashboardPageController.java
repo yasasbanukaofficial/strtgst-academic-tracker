@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class DashboardPageController {
-    private AnchorPane ancDashboard;
+    public AnchorPane ancDashboard;
 
     public void visitTasksPage(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancDashboard, View.TASK);
