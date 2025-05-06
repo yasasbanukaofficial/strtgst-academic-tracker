@@ -25,7 +25,7 @@ public class LoginPageController {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
 
-        if (username.equals("") || password.equals("")){
+        if (username.equals(null) || password.equals(null)){
             new Alert(Alert.AlertType.ERROR,"Please enter username and password.").show();
             return;
         }

@@ -2,6 +2,7 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.dto.StudentDto;
 import edu.ijse.strtgst.model.StudentModel;
+import edu.ijse.strtgst.util.IdLoader;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
@@ -39,8 +40,7 @@ public class SignUpPageController{
 
         if (validateInputs(username, email, password)) {
             try {
-                boolean isSaved = studentModel.addStudent(studentDto);
-                if (isSaved) {
+                if (studentModel.addStudent(studentDto)) {
                     new Alert(Alert.AlertType.INFORMATION, "Successfully Saved user").show();
                     Navigation.navigateTo(signUpAnc, View.MAIN);
                 } else {
@@ -55,7 +55,7 @@ public class SignUpPageController{
 
     public String loadNextId() {
         try {
-            return studentModel.getNextID();
+            return IdLoader.getNextID("Student", "stud_id");
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error when loading a Student ID");
             e.printStackTrace();
