@@ -1,5 +1,6 @@
 package edu.ijse.strtgst.controller;
 
+import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,26 +14,12 @@ import java.util.ResourceBundle;
 public class AssignmentPageController implements Initializable {
     public AnchorPane ancTaskContainer;
 
-
-    public void navigateTo(View view){
-        try {
-            ancTaskContainer.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource(view.getPath()));
-            load.prefWidthProperty().bind(ancTaskContainer.widthProperty());
-            load.prefHeightProperty().bind(ancTaskContainer.heightProperty());
-            ancTaskContainer.getChildren().add(load);
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error when accessing the path to  :   " + view.name());
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo(View.DEFAULT_ASSIGNMENT);
+        Navigation.navigateTo(ancTaskContainer, View.DEFAULT_ASSIGNMENT);
     }
 
     public void addNewAssignment(MouseEvent mouseEvent) {
-        navigateTo(View.ADD_ASSIGNMENT);
+        Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
     }
 }
