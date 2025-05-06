@@ -14,10 +14,10 @@ import java.util.ResourceBundle;
 
 public class CalendarPageController implements Initializable {
     public VBox ancTimeline;
-    private DetailedWeekView detailedWeekView;
-    private DetailedDayView detailedDayView;
-    private MonthView monthView;
-    private YearView yearView;
+    private final DetailedWeekView weekView = new DetailedWeekView();
+    private final DetailedDayView dayView = new DetailedDayView();
+    private final MonthView monthView = new MonthView();
+    private final YearView yearView = new YearView();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,35 +35,23 @@ public class CalendarPageController implements Initializable {
         double height = ancTimeline.getPrefHeight() - 20.0;
         view.setPrefSize(width, height);
 
-        Thread thread = UpdateThread.startThread(view);
+        UpdateThread.startThread(view);
         navigateTo(view);
     }
 
     public void showWeekView(ActionEvent actionEvent) {
-        if (detailedWeekView == null){
-            detailedWeekView = new DetailedWeekView();
-        }
-        setupView(detailedWeekView);
+        setupView(weekView);
     }
 
     public void showDayView(ActionEvent actionEvent) {
-        if (detailedDayView == null){
-            detailedDayView = new DetailedDayView();
-        }
-        setupView(detailedDayView);
+        setupView(dayView);
     }
 
     public void showMonthView(ActionEvent actionEvent) {
-        if (monthView == null){
-            monthView = new MonthView();
-        }
         setupView(monthView);
     }
 
     public void showYearView(ActionEvent actionEvent) {
-        if (yearView == null){
-            yearView = new YearView();
-        }
         setupView(yearView);
     }
 }
@@ -71,10 +59,10 @@ public class CalendarPageController implements Initializable {
 class UpdateThread{
     private static Thread updateTimeThread;
     private static volatile boolean running = false;
-    private static DateControl currentControl;
+    private static DateControl currentView;
 
-    public static Thread startThread(DateControl control) {
-        currentControl = control;
+    public static Thread startThread(DateControl view) {
+        currentView = view;
         if (updateTimeThread == null){
             running = true;
             updateTimeThread = new Thread("Calendar: Update Time"){
@@ -82,9 +70,9 @@ class UpdateThread{
                 public void run() {
                     while (running){
                         Platform.runLater(() -> {
-                            if (currentControl != null && currentControl.getScene() != null){
-                                currentControl.setDate(LocalDate.now());
-                                currentControl.setTime(LocalTime.now());
+                            if (currentView != null && currentView.getScene() != null){
+                                currentView.setDate(LocalDate.now());
+                                currentView.setTime(LocalTime.now());
                             }
                         });
 

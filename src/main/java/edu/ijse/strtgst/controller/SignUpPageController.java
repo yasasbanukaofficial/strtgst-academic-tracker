@@ -2,8 +2,10 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.dto.StudentDto;
 import edu.ijse.strtgst.model.StudentModel;
+import edu.ijse.strtgst.util.IdLoader;
+import edu.ijse.strtgst.util.Navigation;
+import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -22,23 +24,11 @@ public class SignUpPageController{
 
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
-    private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{3,}$";
+    private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{6,}$";
 
 
     public void visitLoginPage(ActionEvent actionEvent) {
-        navigateTo("LoginPage.fxml");
-    }
-
-    public void navigateTo(String path){
-        try{
-            signUpAnc.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
-            load.prefWidthProperty().bind(signUpAnc.widthProperty());
-            load.prefHeightProperty().bind(signUpAnc.heightProperty());
-            signUpAnc.getChildren().add(load);
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Cant Identify the url path");
-        }
+        Navigation.navigateTo(signUpAnc, View.LOGIN);
     }
 
     public void signUpStudent(ActionEvent event) {
@@ -50,10 +40,9 @@ public class SignUpPageController{
 
         if (validateInputs(username, email, password)) {
             try {
-                boolean isSaved = studentModel.addStudent(studentDto);
-                if (isSaved) {
+                if (studentModel.addStudent(studentDto)) {
                     new Alert(Alert.AlertType.INFORMATION, "Successfully Saved user").show();
-                    navigateTo("MainPage.fxml");
+                    Navigation.navigateTo(signUpAnc, View.MAIN);
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed when saving user").show();
                 }
@@ -66,7 +55,7 @@ public class SignUpPageController{
 
     public String loadNextId() {
         try {
-            return studentModel.getNextID();
+            return IdLoader.getNextID("Student", "stud_id");
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error when loading a Student ID");
             e.printStackTrace();
@@ -93,7 +82,7 @@ public class SignUpPageController{
         }
         if (!isValidPassword) {
             txtPassword.setStyle("-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-            errorMessage.append("• Password must be more than 3 characters and should include one uppercase, lowercase, number, and special character.\n");
+            errorMessage.append("• Password must be more than 6 characters and should include one uppercase, lowercase, number, and special character.\n");
             isValid = false;
         }
 

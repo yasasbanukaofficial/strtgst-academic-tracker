@@ -1,5 +1,7 @@
 package edu.ijse.strtgst.controller;
 
+import edu.ijse.strtgst.util.Navigation;
+import edu.ijse.strtgst.util.View;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -12,26 +14,12 @@ import java.util.ResourceBundle;
 public class AssignmentPageController implements Initializable {
     public AnchorPane ancTaskContainer;
 
-
-    public void navigateTo(String path){
-        try {
-            ancTaskContainer.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
-            load.prefWidthProperty().bind(ancTaskContainer.widthProperty());
-            load.prefHeightProperty().bind(ancTaskContainer.heightProperty());
-            ancTaskContainer.getChildren().add(load);
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error when defining url!");
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("DefaultAssignmentDisplay.fxml");
+        Navigation.navigateTo(ancTaskContainer, View.DEFAULT_ASSIGNMENT);
     }
 
     public void addNewAssignment(MouseEvent mouseEvent) {
-        navigateTo("AddNewAssignment.fxml");
+        Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
     }
 }

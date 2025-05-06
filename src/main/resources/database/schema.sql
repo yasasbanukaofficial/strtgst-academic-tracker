@@ -4,7 +4,7 @@ USE Strtgst;
 
 -- Table Student
 CREATE TABLE student(
-    stud_id VARCHAR(4),
+    stud_id VARCHAR(4) NOT NULL,
     stud_name VARCHAR(50),
     username VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE student(
 
 -- Table Subject
 CREATE TABLE subject (
-    sub_id INT NOT NULL,
+    sub_id VARCHAR(5) NOT NULL,
     stud_id VARCHAR(4),
     sub_name VARCHAR(50) NOT NULL,
     total_marks INT,
@@ -31,8 +31,8 @@ CREATE TABLE subject (
 
 -- Table Assignment
 CREATE TABLE assignment (
-    assignment_id INT AUTO_INCREMENT,
-    sub_id INT,
+    assignment_id VARCHAR(4),
+    sub_id VARCHAR(5) DEFAULT NULL,
     assignment_name VARCHAR(255) NOT NULL,
     assignment_description VARCHAR(500),
     due_date DATE,
@@ -54,7 +54,7 @@ CREATE TABLE grade (
 -- Table Lecture
 CREATE TABLE lecture (
     lec_id INT AUTO_INCREMENT,
-    sub_id INT NOT NULL,
+    sub_id VARCHAR(5),
     date DATE NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE lecture (
 -- Table Exam
 CREATE TABLE exam (
     exam_id INT AUTO_INCREMENT,
-    sub_id INT NOT NULL,
+    sub_id VARCHAR(5),
     date DATE NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE event (
 -- Table Subject_Scores (Subject -> Grade) -> Grade History/Updating
 CREATE TABLE subject_scores (
     score_id INT AUTO_INCREMENT,
-    sub_id INT NOT NULL,
+    sub_id VARCHAR(5),
     grade_id INT,
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,

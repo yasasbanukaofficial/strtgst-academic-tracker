@@ -1,0 +1,21 @@
+package edu.ijse.strtgst.util;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class IdLoader {
+    public static String getNextID(String tableName, String idColumn) throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT " + idColumn + " FROM " + tableName + " ORDER BY " + idColumn + " DESC LIMIT 1");
+        char firstCharacter = tableName.charAt(0);
+
+        if (rst.next()){
+            String lastId = rst.getString(1);
+            String lastIdNumString = lastId.substring(1);
+            int lastIdNumber = Integer.parseInt(lastIdNumString);
+            int nextIdNumber = lastIdNumber + 1;
+            String nextIdString = String.format(firstCharacter + "%03d", nextIdNumber);
+            return nextIdString;
+        }
+        return firstCharacter + "001";
+    }
+}

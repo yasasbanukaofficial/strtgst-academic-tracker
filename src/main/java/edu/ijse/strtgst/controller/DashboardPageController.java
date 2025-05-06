@@ -1,7 +1,7 @@
 package edu.ijse.strtgst.controller;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
+import edu.ijse.strtgst.util.Navigation;
+import edu.ijse.strtgst.util.View;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -9,31 +9,22 @@ public class DashboardPageController {
     public AnchorPane ancDashboard;
 
     public void visitTasksPage(MouseEvent mouseEvent) {
-        navigateTo("TaskPage.fxml");
+        Navigation.navigateTo(ancDashboard, View.TASK);
     }
 
     public void visitEventsPage(MouseEvent mouseEvent) {
-        navigateTo("EventsPage.fxml");
+        Navigation.navigateTo(ancDashboard, View.CALENDAR);
     }
 
     public void visitAssignmentsPage(MouseEvent mouseEvent) {
-        navigateTo("AssignmentPage.fxml");
+        Navigation.navigateTo(ancDashboard, View.ASSIGNMENT);
     }
 
     public void visitGradesPage(MouseEvent mouseEvent) {
-        navigateTo("GradesPage.fxml");
+        Navigation.navigateTo(ancDashboard, View.GRADES);
     }
 
-    public void navigateTo(String path){
-        try{
-            ancDashboard.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
-            load.prefHeightProperty().bind(ancDashboard.heightProperty());
-            load.prefWidthProperty().bind(ancDashboard.widthProperty());
-            ancDashboard.getChildren().add(load);
-        }catch (Exception e){
-            new Alert(Alert.AlertType.ERROR, "Error defining the path");
-            e.printStackTrace();
-        }
+    public void visitLecturesPage(MouseEvent mouseEvent) {
+        Navigation.navigateTo(ancDashboard, View.CALENDAR);
     }
 }
