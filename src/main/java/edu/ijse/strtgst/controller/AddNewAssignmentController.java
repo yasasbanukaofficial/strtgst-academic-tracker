@@ -28,6 +28,8 @@ public class AddNewAssignmentController implements Initializable {
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
+    private final Alert alert = new Alert(Alert.AlertType.ERROR);
+
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
     private ObservableList<String> marksOptions = FXCollections.observableArrayList();
     private ObservableList<String> subjectOptions = FXCollections.observableArrayList("Maths", "Science");
@@ -60,15 +62,18 @@ public class AddNewAssignmentController implements Initializable {
         String sub_id = fetchSubId(subject);
 
         if (sub_id == null){
-            new Alert(Alert.AlertType.ERROR, "The selected subject does not exist. Please choose a valid subject.").show();
+            alert.setContentText("The selected subject does not exist. Please choose a valid subject.");
+            alert.show();
             return;
         }
         if (!isFieldsFilled(assignmentName, status)){
-            new Alert(Alert.AlertType.ERROR, "You must fill required fields (*)!").show();
+            alert.setContentText("You must fill required fields (*)!");
+            alert.show();
             return;
         }
         if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
-            new Alert(Alert.AlertType.ERROR, "Invalid Date: Please choose a date in the future. (Tip: This only works when you want to add overdue tasks.)").show();
+            alert.setContentText("Invalid Date: Please choose a date in the future. (Tip: This only works when you want to add overdue tasks.)");
+            alert.show();
             return;
         }
 
@@ -84,11 +89,14 @@ public class AddNewAssignmentController implements Initializable {
 
         try {
             if (assignmentModel.addAssignment(assignmentDto)){
-                new Alert(Alert.AlertType.INFORMATION, "Successfully added an assignment").show();
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setContentText("Successfully added an assignment");
+                alert.show();
                 Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
             } else new Alert(Alert.AlertType.ERROR, "Failed to save an Assignment").show();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Failed when adding an assignment").show();
+            alert.setContentText("Failed when adding an assignment");
+            alert.show();
             e.printStackTrace();
         }
     }
@@ -97,7 +105,8 @@ public class AddNewAssignmentController implements Initializable {
         try {
             return IdLoader.getNextID("Assignment", "assignment_id");
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Error when loading a Assignment ID").show();
+            alert.setContentText("Error when loading a Assignment ID");
+            alert.show();
             e.printStackTrace();
         }
         return "A001";
@@ -116,7 +125,8 @@ public class AddNewAssignmentController implements Initializable {
         try {
             return assignmentModel.fetchExistingID(subjectName);
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Error when fetching existing sub id").show();
+            alert.setContentText("Error when fetching existing sub id");
+            alert.show();
             e.printStackTrace();
         }
         return null;

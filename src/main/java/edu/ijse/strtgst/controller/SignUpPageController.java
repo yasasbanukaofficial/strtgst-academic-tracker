@@ -21,7 +21,7 @@ public class SignUpPageController{
     public Button btnSignUp;
 
     private final StudentModel studentModel = new StudentModel();
-    private Alert alert = new Alert(Alert.AlertType.ERROR);
+    private final Alert alert = new Alert(Alert.AlertType.ERROR);
 
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
