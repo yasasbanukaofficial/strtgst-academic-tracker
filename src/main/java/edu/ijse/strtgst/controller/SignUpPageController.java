@@ -21,10 +21,13 @@ public class SignUpPageController{
     public Button btnSignUp;
 
     private final StudentModel studentModel = new StudentModel();
+    private Alert alert = new Alert(Alert.AlertType.ERROR);
 
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
     private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{6,}$";
+    private final String errorStyle = "-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
+    private final String normalStyle = "-fx-border-color: #000000; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
 
 
     public void visitLoginPage(ActionEvent actionEvent) {
@@ -41,14 +44,18 @@ public class SignUpPageController{
         if (validateInputs(username, email, password)) {
             try {
                 if (studentModel.addStudent(studentDto)) {
-                    new Alert(Alert.AlertType.INFORMATION, "Successfully Saved user").show();
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Successfully Saved user");
+                    alert.show();
                     Navigation.navigateTo(signUpAnc, View.MAIN);
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed when saving user").show();
+                    alert.setContentText("Failed when saving user");
+                    alert.show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Failed when saving user").show();
+                alert.setContentText("Failed when saving user");
+                alert.show();
             }
         }
     }
@@ -57,48 +64,69 @@ public class SignUpPageController{
         try {
             return IdLoader.getNextID("Student", "stud_id");
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Error when loading a Student ID");
+            alert.setContentText("Error when loading a Student ID");
+            alert.show();
             e.printStackTrace();
         }
         return "S001";
     }
 
     private boolean validateInputs (String username, String email, String password) {
-        StringBuilder errorMessage = new StringBuilder();
+        StringBuilder errorMsg = new StringBuilder();
         boolean isValid = true;
-        boolean isValidUserName = username.matches(usernamePattern);
-        boolean isValidEmail = email.matches(emailPattern);
-        boolean isValidPassword = password.matches(passwordPattern);
 
-        if (!isValidUserName) {
-            txtUsername.setStyle("-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-            errorMessage.append("• Username must be at least 3 characters long and contain only letters, digits, underscores or hyphens.\n");
+        if (isUsernameTaken(username)) {
+            errorMsg.append("• This username has already been taken \n");
+            txtUsername.setStyle(errorStyle);
             isValid = false;
-        }
-        if (!isValidEmail) {
-            txtEmail.setStyle("-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-            errorMessage.append("• Email must be a valid one (e.g., name@example.com).\n");
+        } else if (!username.matches(usernamePattern)) {
+            txtUsername.setStyle(errorStyle);
+            errorMsg.append("• Username must have 3+ characters long and contain only letters, digits, underscores or hyphens.\n");
             isValid = false;
-        }
-        if (!isValidPassword) {
-            txtPassword.setStyle("-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-            errorMessage.append("• Password must be more than 6 characters and should include one uppercase, lowercase, number, and special character.\n");
-            isValid = false;
-        }
+        } else txtUsername.setStyle(normalStyle);
 
-        if (isValidUserName) {
-            txtUsername.setStyle("-fx-border-color: #000000; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-        }
-        if (isValidEmail){
-            txtEmail.setStyle("-fx-border-color: #000000; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-        }
-        if (isValidPassword){
-            txtPassword.setStyle("-fx-border-color: #000000; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px");
-        }
+        if (isEmailTaken(email)) {
+            errorMsg.append("• This email has already been taken \n");
+            txtEmail.setStyle(errorStyle);
+            isValid = false;
+        } else if (!email.matches(emailPattern)) {
+            txtEmail.setStyle(errorStyle);
+            errorMsg.append("• Email must be a valid one (e.g., name@example.com).\n");
+            isValid = false;
+        } else txtEmail.setStyle(normalStyle);
+
+        if (!password.matches(passwordPattern)) {
+            txtPassword.setStyle(errorStyle);
+            errorMsg.append("• Password must be 6+ characters and should include following \n one (uppercase, lowercase, number, and special character).\n");
+            isValid = false;
+        } else txtPassword.setStyle(normalStyle);
 
         if (!isValid){
-            new Alert(Alert.AlertType.ERROR, "Please fix the following: \n\n" + errorMessage).show();
+            alert.setContentText("Error when creating an account: \n\n" + errorMsg);
+            alert.show();
         }
         return isValid;
+    }
+
+    private boolean isUsernameTaken(String username){
+        try{
+            return studentModel.fetchExistingUsername(username);
+        } catch (SQLException e){
+            alert.setContentText("Error when checking if username exists.");
+            alert.show();
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private boolean isEmailTaken(String email){
+        try{
+            return studentModel.fetchExistingEmail(email);
+        } catch (SQLException e){
+            alert.setContentText("Error when checking if email exists.");
+            alert.show();
+            e.printStackTrace();
+        }
+        return true;
     }
 }
