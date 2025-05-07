@@ -15,7 +15,7 @@ public class LoginPageController {
     public TextField txtUsername;
     public PasswordField txtPassword;
 
-    private final Authorization authorization = new Authorization();
+    private final LoginService loginService = new LoginService();
 
     public void visitSignUpPage() {
         Navigation.navigateTo(loginAnc, View.SIGNUP);
@@ -31,7 +31,7 @@ public class LoginPageController {
         }
 
         try {
-            if (authorization.validateCredentials(username, password)){
+            if (loginService.validateCredentials(username, password)){
                 Navigation.navigateTo(loginAnc, View.MAIN);
             } else {
                 new Alert(Alert.AlertType.ERROR, "Invalid username or password. Please Try again!").show();
@@ -50,7 +50,7 @@ public class LoginPageController {
     }
 }
 
-class Authorization {
+class LoginService {
     public boolean validateCredentials(String username, String password) throws Exception {
         StudentDto studentDto = StudentModel.getStudent(username);
         return studentDto != null && password.equals(studentDto.getPassword());
