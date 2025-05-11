@@ -4,6 +4,8 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -52,11 +54,23 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </HBox>
-                                <ListView prefHeight="332.0" prefWidth="1032.0">
-                                    <VBox.margin>
-                                        <Insets left="84.0" top="19.0" />
-                                    </VBox.margin>
-                                </ListView>
+                        <TableView fx:id="tblAssignment" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="columnAssignmentName" prefWidth="516.0" text="Name" />
+                            <TableColumn fx:id="columnAssignmentDueDate" prefWidth="99.0" text="Due Date" />
+                              <TableColumn fx:id="columnAssignmentStatus" prefWidth="208.0" text="Status" />
+                              <TableColumn fx:id="columnAssignmentMarks" prefWidth="115.0" text="Marks" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets left="84.0" top="19.0" />
+                           </VBox.margin>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
                                 <Label text="Overdue" textFill="#03004c">
                                     <font>
                                         <Font name="Poppins Bold" size="24.0" />
