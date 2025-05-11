@@ -138,7 +138,7 @@
             </HBox>
                 <HBox prefHeight="77.0" prefWidth="476.0">
                     <children>
-                        <Label text="Due Date:" textFill="#03004c">
+                        <Label text="Due Date: *" textFill="#03004c">
                             <font>
                                 <Font name="Poppins Bold" size="18.0" />
                             </font>
@@ -148,7 +148,7 @@
                         </Label>
                         <DatePicker fx:id="dpDueDate" prefHeight="33.0" prefWidth="284.0" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-radius: 10px;" styleClass="date-picker" stylesheets="@styles/datePicker.css">
                             <HBox.margin>
-                                <Insets bottom="30.0" left="28.0" top="26.0" />
+                                <Insets bottom="30.0" left="15.0" top="26.0" />
                             </HBox.margin>
                             <cursor>
                                 <Cursor fx:constant="HAND" />

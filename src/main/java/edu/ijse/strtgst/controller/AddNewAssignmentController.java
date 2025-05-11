@@ -66,7 +66,7 @@ public class AddNewAssignmentController implements Initializable {
             alert.show();
             return;
         }
-        if (!isFieldsFilled(assignmentName, status)){
+        if (!isFieldsFilled(assignmentName, status, date)){
             alert.setContentText("You must fill required fields (*)!");
             alert.show();
             return;
@@ -114,7 +114,7 @@ public class AddNewAssignmentController implements Initializable {
 
     public boolean isFieldsFilled(Object... inputs) {
         for(Object input : inputs){
-            if (input.equals("")) {
+            if (input == null || input.equals("")) {
                 return false;
             }
         }
