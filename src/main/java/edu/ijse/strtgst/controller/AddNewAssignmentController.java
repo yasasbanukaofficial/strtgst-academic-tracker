@@ -1,5 +1,6 @@
 package edu.ijse.strtgst.controller;
 
+import edu.ijse.strtgst.context.ControllerManager;
 import edu.ijse.strtgst.dto.AssignmentDto;
 import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.IdLoader;
@@ -60,6 +61,7 @@ public class AddNewAssignmentController implements Initializable {
         LocalDate date = dpDueDate.getValue();
         String status = cmbStatus.getValue();
         String sub_id = fetchSubId(subject);
+        AssignmentPageController assignmentPageController = ControllerManager.getAssignmentPageController();
 
         if (sub_id == null){
             alert.setContentText("The selected subject does not exist. Please choose a valid subject.");
@@ -99,6 +101,7 @@ public class AddNewAssignmentController implements Initializable {
             alert.show();
             e.printStackTrace();
         }
+        assignmentPageController.loadTableData();
     }
 
     public String loadNextID(){

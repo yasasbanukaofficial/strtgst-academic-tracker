@@ -1,5 +1,6 @@
 package edu.ijse.strtgst.controller;
 
+import edu.ijse.strtgst.context.ControllerManager;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.Navigation;
@@ -15,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AssignmentPageController implements Initializable {
@@ -26,20 +28,20 @@ public class AssignmentPageController implements Initializable {
     public TableColumn<AssignmentTM, String> columnAssignmentMarks;
 
     private final AssignmentModel assignmentModel = new AssignmentModel();
+    private final ControllerManager controllerManager = new ControllerManager();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumn();
-        loadTableData();
+        controllerManager.setAssignmentPageController(this);
         Navigation.navigateTo(ancTaskContainer, View.DEFAULT_ASSIGNMENT);
-
     }
 
     public void addNewAssignment(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
     }
 
-    private void loadTableData(){
+    public void loadTableData(){
         try {
             tblAssignment.setItems(FXCollections.observableArrayList(
                 assignmentModel.getAllCustomer().stream().map(
@@ -75,10 +77,10 @@ public class AssignmentPageController implements Initializable {
                     label.setStyle(getStatusStyle(status));
                     setGraphic(label);
                     setText(null);
-                    setAlignment(Pos.CENTER);
                 }
             }
         });
+        loadTableData();
     }
 
     private String getStatusStyle(String status) {

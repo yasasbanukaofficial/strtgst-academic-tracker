@@ -37,7 +37,7 @@
 }
 
 .table-cell {
-    -fx-label-padding: 0px 2px;
+    -fx-label-padding: 0px -5px;
     -fx-text-fill: #151515;
     -fx-padding: 10px;
 }
