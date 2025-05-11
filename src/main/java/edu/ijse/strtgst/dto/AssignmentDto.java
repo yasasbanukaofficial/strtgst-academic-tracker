@@ -15,8 +15,8 @@ public class AssignmentDto {
     private String subId;
     private String assignmentName;
     private String assignmentDescription;
-    private String assignmentMarks;
     private LocalDate dueDate;
-    private String assignmentStatus; // "pending", "completed", or "overdue"
+    private String assignmentStatus;
+    private String assignmentMarks;
 }
 

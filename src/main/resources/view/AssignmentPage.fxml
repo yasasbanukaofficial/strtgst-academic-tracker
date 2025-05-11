@@ -56,9 +56,9 @@
                                 </HBox>
                         <TableView fx:id="tblAssignment" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="columnAssignmentName" prefWidth="516.0" text="Name" />
-                            <TableColumn fx:id="columnAssignmentDueDate" prefWidth="99.0" text="Due Date" />
-                              <TableColumn fx:id="columnAssignmentStatus" prefWidth="208.0" text="Status" />
+                            <TableColumn fx:id="columnAssignmentName" prefWidth="432.0" text="Name" />
+                            <TableColumn fx:id="columnAssignmentDueDate" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnAssignmentStatus" prefWidth="189.0" styleClass="status-column" text="Status" />
                               <TableColumn fx:id="columnAssignmentMarks" prefWidth="115.0" text="Marks" />
                           </columns>
                            <VBox.margin>

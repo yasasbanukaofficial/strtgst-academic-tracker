@@ -6,5 +6,6 @@ module edu.ijse.strtgst {
 
 
     opens edu.ijse.strtgst.controller to javafx.fxml;
+    opens edu.ijse.strtgst.dto.tm to javafx.base;
     exports edu.ijse.strtgst;
 }

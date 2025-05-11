@@ -1,32 +1,92 @@
 package edu.ijse.strtgst.controller;
 
+import edu.ijse.strtgst.dto.tm.AssignmentTM;
+import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AssignmentPageController implements Initializable {
     public AnchorPane ancTaskContainer;
-    public TableView tblAssignment;
-    public TableColumn columnAssignmentName;
-    public TableColumn columnAssignmentDueDate;
-    public TableColumn columnAssignmentStatus;
-    public TableColumn columnAssignmentMarks;
+    public TableView<AssignmentTM> tblAssignment;
+    public TableColumn<AssignmentTM, String> columnAssignmentName;
+    public TableColumn<AssignmentTM, LocalDate> columnAssignmentDueDate;
+    public TableColumn<AssignmentTM, String> columnAssignmentStatus;
+    public TableColumn<AssignmentTM, String> columnAssignmentMarks;
+
+    private final AssignmentModel assignmentModel = new AssignmentModel();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupTableColumn();
+        loadTableData();
         Navigation.navigateTo(ancTaskContainer, View.DEFAULT_ASSIGNMENT);
+
     }
 
     public void addNewAssignment(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
+    }
+
+    private void loadTableData(){
+        try {
+            tblAssignment.setItems(FXCollections.observableArrayList(
+                assignmentModel.getAllCustomer().stream().map(
+                        assignmentDto -> new AssignmentTM(
+                                assignmentDto.getAssignmentName(),
+                                assignmentDto.getDueDate(),
+                                assignmentDto.getAssignmentStatus(),
+                                assignmentDto.getAssignmentMarks()
+                        )
+                ).toList()
+            ));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setupTableColumn() {
+        columnAssignmentName.setCellValueFactory(new PropertyValueFactory<>("assignmentName"));
+        columnAssignmentDueDate.setCellValueFactory(new PropertyValueFactory<>("assignmentDueDate"));
+        columnAssignmentStatus.setCellValueFactory(new PropertyValueFactory<>("assignmentStatus"));
+        columnAssignmentMarks.setCellValueFactory(new PropertyValueFactory<>("assignmentMarks"));
+
+        columnAssignmentStatus.setCellFactory(c -> new TableCell<>(){
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+
+                if(empty || status == null){
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Label label = new Label(status);
+                    label.setStyle(getStatusStyle(status));
+                    setGraphic(label);
+                    setText(null);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+    }
+
+    private String getStatusStyle(String status) {
+        return switch (status.toLowerCase()) {
+            case "completed" -> "-fx-background-color: #11C759; -fx-text-fill: white; -fx-padding: 4 8; -fx-background-radius: 10;";
+            case "pending" -> "-fx-background-color: #f1c40f; -fx-text-fill: white; -fx-padding: 4 8; -fx-background-radius: 10;";
+            case "overdue" -> "-fx-background-color: #d90429; -fx-text-fill: white; -fx-padding: 4 8; -fx-background-radius: 10;";
+            default -> "-fx-background-color: #bdc3c7; -fx-text-fill: black; -fx-padding: 4 8; -fx-background-radius: 10;";
+        };
     }
 }

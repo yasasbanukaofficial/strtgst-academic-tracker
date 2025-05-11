@@ -82,9 +82,9 @@ public class AddNewAssignmentController implements Initializable {
                 sub_id,
                 assignmentName,
                 assignmentDescription,
-                assignmentMarks,
                 date,
-                status
+                status,
+                assignmentMarks
         );
 
         try {
