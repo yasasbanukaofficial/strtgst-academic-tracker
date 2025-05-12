@@ -38,7 +38,7 @@ public class AssignmentPageController implements Initializable {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
     }
 
-    public void loadTableData(){
+    private void loadTableData(){
         try {
             tblAssignment.setItems(FXCollections.observableArrayList(
                 assignmentModel.getAllCustomer().stream().map(
@@ -46,9 +46,10 @@ public class AssignmentPageController implements Initializable {
                                 assignmentDto.getAssignmentId(),
                                 assignmentDto.getAssignmentName(),
                                 assignmentDto.getAssignmentDescription(),
+                                assignmentDto.getAssignmentMarks(),
+                                assignmentDto.getSubName(),
                                 assignmentDto.getDueDate(),
-                                assignmentDto.getAssignmentStatus(),
-                                assignmentDto.getAssignmentMarks()
+                                assignmentDto.getAssignmentStatus()
                         )
                 ).toList()
             ));
@@ -57,7 +58,7 @@ public class AssignmentPageController implements Initializable {
         }
     }
 
-    private void setupTableColumn() {
+    public void setupTableColumn() {
         columnAssignmentName.setCellValueFactory(new PropertyValueFactory<>("assignmentName"));
         columnAssignmentDueDate.setCellValueFactory(new PropertyValueFactory<>("assignmentDueDate"));
         columnAssignmentStatus.setCellValueFactory(new PropertyValueFactory<>("assignmentStatus"));
@@ -94,9 +95,9 @@ public class AssignmentPageController implements Initializable {
     public void onClickTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
         AssignmentTM selectedAssignment = tblAssignment.getSelectionModel().getSelectedItem();
-        AddNewAssignmentController addNewAssignmentController = controllerManager.getAddNewAssignmentController();
+        AssignmentFormController addNewAssignmentController = controllerManager.getAddNewAssignmentController();
         if (selectedAssignment != null){
-            addNewAssignmentController.configureEditForm(selectedAssignment);
+            addNewAssignmentController.populateFormForEdit(selectedAssignment);
         }
     }
 }

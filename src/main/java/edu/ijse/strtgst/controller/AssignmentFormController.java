@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddNewAssignmentController implements Initializable {
+public class AssignmentFormController implements Initializable {
     public AnchorPane ancAddNewTask;
     public TextField txtAssignmentName;
     public TextArea txtAssignmentDescription;
@@ -31,7 +31,7 @@ public class AddNewAssignmentController implements Initializable {
     public Button btnAddAssignment;
     public Button btnCancel;
     public Label labelAssignmentHeader;
-    public Label labelRequired;
+    public Label labelCancel;
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
@@ -55,7 +55,7 @@ public class AddNewAssignmentController implements Initializable {
         cmbMarks.setValue(marksOptions.get(0));
         cmbStatus.setItems(statusOptions);
         cmbStatus.setValue(statusOptions.get(0));
-        updateButtonStates(false);
+        setButtonStates(false);
     }
 
     public void cancelTask(ActionEvent actionEvent) {
@@ -67,18 +67,12 @@ public class AddNewAssignmentController implements Initializable {
         String assignmentName = txtAssignmentName.getText();
         String assignmentDescription = txtAssignmentDescription.getText();
         String assignmentMarks = cmbMarks.getValue();
-        String subject = cmbSubject.getValue();
+        String subName = cmbSubject.getValue();
         LocalDate date = dpDueDate.getValue();
         String status = cmbStatus.getValue();
-        String sub_id = fetchSubId(subject);
-        updateButtonStates(false);
+        setButtonStates(false);
 
-        if (sub_id == null){
-            alert.setContentText("The selected subject does not exist. Please choose a valid subject.");
-            alert.show();
-            return;
-        }
-        if (!isFieldsFilled(assignmentName, status, date)){
+        if (!areRequiredFieldsFilled(assignmentName, status, date)){
             alert.setContentText("You must fill required fields (*)!");
             alert.show();
             return;
@@ -91,12 +85,12 @@ public class AddNewAssignmentController implements Initializable {
 
         assignmentDto = new AssignmentDto(
                 assignment_id,
-                sub_id,
                 assignmentName,
                 assignmentDescription,
+                assignmentMarks,
+                subName,
                 date,
-                status,
-                assignmentMarks
+                status
         );
 
         try {
@@ -111,7 +105,7 @@ public class AddNewAssignmentController implements Initializable {
             alert.show();
             e.printStackTrace();
         }
-        assignmentPageController.loadTableData();
+        assignmentPageController.setupTableColumn();
     }
 
     private void deleteAssignment(AssignmentTM assignmentTM) {
@@ -127,9 +121,8 @@ public class AddNewAssignmentController implements Initializable {
         if (resp.isPresent() && resp.get() == ButtonType.YES) {
             String assignmentId = assignmentTM.getAssignmentId();
             try {
-                boolean isDeleted = assignmentModel.deleteAssignment(assignmentId);
-                if (isDeleted) {
-                    assignmentPageController.loadTableData();
+                if (assignmentModel.deleteAssignment(assignmentId)) {
+                    assignmentPageController.setupTableColumn();
                     resetForm();
                     new Alert(Alert.AlertType.INFORMATION, "Successfully deleted an assignment").show();
                 } else {
@@ -141,29 +134,74 @@ public class AddNewAssignmentController implements Initializable {
         }
     }
 
-    public void configureEditForm(AssignmentTM assignmentTM){
+    private void editAssignment(AssignmentTM assignmentTM) {
+        String assignment_id = assignmentTM.getAssignmentId();
+        String assignmentName = txtAssignmentName.getText();
+        String assignmentDescription = txtAssignmentDescription.getText();
+        String assignmentMarks = cmbMarks.getValue();
+        LocalDate date = dpDueDate.getValue();
+        String status = cmbStatus.getValue();
+        String subName = cmbSubject.getValue();
+
+        if (!areRequiredFieldsFilled(assignmentName, status, date)){
+            alert.setContentText("You must fill required fields (*)!");
+            alert.show();
+            return;
+        }
+        if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
+            alert.setContentText("Invalid Date: Please choose a date in the future. (Tip: This only works when you want to add overdue tasks.)");
+            alert.show();
+        }
+
+        assignmentDto = new AssignmentDto(
+                assignment_id,
+                assignmentName,
+                assignmentDescription,
+                assignmentMarks,
+                subName,
+                date,
+                status
+        );
+
+        try {
+            if (assignmentModel.editAssignment(assignmentDto)){
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setContentText("Successfully edited the assignment");
+                alert.show();
+                Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
+            } else new Alert(Alert.AlertType.ERROR, "Failed to edit the Assignment").show();
+        } catch (SQLException e) {
+            alert.setContentText("Failed when editing the assignment");
+            alert.show();
+            e.printStackTrace();
+        }
+        assignmentPageController.setupTableColumn();
+    }
+
+    public void populateFormForEdit(AssignmentTM assignmentTM){
         txtAssignmentName.setText(assignmentTM.getAssignmentName());
+        txtAssignmentDescription.setText(assignmentTM.getAssignmentDescription());
         dpDueDate.setValue(assignmentTM.getAssignmentDueDate());
         cmbStatus.setValue(assignmentTM.getAssignmentStatus());
         cmbMarks.setValue(assignmentTM.getAssignmentMarks());
-        updateButtonStates(false);
+        cmbSubject.setValue(assignmentTM.getSubName());
+        setButtonStates(false);
 
         labelAssignmentHeader.setText("Edit Assignment");
-        labelRequired.setText("Cancel");
-        labelRequired.setOnMouseClicked(e -> {
+        labelCancel.setText("Cancel Editing");
+        labelCancel.setOnMouseClicked(e -> {
             cancelTask(new ActionEvent());
         });
 
         btnAddAssignment.setText("Edit Assignment");
-        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white;");
-        btnAddAssignment.setOnAction(e -> {});
+        btnAddAssignment.setOnAction(e -> {editAssignment(assignmentTM);});
 
         btnCancel.setText("Delete Assignment");
-        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white; -fx-border-radius: 20px; -fx-background-radius: 20px");
+        btnCancel.getStyleClass().add("button-delete");
         btnCancel.setOnAction(e -> {deleteAssignment(assignmentTM);});
     }
 
-    private void updateButtonStates(boolean state) {
+    private void setButtonStates(boolean state) {
         btnAddAssignment.setDisable(state);
         btnCancel.setDisable(state);
     }
@@ -175,7 +213,7 @@ public class AddNewAssignmentController implements Initializable {
         cmbSubject.setValue(null);
         cmbMarks.setValue(null);
         cmbStatus.setValue(null);
-        updateButtonStates(true);
+        setButtonStates(true);
     }
 
     public String loadNextID(){
@@ -189,23 +227,12 @@ public class AddNewAssignmentController implements Initializable {
         return "A001";
     }
 
-    public boolean isFieldsFilled(Object... inputs) {
+    public boolean areRequiredFieldsFilled(Object... inputs) {
         for(Object input : inputs){
             if (input == null || input.equals("")) {
                 return false;
             }
         }
         return true;
-    }
-
-    public String fetchSubId(String subjectName) {
-        try {
-            return assignmentModel.fetchExistingID(subjectName);
-        } catch (SQLException e) {
-            alert.setContentText("Error when fetching existing sub id");
-            alert.show();
-            e.printStackTrace();
-        }
-        return null;
     }
 }

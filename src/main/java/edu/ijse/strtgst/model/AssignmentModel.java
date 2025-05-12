@@ -1,6 +1,7 @@
 package edu.ijse.strtgst.model;
 
 import edu.ijse.strtgst.dto.AssignmentDto;
+import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -12,12 +13,12 @@ public class AssignmentModel {
         return CrudUtil.execute(
                 "INSERT INTO Assignment VALUES (?, ?, ?, ?, ?, ?, ?)",
                 assignmentDto.getAssignmentId(),
-                assignmentDto.getSubId(),
                 assignmentDto.getAssignmentName(),
                 assignmentDto.getAssignmentDescription(),
+                assignmentDto.getAssignmentMarks(),
+                assignmentDto.getSubName(),
                 assignmentDto.getDueDate(),
-                assignmentDto.getAssignmentStatus(),
-                assignmentDto.getAssignmentMarks()
+                assignmentDto.getAssignmentStatus()
         );
     }
 
@@ -40,8 +41,8 @@ public class AssignmentModel {
                     rst.getString(2),
                     rst.getString(3),
                     rst.getString(4),
-                    rst.getDate(5).toLocalDate(),
-                    rst.getString(6),
+                    rst.getString(5),
+                    rst.getDate(6).toLocalDate(),
                     rst.getString(7)
             );
             assignmentDtos.add(assignmentDto);
@@ -50,4 +51,16 @@ public class AssignmentModel {
         return assignmentDtos;
     }
 
+    public boolean editAssignment(AssignmentDto assignmentDto) throws SQLException {
+        return CrudUtil.execute(
+                "UPDATE Assignment SET assignment_name = ?, assignment_description = ?, assignment_marks = ?, sub_name = ?, due_date = ?, assignment_status = ? WHERE assignment_id = ?",
+                assignmentDto.getAssignmentName(),
+                assignmentDto.getAssignmentDescription(),
+                assignmentDto.getAssignmentMarks(),
+                assignmentDto.getSubName(),
+                assignmentDto.getDueDate(),
+                assignmentDto.getAssignmentStatus(),
+                assignmentDto.getAssignmentId()
+        );
+    }
 }

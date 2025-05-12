@@ -1,8 +1,6 @@
 package edu.ijse.strtgst.util;
 
 import edu.ijse.strtgst.db.DBConnection;
-import javafx.scene.control.Alert;
-import lombok.AllArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,8 +21,7 @@ public class CrudUtil {
             return (T) rst;
         } else {
             int i = pst.executeUpdate();
-            boolean isSuccess = i > 0;
-            return (T) (Boolean) isSuccess;
+            return (T) (Boolean) (i > 0);
         }
     }
 }
