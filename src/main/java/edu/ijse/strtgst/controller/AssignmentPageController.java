@@ -43,7 +43,9 @@ public class AssignmentPageController implements Initializable {
             tblAssignment.setItems(FXCollections.observableArrayList(
                 assignmentModel.getAllCustomer().stream().map(
                         assignmentDto -> new AssignmentTM(
+                                assignmentDto.getAssignmentId(),
                                 assignmentDto.getAssignmentName(),
+                                assignmentDto.getAssignmentDescription(),
                                 assignmentDto.getDueDate(),
                                 assignmentDto.getAssignmentStatus(),
                                 assignmentDto.getAssignmentMarks()
@@ -94,7 +96,7 @@ public class AssignmentPageController implements Initializable {
         AssignmentTM selectedAssignment = tblAssignment.getSelectionModel().getSelectedItem();
         AddNewAssignmentController addNewAssignmentController = controllerManager.getAddNewAssignmentController();
         if (selectedAssignment != null){
-            addNewAssignmentController.setFormData(selectedAssignment);
+            addNewAssignmentController.configureEditForm(selectedAssignment);
         }
     }
 }

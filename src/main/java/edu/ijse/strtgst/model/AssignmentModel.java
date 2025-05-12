@@ -21,6 +21,10 @@ public class AssignmentModel {
         );
     }
 
+    public boolean deleteAssignment(String assignmentId) throws SQLException {
+        return CrudUtil.execute("DELETE FROM Assignment WHERE assignment_id = ?", assignmentId);
+    }
+
     public static String fetchExistingID(String subjectName) throws SQLException {
         ResultSet rst = CrudUtil.execute("SELECT * FROM Subject WHERE sub_name = ?", subjectName);
         return rst.next() ? rst.getString(1) : null;

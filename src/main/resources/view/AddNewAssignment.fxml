@@ -27,7 +27,7 @@
                         <Insets left="19.0" top="41.0" />
                     </padding>
                     <children>
-                        <Label prefHeight="32.0" prefWidth="336.0" text="Add New Assignment:" textFill="#03004c">
+                        <Label fx:id="labelAssignmentHeader" prefHeight="32.0" prefWidth="336.0" text="Add New Assignment:" textFill="#03004c">
                             <font>
                                 <Font name="Poppins Bold" size="22.0" />
                             </font>

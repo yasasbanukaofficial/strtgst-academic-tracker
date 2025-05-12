@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddNewAssignmentController implements Initializable {
@@ -29,11 +30,13 @@ public class AddNewAssignmentController implements Initializable {
     public ComboBox<String> cmbStatus;
     public Button btnAddAssignment;
     public Button btnCancel;
+    public Label labelAssignmentHeader;
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final Alert alert = new Alert(Alert.AlertType.ERROR);
     private final ControllerManager controllerManager = new ControllerManager();
+    private final AssignmentPageController assignmentPageController = ControllerManager.getAssignmentPageController();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
     private ObservableList<String> marksOptions = FXCollections.observableArrayList();
@@ -42,6 +45,23 @@ public class AddNewAssignmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controllerManager.setAddNewAssignmentController(this);
+        resetForm();
+        updateButtonStates(false);
+    }
+
+    public void cancelTask(ActionEvent actionEvent) {
+        Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
+    }
+
+    private void updateButtonStates(boolean state) {
+        btnAddAssignment.setDisable(state);
+        btnCancel.setDisable(state);
+    }
+
+    private void resetForm() {
+        txtAssignmentName.setText("");
+        txtAssignmentDescription.setText("");
+        dpDueDate.setValue(null);
         cmbSubject.setItems(subjectOptions);
         cmbSubject.setValue(subjectOptions.get(0));
         for (int i = 0; i <= 100 ; i++) {
@@ -51,10 +71,7 @@ public class AddNewAssignmentController implements Initializable {
         cmbMarks.setValue(marksOptions.get(0));
         cmbStatus.setItems(statusOptions);
         cmbStatus.setValue(statusOptions.get(0));
-    }
-
-    public void cancelTask(ActionEvent actionEvent) {
-        Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
+        updateButtonStates(true);
     }
 
     public void addAssignment(ActionEvent event) {
@@ -66,7 +83,7 @@ public class AddNewAssignmentController implements Initializable {
         LocalDate date = dpDueDate.getValue();
         String status = cmbStatus.getValue();
         String sub_id = fetchSubId(subject);
-        AssignmentPageController assignmentPageController = ControllerManager.getAssignmentPageController();
+        updateButtonStates(false);
 
         if (sub_id == null){
             alert.setContentText("The selected subject does not exist. Please choose a valid subject.");
@@ -140,33 +157,48 @@ public class AddNewAssignmentController implements Initializable {
         return null;
     }
 
-    public void setFormData(AssignmentTM assignmentTM){
+    public void configureEditForm(AssignmentTM assignmentTM){
         txtAssignmentName.setText(assignmentTM.getAssignmentName());
         dpDueDate.setValue(assignmentTM.getAssignmentDueDate());
         cmbStatus.setValue(assignmentTM.getAssignmentStatus());
         cmbMarks.setValue(assignmentTM.getAssignmentMarks());
+        updateButtonStates(false);
 
-        setupEditMode(assignmentTM);
-    }
+        labelAssignmentHeader.setText("Edit Assignment");
 
-    private void setupEditMode(AssignmentTM assignmentTM) {
         btnAddAssignment.setText("Edit Assignment");
         btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white;");
-        btnAddAssignment.setOnAction(e -> {
-
-        });
+        btnAddAssignment.setOnAction(e -> {});
 
         btnCancel.setText("Delete Assignment");
         btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white; -fx-border-radius: 20px; -fx-background-radius: 20px");
-        btnCancel.setOnAction(e -> {
-            alert.setAlertType(Alert.AlertType.CONFIRMATION);
-            alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-            alert.setHeaderText("Are you sure you want to delete this assignment?");
-            alert.setContentText("Name: " + assignmentTM.getAssignmentName() + "\n" +
-                                 "Due: " + assignmentTM.getAssignmentDueDate() + "\n" +
-                                 "Status: " + assignmentTM.getAssignmentStatus() + "\n" +
-                                 "Marks: " + assignmentTM.getAssignmentMarks());
-            alert.show();
-        });
+        btnCancel.setOnAction(e -> {deleteAssignment(assignmentTM);});
+    }
+
+    private void deleteAssignment(AssignmentTM assignmentTM) {
+        alert.setAlertType(Alert.AlertType.CONFIRMATION);
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Are you sure you want to delete this assignment?");
+        alert.setContentText("Name: " + assignmentTM.getAssignmentName() + "\n" +
+                "Due: " + assignmentTM.getAssignmentDueDate() + "\n" +
+                "Status: " + assignmentTM.getAssignmentStatus() + "\n" +
+                "Marks: " + assignmentTM.getAssignmentMarks());
+
+        Optional<ButtonType> resp = alert.showAndWait();
+        if (resp.isPresent() && resp.get() == ButtonType.YES) {
+            String assignmentId = assignmentTM.getAssignmentId();
+            try {
+                boolean isDeleted = assignmentModel.deleteAssignment(assignmentId);
+                if (isDeleted) {
+                    assignmentPageController.loadTableData();
+                    resetForm();
+                    new Alert(Alert.AlertType.INFORMATION, "Successfully deleted an assignment").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to deleted an assignment").show();
+                }
+            } catch (SQLException ex) {
+                new Alert(Alert.AlertType.ERROR, "Error when deleting an assignment").show();
+            }
+        }
     }
 }

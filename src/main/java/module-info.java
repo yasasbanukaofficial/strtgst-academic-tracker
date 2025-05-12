@@ -3,6 +3,7 @@ module edu.ijse.strtgst {
     requires java.sql;
     requires com.calendarfx.view;
     requires static lombok;
+    requires java.desktop;
 
 
     opens edu.ijse.strtgst.controller to javafx.fxml;
