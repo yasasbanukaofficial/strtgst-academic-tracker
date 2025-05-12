@@ -2,6 +2,7 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.context.ControllerManager;
 import edu.ijse.strtgst.dto.AssignmentDto;
+import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.IdLoader;
 import edu.ijse.strtgst.util.Navigation;
@@ -26,10 +27,13 @@ public class AddNewAssignmentController implements Initializable {
     public ComboBox<String> cmbMarks;
     public DatePicker dpDueDate;
     public ComboBox<String> cmbStatus;
+    public Button btnAddAssignment;
+    public Button btnCancel;
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final Alert alert = new Alert(Alert.AlertType.ERROR);
+    private final ControllerManager controllerManager = new ControllerManager();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
     private ObservableList<String> marksOptions = FXCollections.observableArrayList();
@@ -37,6 +41,7 @@ public class AddNewAssignmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        controllerManager.setAddNewAssignmentController(this);
         cmbSubject.setItems(subjectOptions);
         cmbSubject.setValue(subjectOptions.get(0));
         for (int i = 0; i <= 100 ; i++) {
@@ -133,5 +138,35 @@ public class AddNewAssignmentController implements Initializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void setFormData(AssignmentTM assignmentTM){
+        txtAssignmentName.setText(assignmentTM.getAssignmentName());
+        dpDueDate.setValue(assignmentTM.getAssignmentDueDate());
+        cmbStatus.setValue(assignmentTM.getAssignmentStatus());
+        cmbMarks.setValue(assignmentTM.getAssignmentMarks());
+
+        setupEditMode(assignmentTM);
+    }
+
+    private void setupEditMode(AssignmentTM assignmentTM) {
+        btnAddAssignment.setText("Edit Assignment");
+        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white;");
+        btnAddAssignment.setOnAction(e -> {
+
+        });
+
+        btnCancel.setText("Delete Assignment");
+        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white; -fx-border-radius: 20px; -fx-background-radius: 20px");
+        btnCancel.setOnAction(e -> {
+            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+            alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText("Are you sure you want to delete this assignment?");
+            alert.setContentText("Name: " + assignmentTM.getAssignmentName() + "\n" +
+                                 "Due: " + assignmentTM.getAssignmentDueDate() + "\n" +
+                                 "Status: " + assignmentTM.getAssignmentStatus() + "\n" +
+                                 "Marks: " + assignmentTM.getAssignmentMarks());
+            alert.show();
+        });
     }
 }

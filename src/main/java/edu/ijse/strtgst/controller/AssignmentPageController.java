@@ -6,9 +6,7 @@ import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -16,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AssignmentPageController implements Initializable {
@@ -90,5 +87,14 @@ public class AssignmentPageController implements Initializable {
             case "overdue" -> "-fx-background-color: #d90429; -fx-text-fill: white; -fx-padding: 4 8; -fx-background-radius: 10;";
             default -> "-fx-background-color: #bdc3c7; -fx-text-fill: black; -fx-padding: 4 8; -fx-background-radius: 10;";
         };
+    }
+
+    public void onClickTable(MouseEvent mouseEvent) {
+        Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
+        AssignmentTM selectedAssignment = tblAssignment.getSelectionModel().getSelectedItem();
+        AddNewAssignmentController addNewAssignmentController = controllerManager.getAddNewAssignmentController();
+        if (selectedAssignment != null){
+            addNewAssignmentController.setFormData(selectedAssignment);
+        }
     }
 }

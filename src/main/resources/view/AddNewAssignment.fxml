@@ -185,7 +185,7 @@
             </HBox>
                 <HBox minWidth="-Infinity" prefHeight="79.0" prefWidth="476.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#cancelTask" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20.5px; -fx-border-radius: 20.5px; -fx-border-width: 2px;" text="Cancel">
+                        <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#cancelTask" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20.5px; -fx-border-radius: 20.5px; -fx-border-width: 2px;" text="Cancel">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
@@ -203,7 +203,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#addAssignment" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #FFD43A; -fx-background-radius: 20.5px; -fx-border-radius: 20.5px; -fx-border-width: 2px;" text="Add Assignment">
+                        <Button fx:id="btnAddAssignment" mnemonicParsing="false" onAction="#addAssignment" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #FFD43A; -fx-background-radius: 20.5px; -fx-border-radius: 20.5px; -fx-border-width: 2px;" text="Add Assignment">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
