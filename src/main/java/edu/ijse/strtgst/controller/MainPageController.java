@@ -1,8 +1,8 @@
 package edu.ijse.strtgst.controller;
 
-import javafx.fxml.FXMLLoader;
+import edu.ijse.strtgst.util.Navigation;
+import edu.ijse.strtgst.util.View;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -11,46 +11,43 @@ import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable {
     public AnchorPane ancTabDisplay;
+    public AnchorPane ancMainPage;
 
-    public void navigateTo(String path){
-        try {
-            ancTabDisplay.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/" + path));
-            load.prefWidthProperty().bind(ancTabDisplay.widthProperty());
-            load.prefHeightProperty().bind(ancTabDisplay.heightProperty());
-            ancTabDisplay.getChildren().add(load);
-        } catch (Exception e){
-            new Alert(Alert.AlertType.ERROR, "Error finding the path");
-            e.printStackTrace();
-        }
-    }
-
-    public void visitAssignmentPage(MouseEvent mouseEvent) {
-        navigateTo("AssignmentPage.fxml");
+    private void stopAndNavigate(AnchorPane anchorPane, View view) {
+        UpdateThread.stopThread();
+        Navigation.navigateTo(anchorPane, view);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        navigateTo("DashboardPage.fxml");
+        stopAndNavigate(ancTabDisplay, View.DASHBOARD);
+    }
+
+    public void visitAssignmentPage(MouseEvent mouseEvent) {
+        stopAndNavigate(ancTabDisplay, View.ASSIGNMENT);
     }
 
     public void visitDashboardPage(MouseEvent mouseEvent) {
-        navigateTo("DashboardPage.fxml");
+        stopAndNavigate(ancTabDisplay, View.DASHBOARD);
     }
 
     public void visitTaskPage(MouseEvent mouseEvent) {
-        navigateTo("TaskPage.fxml");
+        stopAndNavigate(ancTabDisplay, View.TASK);
     }
 
     public void visitSettingsPage(MouseEvent mouseEvent) {
-        navigateTo("SettingsPage.fxml");
+        stopAndNavigate(ancTabDisplay, View.SETTINGS);
     }
 
     public void visitGradesPage(MouseEvent mouseEvent) {
-        navigateTo("GradesPage.fxml");
+        stopAndNavigate(ancTabDisplay, View.GRADES);
     }
 
     public void visitCalendarPage(MouseEvent mouseEvent) {
-        navigateTo("CalendarPage.fxml");
+        stopAndNavigate(ancTabDisplay, View.CALENDAR);
+    }
+
+    public void visitLoginPage(MouseEvent mouseEvent) {
+        stopAndNavigate(ancMainPage, View.LOGIN);
     }
 }

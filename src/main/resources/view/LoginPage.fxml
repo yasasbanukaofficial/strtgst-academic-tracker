@@ -62,7 +62,7 @@
                                     <Font name="Poppins Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <TextField minHeight="-Infinity" prefHeight="45.0" promptText="grandmaster12" style="-fx-border-color: #000000; -fx-background-color: #ffffff; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-width: 2px;">
+                              <TextField fx:id="txtUsername" minHeight="-Infinity" prefHeight="45.0" promptText="grandmaster12" style="-fx-border-color: #000000; -fx-background-color: #ffffff; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-width: 2px;">
                                  <font>
                                     <Font name="Poppins Regular" size="16.0" />
                                  </font>
@@ -82,7 +82,7 @@
                                     <Font name="Poppins Bold" size="16.0" />
                                  </font>
                               </Label>
-                              <PasswordField prefHeight="45.0" promptText="john@123" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 2px;">
+                              <PasswordField fx:id="txtPassword" prefHeight="45.0" promptText="john@123" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 2px;">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
