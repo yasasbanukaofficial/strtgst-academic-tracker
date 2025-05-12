@@ -32,16 +32,13 @@ CREATE TABLE subject (
 -- Table Assignment
 CREATE TABLE assignment (
     assignment_id VARCHAR(4),
-    sub_id VARCHAR(5) DEFAULT NULL,
     assignment_name VARCHAR(255) NOT NULL,
-    assignment_description VARCHAR(500),
+    assignment_description VARCHAR(500) DEFAULT NULL,
+    assignment_marks INT,
+    sub_name VARCHAR(50),
     due_date DATE,
     assignment_status ENUM('pending', 'completed', 'overdue') DEFAULT 'pending',
-    assignment_marks INT,
-    PRIMARY KEY (assignment_id),
-    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    PRIMARY KEY (assignment_id)
 );
 
 -- Table Grade

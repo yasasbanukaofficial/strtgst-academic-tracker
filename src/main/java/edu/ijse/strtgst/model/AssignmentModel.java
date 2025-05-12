@@ -1,23 +1,29 @@
 package edu.ijse.strtgst.model;
 
 import edu.ijse.strtgst.dto.AssignmentDto;
+import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AssignmentModel {
     public boolean addAssignment(AssignmentDto assignmentDto) throws SQLException {
         return CrudUtil.execute(
                 "INSERT INTO Assignment VALUES (?, ?, ?, ?, ?, ?, ?)",
                 assignmentDto.getAssignmentId(),
-                assignmentDto.getSubId(),
                 assignmentDto.getAssignmentName(),
                 assignmentDto.getAssignmentDescription(),
+                assignmentDto.getAssignmentMarks(),
+                assignmentDto.getSubName(),
                 assignmentDto.getDueDate(),
-                assignmentDto.getAssignmentStatus(),
-                assignmentDto.getAssignmentMarks()
+                assignmentDto.getAssignmentStatus()
         );
+    }
+
+    public boolean deleteAssignment(String assignmentId) throws SQLException {
+        return CrudUtil.execute("DELETE FROM Assignment WHERE assignment_id = ?", assignmentId);
     }
 
     public static String fetchExistingID(String subjectName) throws SQLException {
@@ -25,4 +31,36 @@ public class AssignmentModel {
         return rst.next() ? rst.getString(1) : null;
     }
 
+    public ArrayList<AssignmentDto> getAllCustomer() throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Assignment");
+
+        ArrayList<AssignmentDto> assignmentDtos = new ArrayList<>();
+        while (rst.next()) {
+            AssignmentDto assignmentDto = new AssignmentDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5),
+                    rst.getDate(6).toLocalDate(),
+                    rst.getString(7)
+            );
+            assignmentDtos.add(assignmentDto);
+        }
+
+        return assignmentDtos;
+    }
+
+    public boolean editAssignment(AssignmentDto assignmentDto) throws SQLException {
+        return CrudUtil.execute(
+                "UPDATE Assignment SET assignment_name = ?, assignment_description = ?, assignment_marks = ?, sub_name = ?, due_date = ?, assignment_status = ? WHERE assignment_id = ?",
+                assignmentDto.getAssignmentName(),
+                assignmentDto.getAssignmentDescription(),
+                assignmentDto.getAssignmentMarks(),
+                assignmentDto.getSubName(),
+                assignmentDto.getDueDate(),
+                assignmentDto.getAssignmentStatus(),
+                assignmentDto.getAssignmentId()
+        );
+    }
 }

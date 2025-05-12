@@ -15,7 +15,8 @@ public class LoginPageController {
     public TextField txtUsername;
     public PasswordField txtPassword;
 
-    private final Authorization authorization = new Authorization();
+    private final LoginService loginService = new LoginService();
+    private final Alert alert = new Alert(Alert.AlertType.ERROR);
 
     public void visitSignUpPage() {
         Navigation.navigateTo(loginAnc, View.SIGNUP);
@@ -25,20 +26,23 @@ public class LoginPageController {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
 
-        if (username.equals(null) || password.equals(null)){
-            new Alert(Alert.AlertType.ERROR,"Please enter username and password.").show();
+        if (username.equals("") || password.equals("")){
+            alert.setContentText("Please enter username and password.");
+            alert.show();
             return;
         }
 
         try {
-            if (authorization.validateCredentials(username, password)){
+            if (loginService.validateCredentials(username, password)){
                 Navigation.navigateTo(loginAnc, View.MAIN);
             } else {
-                new Alert(Alert.AlertType.ERROR, "Invalid username or password. Please Try again!").show();
+                alert.setContentText("Invalid username or password. Please Try again!");
+                alert.show();
                 showLoginError();
             }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Something went wrong while trying to log in.").show();
+            alert.setContentText("Something went wrong while trying to log in.");
+            alert.show();
             e.printStackTrace();
         }
     }
@@ -50,7 +54,7 @@ public class LoginPageController {
     }
 }
 
-class Authorization {
+class LoginService {
     public boolean validateCredentials(String username, String password) throws Exception {
         StudentDto studentDto = StudentModel.getStudent(username);
         return studentDto != null && password.equals(studentDto.getPassword());

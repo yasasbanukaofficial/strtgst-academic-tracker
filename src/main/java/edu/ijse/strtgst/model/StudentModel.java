@@ -29,4 +29,14 @@ public class StudentModel {
         }
         return null;
     }
+
+    public boolean fetchExistingUsername(String username) throws SQLException{
+        ResultSet rst = CrudUtil.execute("SELECT username FROM Student WHERE username = ?", username);
+        return rst.next();
+    }
+
+    public boolean fetchExistingEmail(String email) throws SQLException{
+        ResultSet rst = CrudUtil.execute("SELECT email FROM Student WHERE email = ?", email);
+        return rst.next();
+    }
 }

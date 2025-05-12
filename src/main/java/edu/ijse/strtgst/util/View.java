@@ -11,7 +11,7 @@ public enum View {
     SIGNUP("SignUpPage.fxml"),
     MAIN("MainPage.fxml"),
 
-    ADD_ASSIGNMENT("AddNewAssignment.fxml"),
+    ADD_ASSIGNMENT("AssignmentForm.fxml"),
     ADD_EVENT("AddNewEvent.fxml"),
     ADD_GRADE("AddNewGrade.fxml"),
     ADD_TASK("AddNewTask.fxml"),
