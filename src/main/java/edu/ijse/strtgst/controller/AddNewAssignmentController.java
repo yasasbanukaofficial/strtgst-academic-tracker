@@ -31,6 +31,7 @@ public class AddNewAssignmentController implements Initializable {
     public Button btnAddAssignment;
     public Button btnCancel;
     public Label labelAssignmentHeader;
+    public Label labelRequired;
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
@@ -45,23 +46,6 @@ public class AddNewAssignmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controllerManager.setAddNewAssignmentController(this);
-        resetForm();
-        updateButtonStates(false);
-    }
-
-    public void cancelTask(ActionEvent actionEvent) {
-        Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
-    }
-
-    private void updateButtonStates(boolean state) {
-        btnAddAssignment.setDisable(state);
-        btnCancel.setDisable(state);
-    }
-
-    private void resetForm() {
-        txtAssignmentName.setText("");
-        txtAssignmentDescription.setText("");
-        dpDueDate.setValue(null);
         cmbSubject.setItems(subjectOptions);
         cmbSubject.setValue(subjectOptions.get(0));
         for (int i = 0; i <= 100 ; i++) {
@@ -71,7 +55,11 @@ public class AddNewAssignmentController implements Initializable {
         cmbMarks.setValue(marksOptions.get(0));
         cmbStatus.setItems(statusOptions);
         cmbStatus.setValue(statusOptions.get(0));
-        updateButtonStates(true);
+        updateButtonStates(false);
+    }
+
+    public void cancelTask(ActionEvent actionEvent) {
+        Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
     }
 
     public void addAssignment(ActionEvent event) {
@@ -126,6 +114,70 @@ public class AddNewAssignmentController implements Initializable {
         assignmentPageController.loadTableData();
     }
 
+    private void deleteAssignment(AssignmentTM assignmentTM) {
+        alert.setAlertType(Alert.AlertType.CONFIRMATION);
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Are you sure you want to delete this assignment?");
+        alert.setContentText("Name: " + assignmentTM.getAssignmentName() + "\n" +
+                "Due: " + assignmentTM.getAssignmentDueDate() + "\n" +
+                "Status: " + assignmentTM.getAssignmentStatus() + "\n" +
+                "Marks: " + assignmentTM.getAssignmentMarks());
+
+        Optional<ButtonType> resp = alert.showAndWait();
+        if (resp.isPresent() && resp.get() == ButtonType.YES) {
+            String assignmentId = assignmentTM.getAssignmentId();
+            try {
+                boolean isDeleted = assignmentModel.deleteAssignment(assignmentId);
+                if (isDeleted) {
+                    assignmentPageController.loadTableData();
+                    resetForm();
+                    new Alert(Alert.AlertType.INFORMATION, "Successfully deleted an assignment").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to deleted an assignment").show();
+                }
+            } catch (SQLException ex) {
+                new Alert(Alert.AlertType.ERROR, "Error when deleting an assignment").show();
+            }
+        }
+    }
+
+    public void configureEditForm(AssignmentTM assignmentTM){
+        txtAssignmentName.setText(assignmentTM.getAssignmentName());
+        dpDueDate.setValue(assignmentTM.getAssignmentDueDate());
+        cmbStatus.setValue(assignmentTM.getAssignmentStatus());
+        cmbMarks.setValue(assignmentTM.getAssignmentMarks());
+        updateButtonStates(false);
+
+        labelAssignmentHeader.setText("Edit Assignment");
+        labelRequired.setText("Cancel");
+        labelRequired.setOnMouseClicked(e -> {
+            cancelTask(new ActionEvent());
+        });
+
+        btnAddAssignment.setText("Edit Assignment");
+        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white;");
+        btnAddAssignment.setOnAction(e -> {});
+
+        btnCancel.setText("Delete Assignment");
+        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white; -fx-border-radius: 20px; -fx-background-radius: 20px");
+        btnCancel.setOnAction(e -> {deleteAssignment(assignmentTM);});
+    }
+
+    private void updateButtonStates(boolean state) {
+        btnAddAssignment.setDisable(state);
+        btnCancel.setDisable(state);
+    }
+
+    private void resetForm() {
+        txtAssignmentName.setText("");
+        txtAssignmentDescription.setText("");
+        dpDueDate.setValue(null);
+        cmbSubject.setValue(null);
+        cmbMarks.setValue(null);
+        cmbStatus.setValue(null);
+        updateButtonStates(true);
+    }
+
     public String loadNextID(){
         try {
             return IdLoader.getNextID("Assignment", "assignment_id");
@@ -155,50 +207,5 @@ public class AddNewAssignmentController implements Initializable {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void configureEditForm(AssignmentTM assignmentTM){
-        txtAssignmentName.setText(assignmentTM.getAssignmentName());
-        dpDueDate.setValue(assignmentTM.getAssignmentDueDate());
-        cmbStatus.setValue(assignmentTM.getAssignmentStatus());
-        cmbMarks.setValue(assignmentTM.getAssignmentMarks());
-        updateButtonStates(false);
-
-        labelAssignmentHeader.setText("Edit Assignment");
-
-        btnAddAssignment.setText("Edit Assignment");
-        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white;");
-        btnAddAssignment.setOnAction(e -> {});
-
-        btnCancel.setText("Delete Assignment");
-        btnCancel.setStyle("-fx-background-color: #d90404; -fx-text-fill: white; -fx-border-radius: 20px; -fx-background-radius: 20px");
-        btnCancel.setOnAction(e -> {deleteAssignment(assignmentTM);});
-    }
-
-    private void deleteAssignment(AssignmentTM assignmentTM) {
-        alert.setAlertType(Alert.AlertType.CONFIRMATION);
-        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("Are you sure you want to delete this assignment?");
-        alert.setContentText("Name: " + assignmentTM.getAssignmentName() + "\n" +
-                "Due: " + assignmentTM.getAssignmentDueDate() + "\n" +
-                "Status: " + assignmentTM.getAssignmentStatus() + "\n" +
-                "Marks: " + assignmentTM.getAssignmentMarks());
-
-        Optional<ButtonType> resp = alert.showAndWait();
-        if (resp.isPresent() && resp.get() == ButtonType.YES) {
-            String assignmentId = assignmentTM.getAssignmentId();
-            try {
-                boolean isDeleted = assignmentModel.deleteAssignment(assignmentId);
-                if (isDeleted) {
-                    assignmentPageController.loadTableData();
-                    resetForm();
-                    new Alert(Alert.AlertType.INFORMATION, "Successfully deleted an assignment").show();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed to deleted an assignment").show();
-                }
-            } catch (SQLException ex) {
-                new Alert(Alert.AlertType.ERROR, "Error when deleting an assignment").show();
-            }
-        }
     }
 }

@@ -32,10 +32,13 @@
                                 <Font name="Poppins Bold" size="22.0" />
                             </font>
                         </Label>
-                        <Label text="* Required" textFill="#b20404">
+                        <Label fx:id="labelRequired" text="* Required" textFill="#b20404">
                             <font>
                                 <Font name="Poppins Bold" size="18.0" />
                             </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </Label>
                     </children>
                 </HBox>
