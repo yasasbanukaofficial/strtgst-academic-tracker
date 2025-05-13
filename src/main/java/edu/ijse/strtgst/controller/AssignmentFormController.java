@@ -4,6 +4,7 @@ import edu.ijse.strtgst.context.ControllerManager;
 import edu.ijse.strtgst.dto.AssignmentDto;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
+import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.IdLoader;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
@@ -35,7 +36,6 @@ public class AssignmentFormController implements Initializable {
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
-    private final Alert alert = new Alert(Alert.AlertType.ERROR);
     private final ControllerManager controllerManager = new ControllerManager();
     private final AssignmentPageController assignmentPageController = ControllerManager.getAssignmentPageController();
 
@@ -79,14 +79,11 @@ public class AssignmentFormController implements Initializable {
 
             try {
                 if (assignmentModel.addAssignment(assignmentDto)) {
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Successfully added an assignment");
-                    alert.show();
+                    AlertUtil.setInfoAlert("Successfully added an assignment");
                     Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
-                } else new Alert(Alert.AlertType.ERROR, "Failed to save an Assignment").show();
+                } else AlertUtil.setErrorAlert("Failed to save an Assignment");
             } catch (SQLException e) {
-                alert.setContentText("Failed when adding an assignment");
-                alert.show();
+                AlertUtil.setErrorAlert("Failed when adding an assignment");
                 e.printStackTrace();
             }
             assignmentPageController.updateOverdueStatus();
@@ -94,27 +91,23 @@ public class AssignmentFormController implements Initializable {
     }
 
     private void deleteAssignment(AssignmentTM assignmentTM) {
-        alert.setAlertType(Alert.AlertType.CONFIRMATION);
-        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("Are you sure you want to delete this assignment?");
-        alert.setContentText("Name: " + assignmentTM.getAssignmentName() + "\n" +
+        Optional<ButtonType> resp = AlertUtil.setConfirmationAlert("Are you sure you want to delete this assignment?",
+                "Name: " + assignmentTM.getAssignmentName() + "\n" +
                 "Due: " + assignmentTM.getAssignmentDueDate() + "\n" +
                 "Status: " + assignmentTM.getAssignmentStatus() + "\n" +
                 "Marks: " + assignmentTM.getAssignmentMarks());
 
-        Optional<ButtonType> resp = alert.showAndWait();
         if (resp.isPresent() && resp.get() == ButtonType.YES) {
             String assignmentId = assignmentTM.getAssignmentId();
             try {
                 if (assignmentModel.deleteAssignment(assignmentId)) {
                     assignmentPageController.setupTableColumn();
                     setupFormDefaults();
-                    new Alert(Alert.AlertType.INFORMATION, "Successfully deleted an assignment").show();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed to deleted an assignment").show();
-                }
-            } catch (SQLException ex) {
-                new Alert(Alert.AlertType.ERROR, "Error when deleting an assignment").show();
+                    AlertUtil.setInfoAlert("Successfully deleted an assignment");
+                } else { AlertUtil.setErrorAlert("Failed to deleted an assignment"); }
+            } catch (SQLException e) {
+                AlertUtil.setErrorAlert("Error when deleting an assignment");
+                e.printStackTrace();
             }
         }
     }
@@ -142,14 +135,11 @@ public class AssignmentFormController implements Initializable {
 
             try {
                 if (assignmentModel.editAssignment(assignmentDto)) {
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Successfully edited the assignment");
-                    alert.show();
+                    AlertUtil.setInfoAlert("Successfully edited the assignment");
                     Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
-                } else new Alert(Alert.AlertType.ERROR, "Failed to edit the Assignment").show();
+                } else AlertUtil.setErrorAlert("Failed to edit the assignment");
             } catch (SQLException e) {
-                alert.setContentText("Failed when editing the assignment");
-                alert.show();
+                AlertUtil.setErrorAlert("Failed when editing the assignment");
                 e.printStackTrace();
             }
             assignmentPageController.updateOverdueStatus();
@@ -188,8 +178,7 @@ public class AssignmentFormController implements Initializable {
         try {
             return IdLoader.getNextID("Assignment", "assignment_id");
         } catch (SQLException e) {
-            alert.setContentText("Error when loading a Assignment ID");
-            alert.show();
+            AlertUtil.setErrorAlert("Error when loading a Assignment ID");
             e.printStackTrace();
         }
         return "A001";
@@ -197,18 +186,15 @@ public class AssignmentFormController implements Initializable {
 
     private boolean validateAssignmentFields(String assignmentName, String status, LocalDate date) {
         if (!areRequiredFieldsFilled(assignmentName, status, date)){
-            alert.setContentText("You must fill required fields (*)!");
-            alert.show();
+            AlertUtil.setErrorAlert("You must fill required fields (*)!");
             return false;
         }
 
         if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
-            alert.setContentText("Assignments due before today must be marked as overdue. ");
-            alert.show();
+            AlertUtil.setErrorAlert("Assignments due before today must be marked as overdue. ");
             return false;
         } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
-            alert.setContentText("Cant put overdue to a event which is in future.");
-            alert.show();
+            AlertUtil.setErrorAlert("Cannot mark a future assignment as overdue.");
             return false;
         }
         return true;

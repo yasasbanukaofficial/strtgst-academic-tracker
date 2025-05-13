@@ -2,10 +2,10 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.dto.StudentDto;
 import edu.ijse.strtgst.model.StudentModel;
+import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -16,7 +16,6 @@ public class LoginPageController {
     public PasswordField txtPassword;
 
     private final LoginService loginService = new LoginService();
-    private final Alert alert = new Alert(Alert.AlertType.ERROR);
 
     public void visitSignUpPage() {
         Navigation.navigateTo(loginAnc, View.SIGNUP);
@@ -27,8 +26,7 @@ public class LoginPageController {
         String password = txtPassword.getText().trim();
 
         if (username.equals("") || password.equals("")){
-            alert.setContentText("Please enter username and password.");
-            alert.show();
+            AlertUtil.setErrorAlert("Please enter username and password.");
             return;
         }
 
@@ -36,13 +34,11 @@ public class LoginPageController {
             if (loginService.validateCredentials(username, password)){
                 Navigation.navigateTo(loginAnc, View.MAIN);
             } else {
-                alert.setContentText("Invalid username or password. Please Try again!");
-                alert.show();
+                AlertUtil.setErrorAlert("Invalid username or password. Please Try again!");
                 showLoginError();
             }
         } catch (Exception e) {
-            alert.setContentText("Something went wrong while trying to log in.");
-            alert.show();
+            AlertUtil.setErrorAlert("Something went wrong while trying to log in.");
             e.printStackTrace();
         }
     }

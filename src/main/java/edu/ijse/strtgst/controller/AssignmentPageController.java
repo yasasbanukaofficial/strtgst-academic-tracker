@@ -3,6 +3,7 @@ package edu.ijse.strtgst.controller;
 import edu.ijse.strtgst.context.ControllerManager;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
+import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.collections.FXCollections;
@@ -28,7 +29,6 @@ public class AssignmentPageController implements Initializable {
 
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final ControllerManager controllerManager = new ControllerManager();
-    private final Alert alert = new Alert(Alert.AlertType.ERROR);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,8 +58,7 @@ public class AssignmentPageController implements Initializable {
                 ).toList()
             ));
         } catch (Exception e) {
-            alert.setContentText("Error when loading table data");
-            alert.show();
+            AlertUtil.setErrorAlert("Error when loading table data");
             e.printStackTrace();
         }
     }
@@ -117,16 +116,14 @@ public class AssignmentPageController implements Initializable {
                 LocalDate dueDate = LocalDate.parse(row.get(1).toString());
                 String assignmentId = row.get(2).toString();
 
-                if (status.equalsIgnoreCase("Pending") && dueDate.isBefore(today)) {
+                if (status.equals("Pending") && dueDate.isBefore(today)) {
                     assignmentModel.updateAssignmentStatus(assignmentId, "Overdue");
-                    System.out.println("Updated to overdue: " + assignmentId);
                 }
             }
             setupTableColumn();
 
         } catch (SQLException e) {
-            alert.setContentText("Error when updating status");
-            alert.show();
+            AlertUtil.setErrorAlert("Error when updating status");
             e.printStackTrace();
         }
     }
