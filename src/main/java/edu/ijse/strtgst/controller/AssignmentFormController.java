@@ -77,8 +77,13 @@ public class AssignmentFormController implements Initializable {
             alert.show();
             return;
         }
+
         if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
             alert.setContentText("Invalid Date: Please choose a date in the future. (Tip: This only works when you want to add overdue tasks.)");
+            alert.show();
+            return;
+        } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
+            alert.setContentText("Invalid Status: Cant put overdue to a event which is in future. (Tip: This only works when the due date is before the current date.)");
             alert.show();
             return;
         }
@@ -148,9 +153,14 @@ public class AssignmentFormController implements Initializable {
             alert.show();
             return;
         }
+
         if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
             alert.setContentText("Invalid Date: Please choose a date in the future. (Tip: This only works when you want to add overdue tasks.)");
             alert.show();
+        } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
+            alert.setContentText("Invalid Status: Cant put overdue to a event which is in future. (Tip: This only works when the due date is before the current date.)");
+            alert.show();
+            return;
         }
 
         assignmentDto = new AssignmentDto(

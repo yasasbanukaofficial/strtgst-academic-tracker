@@ -86,5 +86,4 @@ public class AssignmentModel {
                 newStatus, assignmentId
         );
     }
-
 }
