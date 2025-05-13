@@ -46,16 +46,10 @@ public class AssignmentFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controllerManager.setAssignmentFormController(this);
-        cmbSubject.setItems(subjectOptions);
-        cmbSubject.setValue(subjectOptions.get(0));
         for (int i = 0; i <= 100 ; i++) {
             marksOptions.add(Integer.toString(i));
         }
-        cmbMarks.setItems(marksOptions);
-        cmbMarks.setValue(marksOptions.get(0));
-        cmbStatus.setItems(statusOptions);
-        cmbStatus.setValue(statusOptions.get(0));
-        setButtonStates(false);
+        setupFormDefaults();
     }
 
     public void cancelTask(ActionEvent actionEvent) {
@@ -70,47 +64,33 @@ public class AssignmentFormController implements Initializable {
         String subName = cmbSubject.getValue();
         LocalDate date = dpDueDate.getValue();
         String status = cmbStatus.getValue();
+
         setButtonStates(false);
+        if (validateAssignmentFields(assignmentName, status, date)) {
+            assignmentDto = new AssignmentDto(
+                    assignment_id,
+                    assignmentName,
+                    assignmentDescription,
+                    assignmentMarks,
+                    subName,
+                    date,
+                    status
+            );
 
-        if (!areRequiredFieldsFilled(assignmentName, status, date)){
-            alert.setContentText("You must fill required fields (*)!");
-            alert.show();
-            return;
-        }
-
-        if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
-            alert.setContentText("Invalid Date: Please choose a date in the future. (Tip: This only works when you want to add overdue tasks.)");
-            alert.show();
-            return;
-        } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
-            alert.setContentText("Invalid Status: Cant put overdue to a event which is in future. (Tip: This only works when the due date is before the current date.)");
-            alert.show();
-            return;
-        }
-
-        assignmentDto = new AssignmentDto(
-                assignment_id,
-                assignmentName,
-                assignmentDescription,
-                assignmentMarks,
-                subName,
-                date,
-                status
-        );
-
-        try {
-            if (assignmentModel.addAssignment(assignmentDto)){
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("Successfully added an assignment");
+            try {
+                if (assignmentModel.addAssignment(assignmentDto)) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Successfully added an assignment");
+                    alert.show();
+                    Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
+                } else new Alert(Alert.AlertType.ERROR, "Failed to save an Assignment").show();
+            } catch (SQLException e) {
+                alert.setContentText("Failed when adding an assignment");
                 alert.show();
-                Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
-            } else new Alert(Alert.AlertType.ERROR, "Failed to save an Assignment").show();
-        } catch (SQLException e) {
-            alert.setContentText("Failed when adding an assignment");
-            alert.show();
-            e.printStackTrace();
+                e.printStackTrace();
+            }
+            assignmentPageController.updateOverdueStatus();
         }
-        assignmentPageController.updateOverdueStatus();
     }
 
     private void deleteAssignment(AssignmentTM assignmentTM) {
@@ -128,7 +108,7 @@ public class AssignmentFormController implements Initializable {
             try {
                 if (assignmentModel.deleteAssignment(assignmentId)) {
                     assignmentPageController.setupTableColumn();
-                    resetForm();
+                    setupFormDefaults();
                     new Alert(Alert.AlertType.INFORMATION, "Successfully deleted an assignment").show();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to deleted an assignment").show();
@@ -148,44 +128,32 @@ public class AssignmentFormController implements Initializable {
         String status = cmbStatus.getValue();
         String subName = cmbSubject.getValue();
 
-        if (!areRequiredFieldsFilled(assignmentName, status, date)){
-            alert.setContentText("You must fill required fields (*)!");
-            alert.show();
-            return;
-        }
+        setButtonStates(false);
+        if (validateAssignmentFields(assignmentName, status, date)) {
+            assignmentDto = new AssignmentDto(
+                    assignment_id,
+                    assignmentName,
+                    assignmentDescription,
+                    assignmentMarks,
+                    subName,
+                    date,
+                    status
+            );
 
-        if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
-            alert.setContentText("Invalid Date: Please choose a date in the future. (Tip: This only works when you want to add overdue tasks.)");
-            alert.show();
-        } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
-            alert.setContentText("Invalid Status: Cant put overdue to a event which is in future. (Tip: This only works when the due date is before the current date.)");
-            alert.show();
-            return;
-        }
-
-        assignmentDto = new AssignmentDto(
-                assignment_id,
-                assignmentName,
-                assignmentDescription,
-                assignmentMarks,
-                subName,
-                date,
-                status
-        );
-
-        try {
-            if (assignmentModel.editAssignment(assignmentDto)){
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("Successfully edited the assignment");
+            try {
+                if (assignmentModel.editAssignment(assignmentDto)) {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Successfully edited the assignment");
+                    alert.show();
+                    Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
+                } else new Alert(Alert.AlertType.ERROR, "Failed to edit the Assignment").show();
+            } catch (SQLException e) {
+                alert.setContentText("Failed when editing the assignment");
                 alert.show();
-                Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
-            } else new Alert(Alert.AlertType.ERROR, "Failed to edit the Assignment").show();
-        } catch (SQLException e) {
-            alert.setContentText("Failed when editing the assignment");
-            alert.show();
-            e.printStackTrace();
+                e.printStackTrace();
+            }
+            assignmentPageController.updateOverdueStatus();
         }
-        assignmentPageController.updateOverdueStatus();
     }
 
     public void populateFormForEdit(AssignmentTM assignmentTM){
@@ -216,16 +184,6 @@ public class AssignmentFormController implements Initializable {
         btnCancel.setDisable(state);
     }
 
-    private void resetForm() {
-        txtAssignmentName.setText("");
-        txtAssignmentDescription.setText("");
-        dpDueDate.setValue(null);
-        cmbSubject.setValue(null);
-        cmbMarks.setValue(null);
-        cmbStatus.setValue(null);
-        setButtonStates(true);
-    }
-
     public String loadNextID(){
         try {
             return IdLoader.getNextID("Assignment", "assignment_id");
@@ -237,12 +195,44 @@ public class AssignmentFormController implements Initializable {
         return "A001";
     }
 
-    public boolean areRequiredFieldsFilled(Object... inputs) {
+    private boolean validateAssignmentFields(String assignmentName, String status, LocalDate date) {
+        if (!areRequiredFieldsFilled(assignmentName, status, date)){
+            alert.setContentText("You must fill required fields (*)!");
+            alert.show();
+            return false;
+        }
+
+        if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
+            alert.setContentText("Assignments due before today must be marked as overdue. ");
+            alert.show();
+            return false;
+        } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
+            alert.setContentText("Cant put overdue to a event which is in future.");
+            alert.show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean areRequiredFieldsFilled(Object... inputs) {
         for(Object input : inputs){
             if (input == null || input.equals("")) {
                 return false;
             }
         }
         return true;
+    }
+
+    private void setupFormDefaults() {
+        txtAssignmentName.setText("");
+        txtAssignmentDescription.setText("");
+        dpDueDate.setValue(null);
+        cmbSubject.setItems(subjectOptions);
+        cmbSubject.setValue(subjectOptions.get(0));
+        cmbMarks.setItems(marksOptions);
+        cmbMarks.setValue(marksOptions.get(0));
+        cmbStatus.setItems(statusOptions);
+        cmbStatus.setValue(statusOptions.get(0));
+        setButtonStates(false);
     }
 }
