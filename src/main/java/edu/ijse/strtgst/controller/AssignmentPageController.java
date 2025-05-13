@@ -1,6 +1,7 @@
 package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.context.ControllerManager;
+import edu.ijse.strtgst.dto.AssignmentDto;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.AlertUtil;
@@ -23,11 +24,16 @@ import java.util.ResourceBundle;
 public class AssignmentPageController implements Initializable {
     public AnchorPane ancTaskContainer;
     public Label labelDate;
-    public TableView<AssignmentTM> tblAssignment;
-    public TableColumn<AssignmentTM, String> columnAssignmentName;
-    public TableColumn<AssignmentTM, LocalDate> columnAssignmentDueDate;
-    public TableColumn<AssignmentTM, String> columnAssignmentStatus;
-    public TableColumn<AssignmentTM, String> columnAssignmentMarks;
+    public TableView <AssignmentTM> tblAssignment;
+    public TableColumn <AssignmentTM, String> columnAssignmentName;
+    public TableColumn <AssignmentTM, LocalDate> columnAssignmentDueDate;
+    public TableColumn <AssignmentTM, String> columnAssignmentStatus;
+    public TableColumn <AssignmentTM, String> columnAssignmentMarks;
+    public TableView <AssignmentTM> tblCompletedAssignment;
+    public TableColumn <AssignmentTM, String> columnCompletedName;
+    public TableColumn <AssignmentTM, LocalDate> columnCompletedDueDate;
+    public TableColumn <AssignmentTM, String> columnCompletedStatus;
+    public TableColumn <AssignmentTM, String> columnCompletedMarks;
 
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final ControllerManager controllerManager = new ControllerManager();
@@ -45,27 +51,6 @@ public class AssignmentPageController implements Initializable {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
     }
 
-    private void loadTableData(){
-        try {
-            tblAssignment.setItems(FXCollections.observableArrayList(
-                assignmentModel.getAllAssignments().stream().map(
-                        assignmentDto -> new AssignmentTM(
-                                assignmentDto.getAssignmentId(),
-                                assignmentDto.getAssignmentName(),
-                                assignmentDto.getAssignmentDescription(),
-                                assignmentDto.getAssignmentMarks(),
-                                assignmentDto.getSubName(),
-                                assignmentDto.getDueDate(),
-                                assignmentDto.getAssignmentStatus()
-                        )
-                ).toList()
-            ));
-        } catch (Exception e) {
-            AlertUtil.setErrorAlert("Error when loading table data");
-            e.printStackTrace();
-        }
-    }
-
     public void setupTableColumn() {
         columnAssignmentName.setCellValueFactory(new PropertyValueFactory<>("assignmentName"));
         columnAssignmentDueDate.setCellValueFactory(new PropertyValueFactory<>("assignmentDueDate"));
@@ -76,7 +61,6 @@ public class AssignmentPageController implements Initializable {
             @Override
             protected void updateItem(String status, boolean empty) {
                 super.updateItem(status, empty);
-
                 if(empty || status == null){
                     setText(null);
                     setGraphic(null);
@@ -88,7 +72,65 @@ public class AssignmentPageController implements Initializable {
                 }
             }
         });
+
+        columnCompletedName.setCellValueFactory(new PropertyValueFactory<>("assignmentName"));
+        columnCompletedDueDate.setCellValueFactory(new PropertyValueFactory<>("assignmentDueDate"));
+        columnCompletedStatus.setCellValueFactory(new PropertyValueFactory<>("assignmentStatus"));
+        columnCompletedMarks.setCellValueFactory(new PropertyValueFactory<>("assignmentMarks"));
+
+        columnCompletedStatus.setCellFactory(c -> new TableCell<>(){
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                if(empty || status == null){
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Label label = new Label(status);
+                    label.setStyle(getStatusStyle(status));
+                    setGraphic(label);
+                    setText(null);
+                }
+            }
+        });
+
         loadTableData();
+    }
+
+    private void loadTableData(){
+        try {
+            ArrayList<AssignmentDto> allAssignments = assignmentModel.getAllAssignments();
+            tblAssignment.setItems(FXCollections.observableArrayList(
+                    allAssignments.stream().filter(assignmentDto -> !assignmentDto.getAssignmentStatus().equalsIgnoreCase("Completed"))
+                        .map(assignmentDto -> new AssignmentTM(
+                                assignmentDto.getAssignmentId(),
+                                assignmentDto.getAssignmentName(),
+                                assignmentDto.getAssignmentDescription(),
+                                assignmentDto.getAssignmentMarks(),
+                                assignmentDto.getSubName(),
+                                assignmentDto.getDueDate(),
+                                assignmentDto.getAssignmentStatus()
+                        )
+                ).toList()
+            ));
+
+            tblCompletedAssignment.setItems(FXCollections.observableArrayList(
+                    allAssignments.stream().filter(assignmentDto -> assignmentDto.getAssignmentStatus().equalsIgnoreCase("Completed"))
+                            .map(assignmentDto -> new AssignmentTM(
+                                    assignmentDto.getAssignmentId(),
+                                    assignmentDto.getAssignmentName(),
+                                    assignmentDto.getAssignmentDescription(),
+                                    assignmentDto.getAssignmentMarks(),
+                                    assignmentDto.getSubName(),
+                                    assignmentDto.getDueDate(),
+                                    assignmentDto.getAssignmentStatus()
+                            )
+                    ).toList()
+            ));
+        } catch (Exception e) {
+            AlertUtil.setErrorAlert("Error when loading table data");
+            e.printStackTrace();
+        }
     }
 
     private String getStatusStyle(String status) {
@@ -123,7 +165,7 @@ public class AssignmentPageController implements Initializable {
                     assignmentModel.updateAssignmentStatus(assignmentId, "Overdue");
                 }
             }
-            setupTableColumn();
+            loadTableData();
 
         } catch (SQLException e) {
             AlertUtil.setErrorAlert("Error when updating status");

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -54,7 +53,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </HBox>
-                        <TableView fx:id="tblAssignment" onMouseClicked="#onClickTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tblAssignment" onMouseClicked="#onClickTable" prefHeight="346.0" prefWidth="949.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="columnAssignmentName" prefWidth="432.0" text="Name" />
                             <TableColumn fx:id="columnAssignmentDueDate" prefWidth="194.0" text="Due Date" />
@@ -71,7 +70,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
-                                <Label text="Overdue" textFill="#03004c">
+                                <Label text="Completed" textFill="#03004c">
                                     <font>
                                         <Font name="Poppins Bold" size="24.0" />
                                     </font>
@@ -79,11 +78,23 @@
                                         <Insets bottom="22.0" left="93.0" top="27.0" />
                                     </VBox.margin>
                                 </Label>
-                                <ListView prefHeight="332.0" prefWidth="200.0">
-                                    <VBox.margin>
-                                        <Insets left="84.0" />
-                                    </VBox.margin>
-                                </ListView>
+                        <TableView fx:id="tblCompletedAssignment" onMouseClicked="#onClickTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
+                           <columns>
+                              <TableColumn fx:id="columnCompletedName" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnCompletedDueDate" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnCompletedStatus" prefWidth="189.0" styleClass="status-column" text="Status" />
+                              <TableColumn fx:id="columnCompletedMarks" prefWidth="115.0" text="Marks" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="30.0" left="86.0" />
+                           </VBox.margin>
+                        </TableView>
                             </children>
                         </VBox>
                         <VBox minWidth="-Infinity" prefHeight="1000.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
