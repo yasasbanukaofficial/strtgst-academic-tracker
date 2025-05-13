@@ -53,7 +53,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </HBox>
-                        <TableView fx:id="tblAssignment" onMouseClicked="#onClickTable" prefHeight="346.0" prefWidth="949.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tblAssignment" onMouseClicked="#onClickAssignmentTable" prefHeight="346.0" prefWidth="949.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="columnAssignmentName" prefWidth="432.0" text="Name" />
                             <TableColumn fx:id="columnAssignmentDueDate" prefWidth="194.0" text="Due Date" />
@@ -78,7 +78,7 @@
                                         <Insets bottom="22.0" left="93.0" top="27.0" />
                                     </VBox.margin>
                                 </Label>
-                        <TableView fx:id="tblCompletedAssignment" onMouseClicked="#onClickTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tblCompletedAssignment" onMouseClicked="#onClickCompletedTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles/tableView.css" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="columnCompletedName" prefWidth="432.0" text="Name" />
                               <TableColumn fx:id="columnCompletedDueDate" prefWidth="194.0" text="Due Date" />
