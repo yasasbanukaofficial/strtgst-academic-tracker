@@ -101,7 +101,7 @@ public class AssignmentPageController implements Initializable {
     public void onClickTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
         AssignmentTM selectedAssignment = tblAssignment.getSelectionModel().getSelectedItem();
-        AssignmentFormController addNewAssignmentController = controllerManager.getAddNewAssignmentController();
+        AssignmentFormController addNewAssignmentController = controllerManager.getAssignmentFormController();
         if (selectedAssignment != null){
             addNewAssignmentController.populateFormForEdit(selectedAssignment);
         }
@@ -130,5 +130,4 @@ public class AssignmentPageController implements Initializable {
             e.printStackTrace();
         }
     }
-
 }

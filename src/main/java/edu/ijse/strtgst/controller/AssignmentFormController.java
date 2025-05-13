@@ -45,7 +45,7 @@ public class AssignmentFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controllerManager.setAddNewAssignmentController(this);
+        controllerManager.setAssignmentFormController(this);
         cmbSubject.setItems(subjectOptions);
         cmbSubject.setValue(subjectOptions.get(0));
         for (int i = 0; i <= 100 ; i++) {

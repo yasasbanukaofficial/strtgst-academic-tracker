@@ -4,7 +4,7 @@ import edu.ijse.strtgst.controller.AssignmentFormController;
 import edu.ijse.strtgst.controller.AssignmentPageController;
 public class ControllerManager {
     private static AssignmentPageController assignmentPageController;
-    private static AssignmentFormController addNewAssignmentController;
+    private static AssignmentFormController assignmentFormController;
 
     public static AssignmentPageController getAssignmentPageController() {
         if (assignmentPageController == null){
@@ -17,15 +17,15 @@ public class ControllerManager {
         this.assignmentPageController = assignmentPageController;
     }
 
-    public void setAddNewAssignmentController(AssignmentFormController addNewAssignmentController) {
-        this.addNewAssignmentController = addNewAssignmentController;
+    public void setAssignmentFormController(AssignmentFormController assignmentFormController) {
+        this.assignmentFormController = assignmentFormController;
     }
 
-    public static AssignmentFormController getAddNewAssignmentController() {
-        if (addNewAssignmentController == null){
-            addNewAssignmentController = new AssignmentFormController();
+    public static AssignmentFormController getAssignmentFormController() {
+        if (assignmentFormController == null){
+            assignmentFormController = new AssignmentFormController();
         }
-        return addNewAssignmentController;
+        return assignmentFormController;
     }
 
 
