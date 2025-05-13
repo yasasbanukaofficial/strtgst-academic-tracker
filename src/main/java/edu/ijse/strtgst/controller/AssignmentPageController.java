@@ -4,6 +4,7 @@ import edu.ijse.strtgst.context.ControllerManager;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.AlertUtil;
+import edu.ijse.strtgst.util.DateUtil;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.collections.FXCollections;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class AssignmentPageController implements Initializable {
     public AnchorPane ancTaskContainer;
+    public Label labelDate;
     public TableView<AssignmentTM> tblAssignment;
     public TableColumn<AssignmentTM, String> columnAssignmentName;
     public TableColumn<AssignmentTM, LocalDate> columnAssignmentDueDate;
@@ -34,6 +36,7 @@ public class AssignmentPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumn();
         updateOverdueStatus();
+        updateDateLabel();
         controllerManager.setAssignmentPageController(this);
         Navigation.navigateTo(ancTaskContainer, View.DEFAULT_ASSIGNMENT);
     }
@@ -126,5 +129,9 @@ public class AssignmentPageController implements Initializable {
             AlertUtil.setErrorAlert("Error when updating status");
             e.printStackTrace();
         }
+    }
+
+    private void updateDateLabel() {
+        labelDate.setText(DateUtil.setDate());
     }
 }

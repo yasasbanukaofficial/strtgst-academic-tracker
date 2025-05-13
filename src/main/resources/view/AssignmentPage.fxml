@@ -90,7 +90,7 @@
                             <children>
                                 <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
                                     <children>
-                                        <Label text="May 19" textFill="#03004c">
+                                        <Label fx:id="labelDate" text="May 19" textFill="#03004c">
                                             <font>
                                                 <Font name="Poppins Bold" size="44.0" />
                                             </font>
