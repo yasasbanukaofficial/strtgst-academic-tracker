@@ -13,7 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AssignmentPageController implements Initializable {
@@ -26,10 +28,12 @@ public class AssignmentPageController implements Initializable {
 
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final ControllerManager controllerManager = new ControllerManager();
+    private final Alert alert = new Alert(Alert.AlertType.ERROR);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumn();
+        updateOverdueStatus();
         controllerManager.setAssignmentPageController(this);
         Navigation.navigateTo(ancTaskContainer, View.DEFAULT_ASSIGNMENT);
     }
@@ -41,7 +45,7 @@ public class AssignmentPageController implements Initializable {
     private void loadTableData(){
         try {
             tblAssignment.setItems(FXCollections.observableArrayList(
-                assignmentModel.getAllCustomer().stream().map(
+                assignmentModel.getAllAssignments().stream().map(
                         assignmentDto -> new AssignmentTM(
                                 assignmentDto.getAssignmentId(),
                                 assignmentDto.getAssignmentName(),
@@ -54,7 +58,9 @@ public class AssignmentPageController implements Initializable {
                 ).toList()
             ));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            alert.setContentText("Error when loading table data");
+            alert.show();
+            e.printStackTrace();
         }
     }
 
@@ -100,4 +106,29 @@ public class AssignmentPageController implements Initializable {
             addNewAssignmentController.populateFormForEdit(selectedAssignment);
         }
     }
+
+    public void updateOverdueStatus() {
+        try {
+            LocalDate today = LocalDate.now();
+            ArrayList<ArrayList> assignments = assignmentModel.getAllSubjectStatus();
+
+            for (ArrayList row : assignments) {
+                String status = row.get(0).toString();
+                LocalDate dueDate = LocalDate.parse(row.get(1).toString());
+                String assignmentId = row.get(2).toString();
+
+                if (status.equalsIgnoreCase("Pending") && dueDate.isBefore(today)) {
+                    assignmentModel.updateAssignmentStatus(assignmentId, "Overdue");
+                    System.out.println("Updated to overdue: " + assignmentId);
+                }
+            }
+            setupTableColumn();
+
+        } catch (SQLException e) {
+            alert.setContentText("Error when updating status");
+            alert.show();
+            e.printStackTrace();
+        }
+    }
+
 }

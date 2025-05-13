@@ -105,7 +105,7 @@ public class AssignmentFormController implements Initializable {
             alert.show();
             e.printStackTrace();
         }
-        assignmentPageController.setupTableColumn();
+        assignmentPageController.updateOverdueStatus();
     }
 
     private void deleteAssignment(AssignmentTM assignmentTM) {
@@ -175,7 +175,7 @@ public class AssignmentFormController implements Initializable {
             alert.show();
             e.printStackTrace();
         }
-        assignmentPageController.setupTableColumn();
+        assignmentPageController.updateOverdueStatus();
     }
 
     public void populateFormForEdit(AssignmentTM assignmentTM){
