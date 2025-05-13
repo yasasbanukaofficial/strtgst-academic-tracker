@@ -7,6 +7,7 @@ import edu.ijse.strtgst.util.CrudUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AssignmentModel {
     public boolean addAssignment(AssignmentDto assignmentDto) throws SQLException {
@@ -31,7 +32,7 @@ public class AssignmentModel {
         return rst.next() ? rst.getString(1) : null;
     }
 
-    public ArrayList<AssignmentDto> getAllCustomer() throws SQLException {
+    public ArrayList<AssignmentDto> getAllAssignments() throws SQLException {
         ResultSet rst = CrudUtil.execute("SELECT * FROM Assignment");
 
         ArrayList<AssignmentDto> assignmentDtos = new ArrayList<>();
@@ -61,6 +62,28 @@ public class AssignmentModel {
                 assignmentDto.getDueDate(),
                 assignmentDto.getAssignmentStatus(),
                 assignmentDto.getAssignmentId()
+        );
+    }
+
+    public ArrayList<ArrayList> getAllSubjectStatus() throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT assignment_status, due_date, assignment_id FROM Assignment");
+        ArrayList<ArrayList> list = new ArrayList<>();
+
+        while (rst.next()) {
+            ArrayList<String> row = new ArrayList<>();
+            row.add(rst.getString("assignment_status"));
+            row.add(rst.getString("due_date"));
+            row.add(rst.getString("assignment_id"));
+            list.add(row);
+        }
+        return list;
+    }
+
+
+    public boolean updateAssignmentStatus(String assignmentId, String newStatus) throws SQLException {
+        return CrudUtil.execute(
+                "UPDATE Assignment SET assignment_status = ? WHERE assignment_id = ?",
+                newStatus, assignmentId
         );
     }
 }

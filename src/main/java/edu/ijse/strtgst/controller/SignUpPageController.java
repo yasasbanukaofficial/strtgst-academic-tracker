@@ -2,11 +2,11 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.dto.StudentDto;
 import edu.ijse.strtgst.model.StudentModel;
+import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.IdLoader;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -21,8 +21,6 @@ public class SignUpPageController{
     public Button btnSignUp;
 
     private final StudentModel studentModel = new StudentModel();
-    private final Alert alert = new Alert(Alert.AlertType.ERROR);
-
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
     private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{6,}$";
@@ -44,18 +42,12 @@ public class SignUpPageController{
         if (validateInputs(username, email, password)) {
             try {
                 if (studentModel.addStudent(studentDto)) {
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Successfully Saved user");
-                    alert.show();
+                    AlertUtil.setInfoAlert("Successfully Saved user");
                     Navigation.navigateTo(signUpAnc, View.MAIN);
-                } else {
-                    alert.setContentText("Failed when saving user");
-                    alert.show();
-                }
+                } else { AlertUtil.setErrorAlert("Failed when saving user"); }
             } catch (Exception e) {
+                AlertUtil.setErrorAlert("Failed when saving user");
                 e.printStackTrace();
-                alert.setContentText("Failed when saving user");
-                alert.show();
             }
         }
     }
@@ -64,8 +56,7 @@ public class SignUpPageController{
         try {
             return IdLoader.getNextID("Student", "stud_id");
         } catch (SQLException e) {
-            alert.setContentText("Error when loading a Student ID");
-            alert.show();
+            AlertUtil.setErrorAlert("Error when loading a Student ID");
             e.printStackTrace();
         }
         return "S001";
@@ -102,8 +93,7 @@ public class SignUpPageController{
         } else txtPassword.setStyle(normalStyle);
 
         if (!isValid){
-            alert.setContentText("Error when creating an account: \n\n" + errorMsg);
-            alert.show();
+            AlertUtil.setErrorAlert("Error when creating an account: \n\n" + errorMsg);
         }
         return isValid;
     }
@@ -112,8 +102,7 @@ public class SignUpPageController{
         try{
             return studentModel.fetchExistingUsername(username);
         } catch (SQLException e){
-            alert.setContentText("Error when checking if username exists.");
-            alert.show();
+            AlertUtil.setErrorAlert("Error when checking if username exists.");
             e.printStackTrace();
         }
         return true;
@@ -123,8 +112,7 @@ public class SignUpPageController{
         try{
             return studentModel.fetchExistingEmail(email);
         } catch (SQLException e){
-            alert.setContentText("Error when checking if email exists.");
-            alert.show();
+            AlertUtil.setErrorAlert("Error when checking if email exists.");
             e.printStackTrace();
         }
         return true;
