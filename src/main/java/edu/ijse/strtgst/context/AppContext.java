@@ -1,9 +1,6 @@
 package edu.ijse.strtgst.context;
 
-import edu.ijse.strtgst.controller.AssignmentFormController;
-import edu.ijse.strtgst.controller.AssignmentPageController;
-import edu.ijse.strtgst.controller.TaskFormController;
-import edu.ijse.strtgst.controller.TaskPageController;
+import edu.ijse.strtgst.controller.*;
 
 public class AppContext {
     private static AppContext appContext;
@@ -11,6 +8,7 @@ public class AppContext {
     private static AssignmentFormController assignmentFormController;
     private static TaskFormController taskFormController;
     private static TaskPageController taskPageController;
+    private static MainPageController mainPageController;
     private String username;
 
     private AppContext() {}
@@ -19,40 +17,43 @@ public class AppContext {
         return appContext == null ? appContext = new AppContext() : appContext;
     }
 
-    public static AssignmentPageController getAssignmentPageController() {
+    public AssignmentPageController getAssignmentPageController() {
         if (assignmentPageController == null){
             assignmentPageController = new AssignmentPageController();
         }
         return assignmentPageController;
     }
 
-    public static TaskPageController getTaskPageController() {
+    public TaskPageController getTaskPageController() {
         if (taskPageController == null){
             taskPageController = new TaskPageController();
         }
         return taskPageController;
     }
 
-    public static AssignmentFormController getAssignmentFormController() {
+    public AssignmentFormController getAssignmentFormController() {
         if (assignmentFormController == null){
             assignmentFormController = new AssignmentFormController();
         }
         return assignmentFormController;
     }
 
-    public static TaskFormController getTaskFormController() {
+    public TaskFormController getTaskFormController() {
         if (taskFormController == null){
             taskFormController = new TaskFormController();
         }
         return taskFormController;
     }
 
-    public String getUsername() {
-        return username;
+    public MainPageController getMainPageController() {
+        if (mainPageController == null){
+            mainPageController = new MainPageController();
+        }
+        return mainPageController;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUsername() {
+        return username;
     }
 
     public void setAssignmentPageController(AssignmentPageController assignmentPageController) {
@@ -70,4 +71,13 @@ public class AppContext {
     public void setTaskPageController(TaskPageController taskPageController) {
         this.taskPageController = taskPageController;
     }
+
+    public void setMainPageController(MainPageController mainPageController) {
+        this.mainPageController = mainPageController;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }

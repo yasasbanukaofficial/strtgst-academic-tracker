@@ -32,6 +32,7 @@ public class SettingsPageController implements Initializable {
 
     private StudentDto studentDetails;
     private final AppContext appContext = AppContext.getInstance();
+    private final MainPageController mainPageController = appContext.getMainPageController();
     private final StudentModel studentModel = new StudentModel();
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
@@ -90,7 +91,9 @@ public class SettingsPageController implements Initializable {
                 if (studentModel.updateStudent(studentDto)) {
                     AlertUtil.setInfoAlert("Successfully made changes");
                     appContext.setUsername(username);
+                    mainPageController.setUpLabels();
                     setFieldDefaults(studentDto);
+                    this.studentDetails = studentDto;
                 } else { AlertUtil.setErrorAlert("Failed when making changes"); }
             } catch (Exception e) {
                 AlertUtil.setErrorAlert("Failed when making changes");

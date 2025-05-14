@@ -55,6 +55,14 @@ public class StudentModel {
         return null;
     }
 
+    public String fetchStudentName(String username) throws SQLException{
+        ResultSet rst = CrudUtil.execute("SELECT stud_name FROM Student WHERE username = ?", username);
+        while (rst.next()){
+            return rst.getString(1);
+        }
+        return "Student";
+    }
+
     public boolean updateStudent(StudentDto studentDto) throws SQLException {
         return CrudUtil.execute(
                 "UPDATE Student SET stud_name = ?, username = ?, email = ?, password = ?, date_of_birth = ? WHERE stud_id = ?",

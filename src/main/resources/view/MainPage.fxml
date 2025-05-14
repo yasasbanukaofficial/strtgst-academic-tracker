@@ -158,24 +158,24 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" onMouseClicked="#visitSettingsPage" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #F8F8F8; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
+                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" onMouseClicked="#visitSettingsPage" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #03004c; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
-                                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="75.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/Vector.png" />
+                                          <Image url="@../images/836-removebg-preview.png" />
                                        </image>
                                        <HBox.margin>
-                                          <Insets right="10.0" top="15.0" />
+                                          <Insets right="10.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <VBox prefHeight="55.0" prefWidth="205.0">
                                        <children>
-                                          <Label text="John Doe">
+                                          <Label fx:id="txtStudentName" text="John Doe" textFill="WHITE">
                                              <font>
                                                 <Font name="Poppins Bold" size="20.0" />
                                              </font>
                                           </Label>
-                                          <Label text="\@grandmaster12">
+                                          <Label fx:id="txtUsername" text="\@grandmaster12" textFill="WHITE">
                                              <font>
                                                 <Font name="Poppins Regular" size="14.0" />
                                              </font>

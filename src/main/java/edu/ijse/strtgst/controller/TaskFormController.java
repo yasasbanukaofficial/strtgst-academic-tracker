@@ -35,7 +35,7 @@ public class TaskFormController implements Initializable {
     private TaskDto taskDto;
     private final TaskModel taskModel = new TaskModel();
     private final AppContext appContext = AppContext.getInstance();
-    private final TaskPageController taskPageController = AppContext.getTaskPageController();
+    private final TaskPageController taskPageController = appContext.getTaskPageController();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
 

@@ -37,7 +37,7 @@ public class AssignmentFormController implements Initializable {
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final AppContext appContext = AppContext.getInstance();
-    private final AssignmentPageController assignmentPageController = AppContext.getAssignmentPageController();
+    private final AssignmentPageController assignmentPageController = appContext.getAssignmentPageController();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
     private ObservableList<String> subjectOptions = FXCollections.observableArrayList("Maths", "Science");
