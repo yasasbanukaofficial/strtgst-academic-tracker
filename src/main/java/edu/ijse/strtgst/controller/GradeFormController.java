@@ -1,4 +1,4 @@
 package edu.ijse.strtgst.controller;
 
-public class AddNewGradeController {
+public class GradeFormController {
 }

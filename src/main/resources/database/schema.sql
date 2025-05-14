@@ -43,8 +43,10 @@ CREATE TABLE assignment (
 
 -- Table Grade
 CREATE TABLE grade (
-    grade_id INT AUTO_INCREMENT,
+    grade_id VARCHAR(5),
+    marks INT,
     grade VARCHAR(2),
+    received_date DATE,
     PRIMARY KEY (grade_id)
 );
 
