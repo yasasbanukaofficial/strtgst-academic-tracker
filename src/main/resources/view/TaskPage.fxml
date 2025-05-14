@@ -3,7 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +12,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane fx:id="ancTask" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.TaskPageController">
    <children>
@@ -53,31 +53,53 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </HBox>
-                        <ListView prefHeight="332.0" prefWidth="1032.0">
+                        <TableView fx:id="tblTask" onMouseClicked="#onClickTaskTable" prefHeight="346.0" prefWidth="949.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnTaskName" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnTaskDueDate" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnTaskStatus" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                            <VBox.margin>
                               <Insets left="84.0" top="19.0" />
                            </VBox.margin>
-                        </ListView>
-                        <Label text="Overdue" textFill="#03004c">
+                        </TableView>
+                        <Label text="Completed" textFill="#03004c">
                            <font>
                               <Font name="Poppins Bold" size="24.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="22.0" left="93.0" top="27.0" />
+                              <Insets left="84.0" top="19.0" />
                            </VBox.margin>
                         </Label>
-                        <ListView prefHeight="332.0" prefWidth="200.0">
+                        <TableView fx:id="tblCompletedTask" onMouseClicked="#onClickCompletedTable" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnCompletedName" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnCompletedDueDate" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnCompletedStatus" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                            <VBox.margin>
-                              <Insets left="84.0" />
+                              <Insets left="84.0" top="19.0" />
                            </VBox.margin>
-                        </ListView>
+                        </TableView>
                      </children>
                   </VBox>
                   <VBox minWidth="-Infinity" prefHeight="1000.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                      <children>
                         <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Label text="May 19" textFill="#03004c">
+                              <Label fx:id="labelDate" text="May 19" textFill="#03004c">
                                  <font>
                                     <Font name="Poppins Bold" size="44.0" />
                                  </font>

@@ -169,11 +169,6 @@ public class AssignmentFormController implements Initializable {
         btnCancel.setOnAction(e -> {deleteAssignment(assignmentTM);});
     }
 
-    private void setButtonStates(boolean state) {
-        btnAddAssignment.setDisable(state);
-        btnCancel.setDisable(state);
-    }
-
     public String loadNextID(){
         try {
             return IdLoader.getNextID("Assignment", "assignment_id");
@@ -182,6 +177,24 @@ public class AssignmentFormController implements Initializable {
             e.printStackTrace();
         }
         return "A001";
+    }
+
+    private void setupFormDefaults() {
+        txtAssignmentName.setText("");
+        txtAssignmentDescription.setText("");
+        dpDueDate.setValue(null);
+        cmbSubject.setItems(subjectOptions);
+        cmbSubject.setValue(subjectOptions.get(0));
+        cmbMarks.setItems(marksOptions);
+        cmbMarks.setValue(marksOptions.get(0));
+        cmbStatus.setItems(statusOptions);
+        cmbStatus.setValue(statusOptions.get(0));
+        setButtonStates(false);
+    }
+
+    private void setButtonStates(boolean state) {
+        btnAddAssignment.setDisable(state);
+        btnCancel.setDisable(state);
     }
 
     private boolean validateAssignmentFields(String assignmentName, String status, LocalDate date) {
@@ -207,18 +220,5 @@ public class AssignmentFormController implements Initializable {
             }
         }
         return true;
-    }
-
-    private void setupFormDefaults() {
-        txtAssignmentName.setText("");
-        txtAssignmentDescription.setText("");
-        dpDueDate.setValue(null);
-        cmbSubject.setItems(subjectOptions);
-        cmbSubject.setValue(subjectOptions.get(0));
-        cmbMarks.setItems(marksOptions);
-        cmbMarks.setValue(marksOptions.get(0));
-        cmbStatus.setItems(statusOptions);
-        cmbStatus.setValue(statusOptions.get(0));
-        setButtonStates(false);
     }
 }

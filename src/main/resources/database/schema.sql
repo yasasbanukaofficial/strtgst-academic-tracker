@@ -76,18 +76,14 @@ CREATE TABLE exam (
         ON DELETE CASCADE
 );
 
--- Table TodoList
-CREATE TABLE todo_list (
-    todo_id INT AUTO_INCREMENT,
-    stud_id VARCHAR(4),
+-- Table Tasks
+CREATE TABLE tasks (
+    task_id VARCHAR(5) NOT NULL ,
     task_name VARCHAR(255) NOT NULL,
     task_description VARCHAR(500),
     due_date DATE,
     status ENUM('pending', 'completed', 'overdue') DEFAULT 'pending',
-    PRIMARY KEY (todo_id),
-    FOREIGN KEY (stud_id) REFERENCES student(stud_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    PRIMARY KEY (task_id)
 );
 
 -- Table StudySession

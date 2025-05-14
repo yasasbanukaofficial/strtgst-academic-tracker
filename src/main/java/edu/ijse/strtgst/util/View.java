@@ -14,7 +14,7 @@ public enum View {
     ADD_ASSIGNMENT("AssignmentForm.fxml"),
     ADD_EVENT("AddNewEvent.fxml"),
     ADD_GRADE("AddNewGrade.fxml"),
-    ADD_TASK("AddNewTask.fxml"),
+    ADD_TASK("TaskForm.fxml"),
 
     DEFAULT_ASSIGNMENT("DefaultAssignmentDisplay.fxml"),
     DEFAULT_GRADE("DefaultGradeDisplay.fxml"),
