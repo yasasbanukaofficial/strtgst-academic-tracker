@@ -145,9 +145,9 @@ public class AssignmentPageController implements Initializable {
     public void onClickAssignmentTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
         AssignmentTM selectedAssignment = tblAssignment.getSelectionModel().getSelectedItem();
-        AssignmentFormController addNewAssignmentController = controllerManager.getAssignmentFormController();
+        AssignmentFormController assignmentFormController = controllerManager.getAssignmentFormController();
         if (selectedAssignment != null){
-            addNewAssignmentController.populateFormForEdit(selectedAssignment);
+            assignmentFormController.populateFormForEdit(selectedAssignment);
         }
     }
 
@@ -163,7 +163,7 @@ public class AssignmentPageController implements Initializable {
     public void updateOverdueStatus() {
         try {
             LocalDate today = LocalDate.now();
-            ArrayList<ArrayList> assignments = assignmentModel.getAllSubjectStatus();
+            ArrayList<ArrayList> assignments = assignmentModel.getAllAssignmentStatus();
 
             for (ArrayList row : assignments) {
                 String status = row.get(0).toString();
