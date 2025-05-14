@@ -5,12 +5,11 @@ USE Strtgst;
 -- Table Student
 CREATE TABLE student(
     stud_id VARCHAR(4) NOT NULL,
-    stud_name VARCHAR(50),
+    stud_name VARCHAR(50) DEFAULT 'Student',
     username VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL,
     password VARCHAR(200) NOT NULL,
-    profile_picture MEDIUMBLOB,
-    date_of_birth DATE,
+    date_of_birth TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
@@ -120,7 +119,7 @@ CREATE TABLE event (
 CREATE TABLE subject_scores (
     score_id INT AUTO_INCREMENT,
     sub_id VARCHAR(5),
-    grade_id INT,
+    grade_id VARCHAR(5),
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (score_id),

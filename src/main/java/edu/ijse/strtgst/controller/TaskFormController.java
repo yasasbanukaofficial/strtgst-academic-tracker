@@ -1,6 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.context.ControllerManager;
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.TaskDto;
 import edu.ijse.strtgst.dto.tm.TaskTM;
 import edu.ijse.strtgst.model.TaskModel;
@@ -34,14 +34,14 @@ public class TaskFormController implements Initializable {
 
     private TaskDto taskDto;
     private final TaskModel taskModel = new TaskModel();
-    private final ControllerManager controllerManager = new ControllerManager();
-    private final TaskPageController taskPageController = ControllerManager.getTaskPageController();
+    private final AppContext appContext = AppContext.getInstance();
+    private final TaskPageController taskPageController = AppContext.getTaskPageController();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controllerManager.setTaskFormController(this);
+        appContext.setTaskFormController(this);
         setupFormDefaults();
     }
 

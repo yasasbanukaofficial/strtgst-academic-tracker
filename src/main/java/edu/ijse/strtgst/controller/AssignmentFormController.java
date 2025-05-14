@@ -1,6 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.context.ControllerManager;
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.AssignmentDto;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
@@ -36,15 +36,15 @@ public class AssignmentFormController implements Initializable {
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
-    private final ControllerManager controllerManager = new ControllerManager();
-    private final AssignmentPageController assignmentPageController = ControllerManager.getAssignmentPageController();
+    private final AppContext appContext = AppContext.getInstance();
+    private final AssignmentPageController assignmentPageController = AppContext.getAssignmentPageController();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
     private ObservableList<String> subjectOptions = FXCollections.observableArrayList("Maths", "Science");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controllerManager.setAssignmentFormController(this);
+        appContext.setAssignmentFormController(this);
         setupFormDefaults();
     }
 

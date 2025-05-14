@@ -5,11 +5,19 @@ import edu.ijse.strtgst.controller.AssignmentPageController;
 import edu.ijse.strtgst.controller.TaskFormController;
 import edu.ijse.strtgst.controller.TaskPageController;
 
-public class ControllerManager {
+public class AppContext {
+    private static AppContext appContext;
     private static AssignmentPageController assignmentPageController;
     private static AssignmentFormController assignmentFormController;
     private static TaskFormController taskFormController;
     private static TaskPageController taskPageController;
+    private String username;
+
+    private AppContext() {}
+
+    public static AppContext getInstance() {
+        return appContext == null ? appContext = new AppContext() : appContext;
+    }
 
     public static AssignmentPageController getAssignmentPageController() {
         if (assignmentPageController == null){
@@ -25,6 +33,28 @@ public class ControllerManager {
         return taskPageController;
     }
 
+    public static AssignmentFormController getAssignmentFormController() {
+        if (assignmentFormController == null){
+            assignmentFormController = new AssignmentFormController();
+        }
+        return assignmentFormController;
+    }
+
+    public static TaskFormController getTaskFormController() {
+        if (taskFormController == null){
+            taskFormController = new TaskFormController();
+        }
+        return taskFormController;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setAssignmentPageController(AssignmentPageController assignmentPageController) {
         this.assignmentPageController = assignmentPageController;
     }
@@ -33,23 +63,8 @@ public class ControllerManager {
         this.assignmentFormController = assignmentFormController;
     }
 
-    public static AssignmentFormController getAssignmentFormController() {
-        if (assignmentFormController == null){
-            assignmentFormController = new AssignmentFormController();
-        }
-        return assignmentFormController;
-    }
-
-
     public void setTaskFormController(TaskFormController taskFormController) {
         this.taskFormController = taskFormController;
-    }
-
-    public static TaskFormController getTaskFormController() {
-        if (taskFormController == null){
-            taskFormController = new TaskFormController();
-        }
-        return taskFormController;
     }
 
     public void setTaskPageController(TaskPageController taskPageController) {
