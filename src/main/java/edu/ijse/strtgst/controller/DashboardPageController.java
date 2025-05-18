@@ -38,10 +38,6 @@ public class DashboardPageController implements Initializable {
         Navigation.navigateTo(ancDashboard, View.ASSIGNMENT);
     }
 
-    public void visitGradesPage(MouseEvent mouseEvent) {
-        Navigation.navigateTo(ancDashboard, View.GRADES);
-    }
-
     public void visitLecturesPage(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancDashboard, View.CALENDAR);
     }
@@ -54,5 +50,9 @@ public class DashboardPageController implements Initializable {
             AlertUtil.setErrorAlert("Error when fetching total");
             e.printStackTrace();
         }
+    }
+
+    public void visitAcademicsPage(MouseEvent mouseEvent) {
+        Navigation.navigateTo(ancDashboard, View.ACADEMICS);
     }
 }

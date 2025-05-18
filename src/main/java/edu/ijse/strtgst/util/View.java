@@ -5,7 +5,7 @@ public enum View {
     CALENDAR("CalendarPage.fxml"),
     TASK("TaskPage.fxml"),
     ASSIGNMENT("AssignmentPage.fxml"),
-    GRADES("GradesPage.fxml"),
+    ACADEMICS("AcademicsPage.fxml"),
     SETTINGS("SettingsPage.fxml"),
     LOGIN("LoginPage.fxml"),
     SIGNUP("SignUpPage.fxml"),
@@ -13,11 +13,9 @@ public enum View {
 
     ADD_ASSIGNMENT("AssignmentForm.fxml"),
     ADD_EVENT("AddNewEvent.fxml"),
-    ADD_GRADE("GradesForm.fxml"),
     ADD_TASK("TaskForm.fxml"),
 
     DEFAULT_ASSIGNMENT("DefaultAssignmentDisplay.fxml"),
-    DEFAULT_GRADE("DefaultGradeDisplay.fxml"),
     DEFAULT_TASK("DefaultTaskDisplay.fxml");
 
 

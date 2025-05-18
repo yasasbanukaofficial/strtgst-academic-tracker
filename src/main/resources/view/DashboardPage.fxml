@@ -115,7 +115,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitGradesPage" prefHeight="212.0" prefWidth="263.0" style="-fx-background-color: #D4EDEB; -fx-background-radius: 34px; -fx-border-radius: 34px;">
+                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitAcademicsPage" prefHeight="212.0" prefWidth="263.0" style="-fx-background-color: #D4EDEB; -fx-background-radius: 34px; -fx-border-radius: 34px;">
                      <children>
                         <Label text="GPA Calculation">
                            <font>

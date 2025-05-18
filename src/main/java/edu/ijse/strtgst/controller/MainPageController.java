@@ -62,15 +62,15 @@ public class MainPageController implements Initializable {
         stopAndNavigate(ancTabDisplay, View.SETTINGS);
     }
 
-    public void visitGradesPage(MouseEvent mouseEvent) {
-        stopAndNavigate(ancTabDisplay, View.GRADES);
-    }
-
     public void visitCalendarPage(MouseEvent mouseEvent) {
         stopAndNavigate(ancTabDisplay, View.CALENDAR);
     }
 
     public void visitLoginPage(MouseEvent mouseEvent) {
         stopAndNavigate(ancMainPage, View.LOGIN);
+    }
+
+    public void visitAcademicsPage(MouseEvent mouseEvent) {
+        stopAndNavigate(ancTabDisplay, View.ACADEMICS);
     }
 }
