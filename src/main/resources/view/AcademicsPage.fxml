@@ -5,8 +5,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -209,40 +212,19 @@
                   <Insets left="86.0" right="86.0" top="30.0" />
                </VBox.margin>
             </HBox>
-            <Label text="Recent Exams" textFill="#03004c">
-               <font>
-                  <Font name="Poppins Bold" size="24.0" />
-               </font>
+            <HBox prefHeight="533.0" prefWidth="1461.0" spacing="30.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
-                  <Insets bottom="10.0" left="90.0" top="30.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="30.0" left="86.0" right="86.0" />
+                  <Insets bottom="30.0" left="86.0" right="56.0" top="20.0" />
                </VBox.margin>
                <children>
-                  <TableView fx:id="tblTask" onMouseClicked="#onClickTaskTable" prefHeight="570.0" prefWidth="734.0" stylesheets="@styles/tableView.css">
-                     <columns>
-                        <TableColumn fx:id="columnTaskName" prefWidth="432.0" text="Name" />
-                        <TableColumn fx:id="columnTaskDueDate" prefWidth="194.0" text="Due Date" />
-                        <TableColumn fx:id="columnTaskStatus" prefWidth="189.0" styleClass="status-column" text="Status" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </TableView>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                  <VBox maxHeight="-Infinity" prefHeight="580.0" prefWidth="684.0" spacing="10.0">
                      <children>
-                        <Label text="Subjects" textFill="#03004c">
+                        <Label text="Exams" textFill="#03004c">
                            <font>
                               <Font name="Poppins Bold" size="24.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="tblTask1" onMouseClicked="#onClickTaskTable" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                        <TableView fx:id="tblExams" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
                            <columns>
                               <TableColumn fx:id="columnTaskName1" prefWidth="432.0" text="Name" />
                               <TableColumn fx:id="columnTaskDueDate1" prefWidth="194.0" text="Due Date" />
@@ -263,7 +245,7 @@
                               <Font name="Poppins Bold" size="24.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="tblTask11" onMouseClicked="#onClickTaskTable" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                        <TableView fx:id="tblEvents" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
                            <columns>
                               <TableColumn fx:id="columnTaskName11" prefWidth="432.0" text="Name" />
                               <TableColumn fx:id="columnTaskDueDate11" prefWidth="194.0" text="Due Date" />
@@ -277,7 +259,78 @@
                            </cursor>
                         </TableView>
                      </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </VBox>
+                  <VBox maxHeight="-Infinity" prefHeight="580.0" prefWidth="657.0" spacing="10.0">
+                     <children>
+                        <Label text="Exams" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tblExams1" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnTaskName11" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnTaskDueDate11" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnTaskStatus11" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <Label text="Events" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tblEvents1" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnTaskName111" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnTaskDueDate111" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnTaskStatus111" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
+                     </children>
+                  </VBox>
+                  <HBox accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onMouseClicked="#showOptionsPage" prefHeight="63.0" prefWidth="63.0" style="-fx-background-color: #ffffff; -fx-background-radius: 25px; -fx-border-radius: 25px;">
+                     <children>
+                        <StackPane prefHeight="63.0" prefWidth="69.0">
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/Frame%201.png" />
+                                 </image>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </ImageView>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </StackPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets top="510.0" />
+                     </HBox.margin>
+                  </HBox>
                </children>
             </HBox>
          </children>
