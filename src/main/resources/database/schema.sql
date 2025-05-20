@@ -53,6 +53,7 @@ CREATE TABLE grade (
 CREATE TABLE lecture (
     lec_id INT AUTO_INCREMENT,
     sub_id VARCHAR(5),
+    lec_Name VARCHAR(150),
     date DATE NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,

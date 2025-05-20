@@ -16,6 +16,7 @@ public enum View {
     ADD_TASK("TaskForm.fxml"),
 
     ACADEMIC_CHOICE("AcademicChoice.fxml"),
+    LECTURES_FORM("LecturesForm.fxml"),
 
     DEFAULT_ASSIGNMENT("DefaultAssignmentDisplay.fxml"),
     DEFAULT_TASK("DefaultTaskDisplay.fxml");

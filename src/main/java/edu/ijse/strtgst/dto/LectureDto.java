@@ -1,9 +1,8 @@
 package edu.ijse.strtgst.dto;
 
 import lombok.*;
-
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,10 +10,11 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 public class LectureDto {
-    private int lecId;
+    private String lecId;
     private String subId;
-    private Date date;
-    private Timestamp startTime;
-    private Timestamp endTime;
-    private String status; // "upcoming", "ongoing", or "ended"
+    private String lectureName;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String status;
 }

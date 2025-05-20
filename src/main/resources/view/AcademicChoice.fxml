@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancOption" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="476.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.AcademicChoiceController">
+<AnchorPane fx:id="ancOption" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="857.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.AcademicChoiceController">
    <children>
       <VBox layoutX="148.0" layoutY="164.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -24,7 +24,7 @@
                         <Font name="Poppins Bold" size="22.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelAssignmentHeader1" onMouseClicked="#closeEditor" prefHeight="32.0" prefWidth="189.0" text="Close Editor" textFill="#ab0036" underline="true">
+                  <Label fx:id="labelAssignmentHeader1" onMouseClicked="#closeEditor" prefHeight="32.0" prefWidth="98.0" text="Close " textFill="#ab0036" underline="true">
                      <font>
                         <Font name="Poppins Bold" size="16.0" />
                      </font>
