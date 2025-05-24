@@ -4,6 +4,8 @@ import edu.ijse.strtgst.dto.LectureDto;
 import edu.ijse.strtgst.model.LectureModel;
 import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.IdLoader;
+import edu.ijse.strtgst.util.Navigation;
+import edu.ijse.strtgst.util.View;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,17 +38,6 @@ public class LectureFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for (int i = 0; i <= 24; i++) {
-            String formattedHr = String.format("%02d", i);
-            cmbStartHour.getItems().add(formattedHr);
-            cmbEndHour.getItems().add(formattedHr);
-        }
-        for (int i = 0; i < 60; i++) {
-            String formattedMin = String.format("%02d", i);
-            cmbStartMinute.getItems().add(formattedMin);
-            cmbEndMinute.getItems().add(formattedMin);
-        }
-
         LocalTime currentTime = LocalTime.now();
         int currentHr = currentTime.getHour();
         int currentMin = currentTime.getMinute();
@@ -57,6 +48,17 @@ public class LectureFormController implements Initializable {
             cmbEndMinute.setValue(0 + "" + String.valueOf(currentMin));
             cmbStartMinute.setValue(0 + "" + String.valueOf(currentMin));
         }
+        
+        for (int i = 0; i <= 23; i++) {
+            String formattedHr = String.format("%02d", i);
+            cmbStartHour.getItems().add(formattedHr);
+            cmbEndHour.getItems().add(formattedHr);
+        }
+        for (int i = 0; i <= 59; i++) {
+            String formattedMin = String.format("%02d", i);
+            cmbStartMinute.getItems().add(formattedMin);
+            cmbEndMinute.getItems().add(formattedMin);
+        }
     }
 
     public void cancelAdding(ActionEvent event) {
@@ -64,24 +66,52 @@ public class LectureFormController implements Initializable {
 
     public void addLecture(ActionEvent event) {
         String lecId = loadNextId();
+        String lecName = txtLectureName.getText();
         String subId = getSubId(cmbSubject.getValue());
+        LocalDate date = dpDate.getValue();
         LocalTime startTime = LocalTime.of(Integer.parseInt(cmbStartHour.getValue()), Integer.parseInt(cmbStartMinute.getValue()));
         LocalTime endTime = LocalTime.of(Integer.parseInt(cmbEndHour.getValue()), Integer.parseInt(cmbEndMinute.getValue()));
         String status = getStatus(dpDate.getValue());
 
-        LectureDto lectureDto = new LectureDto(
-                lecId,
-                subId,
-                txtLectureName.getText(),
-                dpDate.getValue(),
-                startTime,
-                endTime,
-                status
-        );
+        setButtonStates(false);
+        if (validateLectureFields(lecName, date, startTime, endTime, status)){
+            LectureDto lectureDto = new LectureDto(
+                    lecId,
+                    subId,
+                    lecName,
+                    date,
+                    startTime,
+                    endTime,
+                    status
+            );
+
+            try {
+                if (lectureModel.addLecture(lectureDto)){
+                    AlertUtil.setInfoAlert("Successfully edited the lecture");
+                } else AlertUtil.setInfoAlert("Failed to add the lecture");
+            } catch (SQLException e){
+                AlertUtil.setErrorAlert("Failed when adding a lecture");
+                e.printStackTrace();
+            }
+        }
     }
 
     private String getSubId(String subName) {
-        String subId = IdLoader.fetchIdByName()
+        try {
+            String subId = IdLoader.fetchIdByName("Subject", "sub_id", subName);
+            if (!areRequiredFieldsFilled(subId)) {
+                AlertUtil.setErrorAlert("Error when loading sub id");
+            }
+            return subId;
+        } catch (SQLException e) {
+            AlertUtil.setErrorAlert("Error when fetching sub id");
+        }
+        return null;
+    }
+
+    private void setButtonStates(boolean state) {
+        btnAddLecture.setDisable(state);
+        btnCancel.setDisable(state);
     }
 
     private String getStatus(LocalDate date) {
@@ -102,5 +132,25 @@ public class LectureFormController implements Initializable {
             e.printStackTrace();
         }
         return "L001";
+    }
+
+    private boolean validateLectureFields(String lectureName, LocalDate date, LocalTime startTime, LocalTime endTime, String status) {
+        if (!areRequiredFieldsFilled(lectureName, status, date)){
+            AlertUtil.setErrorAlert("You must fill required fields (*)!");
+            return false;
+        }
+        if (startTime.isAfter(endTime) || endTime.isBefore(startTime)){
+            AlertUtil.setErrorAlert("Invalid time range: the start time must be earlier than the end time.");
+        }
+        return true;
+    }
+
+    private boolean areRequiredFieldsFilled(Object... inputs) {
+        for(Object input : inputs){
+            if (input == null || input.equals("")) {
+                return false;
+            }
+        }
+        return true;
     }
 }

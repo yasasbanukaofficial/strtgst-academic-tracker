@@ -14,7 +14,6 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="857.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.LectureFormController">
    <children>
       <VBox layoutX="148.0" layoutY="164.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-radius: 63px 0 0 0; -fx-background-radius: 63px 0 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -232,7 +231,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnAddLecture" mnemonicParsing="false" onAction="#addLecture" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #FFD43A; -fx-background-radius: 20.5px; -fx-border-radius: 20.5px; -fx-border-width: 2px;" text="Add Assignment">
+                  <Button fx:id="btnAddLecture" mnemonicParsing="false" onAction="#addLecture" prefHeight="41.0" prefWidth="198.0" style="-fx-background-color: #FFD43A; -fx-background-radius: 20.5px; -fx-border-radius: 20.5px; -fx-border-width: 2px;" text="Add Lecture">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

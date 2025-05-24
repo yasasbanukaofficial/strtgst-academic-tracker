@@ -56,7 +56,7 @@ public class TaskFormController implements Initializable {
         LocalDate dueDate = dpTaskDueDate.getValue();
         String status = cmbStatus.getValue();
         setButtonStates(false);
-        if (validateAssignmentFields(taskName, status, dueDate)) {
+        if (validateTaskFields(taskName, status, dueDate)) {
              taskDto = new TaskDto(
                     task_id,
                     taskName,
@@ -108,7 +108,7 @@ public class TaskFormController implements Initializable {
         String status = cmbStatus.getValue();
 
         setButtonStates(false);
-        if (validateAssignmentFields(taskName, status, dueDate)) {
+        if (validateTaskFields(taskName, status, dueDate)) {
             taskDto = new TaskDto(
                     task_id,
                     taskName,
@@ -175,7 +175,7 @@ public class TaskFormController implements Initializable {
         btnCancelTask.setDisable(state);
     }
 
-    private boolean validateAssignmentFields(String taskName, String status, LocalDate dueDate) {
+    private boolean validateTaskFields(String taskName, String status, LocalDate dueDate) {
         if (!areRequiredFieldsFilled(taskName, status, dueDate)){
             AlertUtil.setErrorAlert("You must fill required fields (*)!");
             return false;
