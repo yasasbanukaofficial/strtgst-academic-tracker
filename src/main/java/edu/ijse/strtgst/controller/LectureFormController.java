@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-
 public class LectureFormController implements Initializable {
 
     public Label labelLectureHeading;
@@ -33,36 +32,12 @@ public class LectureFormController implements Initializable {
     public Button btnCancel;
     public Button btnAddLecture;
 
-    ObservableList <String> hours = FXCollections.observableArrayList();
     private final LectureModel lectureModel = new LectureModel();
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        LocalTime currentTime = LocalTime.now();
-        int currentHr = currentTime.getHour();
-        int currentMin = currentTime.getMinute();
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
-        cmbStartHour.setValue(String.valueOf(currentHr));
-        cmbEndHour.setValue(String.valueOf(currentHr + 1));
-        if (currentMin < 10){
-            cmbEndMinute.setValue(0 + "" + String.valueOf(currentMin));
-            cmbStartMinute.setValue(0 + "" + String.valueOf(currentMin));
-        }
-        
-        for (int i = 0; i <= 23; i++) {
-            String formattedHr = String.format("%02d", i);
-            cmbStartHour.getItems().add(formattedHr);
-            cmbEndHour.getItems().add(formattedHr);
-        }
-        for (int i = 0; i <= 59; i++) {
-            String formattedMin = String.format("%02d", i);
-            cmbStartMinute.getItems().add(formattedMin);
-            cmbEndMinute.getItems().add(formattedMin);
-        }
-    }
-
-    public void cancelAdding(ActionEvent event) {
-    }
+    public void cancelAdding(ActionEvent event) {}
 
     public void addLecture(ActionEvent event) {
         String lecId = loadNextId();

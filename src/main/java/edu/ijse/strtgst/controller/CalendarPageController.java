@@ -1,27 +1,54 @@
 package edu.ijse.strtgst.controller;
 
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarEvent;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
 import com.calendarfx.view.*;
+import com.calendarfx.view.page.DayPage;
+import com.calendarfx.view.page.MonthPage;
+import com.calendarfx.view.page.WeekPage;
+import com.calendarfx.view.page.YearPage;
+import edu.ijse.strtgst.model.CalendarModel;
+import edu.ijse.strtgst.util.AlertUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class CalendarPageController implements Initializable {
     public VBox ancTimeline;
+    private Calendar examCalendar = new Calendar("Exam");
+    private Calendar lectureCalendar = new Calendar("Lecture");
+    private Calendar eventsCalendar = new Calendar("Event");
+    private CalendarSource calendarSource = new CalendarSource("My Calendar");
     private final DetailedWeekView weekView = new DetailedWeekView();
     private final DetailedDayView dayView = new DetailedDayView();
     private final MonthView monthView = new MonthView();
     private final YearView yearView = new YearView();
 
+    private final CalendarModel calendarModel = new CalendarModel();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showWeekView(new ActionEvent());
+        calendarSource.getCalendars().addAll(examCalendar, lectureCalendar, eventsCalendar);
+        weekView.getCalendarSources().add(calendarSource);
+        dayView.getCalendarSources().add(calendarSource);
+        monthView.getCalendarSources().add(calendarSource);
+        yearView.getCalendarSources().add(calendarSource);
+
+        eventsInitializer();
     }
 
     public void navigateTo(Node node){
@@ -34,7 +61,8 @@ public class CalendarPageController implements Initializable {
         double width = ancTimeline.getPrefWidth() - 20.0;
         double height = ancTimeline.getPrefHeight() - 20.0;
         view.setPrefSize(width, height);
-
+        view.refreshData();
+        view.requestLayout();
         UpdateThread.startThread(view);
         navigateTo(view);
     }
@@ -53,6 +81,25 @@ public class CalendarPageController implements Initializable {
 
     public void showYearView(ActionEvent actionEvent) {
         setupView(yearView);
+    }
+
+    private void eventsInitializer(){
+        EventHandler<CalendarEvent> event = e -> handleEvent(e);
+        examCalendar.addEventHandler(event);
+        lectureCalendar.addEventHandler(event);
+        eventsCalendar.addEventHandler(event);
+    }
+
+    private void handleEvent (CalendarEvent e) {
+        Entry<?> entry = e.getEntry();
+        try {
+            if (!calendarModel.syncEntryWithDatabase(entry)) {
+                AlertUtil.setErrorAlert("Error when adding an event to the calendar");
+            }
+        } catch (SQLException ex) {
+            AlertUtil.setErrorAlert("Error when adding an event to the calendar in db");
+            ex.printStackTrace();
+        }
     }
 }
 
@@ -77,7 +124,7 @@ class UpdateThread{
                         });
 
                         try{
-                            sleep(10000);
+                            sleep(5000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
