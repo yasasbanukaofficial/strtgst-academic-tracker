@@ -104,24 +104,22 @@ public class CalendarPageController implements Initializable {
 
     private void loadAllEntries() {
         try {
-            ArrayList<Entry<?>> examEntries = calendarModel.getAllExamEntries();
-            examEntries.stream().forEach(e -> {
-                examCalendar.addEntry(e);
-            });
-            ArrayList<Entry<?>> lectureEntries = calendarModel.getAllLectureEntries();
-            lectureEntries.stream().forEach(e -> {
-                lectureCalendar.addEntry(e);
-            });
-            ArrayList<Entry<?>> EventEntries = calendarModel.getAllEventEntries();
-            EventEntries.stream().forEach(e -> {
-                eventsCalendar.addEntry(e);
-            });
+            loadEntriesForCalendar(examCalendar, calendarModel.getAllExamEntries());
+            loadEntriesForCalendar(lectureCalendar, calendarModel.getAllLectureEntries());
+            loadEntriesForCalendar(eventsCalendar, calendarModel.getAllEventEntries());
             refreshViews();
         } catch (SQLException e) {
             AlertUtil.setErrorAlert("Error when loading all entries from the calendar");
             e.printStackTrace();
         }
     }
+
+    private void loadEntriesForCalendar(Calendar calendar, ArrayList<Entry<?>> entries) {
+        for (Entry<?> entry : entries) {
+            calendar.addEntry(entry);
+        }
+    }
+
 
     private void refreshViews() {
         weekView.refreshData();
