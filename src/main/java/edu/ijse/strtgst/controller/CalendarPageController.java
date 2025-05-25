@@ -5,17 +5,12 @@ import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.*;
-import com.calendarfx.view.page.DayPage;
 import com.calendarfx.view.page.MonthPage;
-import com.calendarfx.view.page.WeekPage;
-import com.calendarfx.view.page.YearPage;
 import edu.ijse.strtgst.model.CalendarModel;
 import edu.ijse.strtgst.util.AlertUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
@@ -24,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CalendarPageController implements Initializable {
@@ -34,7 +30,7 @@ public class CalendarPageController implements Initializable {
     private CalendarSource calendarSource = new CalendarSource("My Calendar");
     private final DetailedWeekView weekView = new DetailedWeekView();
     private final DetailedDayView dayView = new DetailedDayView();
-    private final MonthView monthView = new MonthView();
+    private final MonthPage monthView = new MonthPage();
     private final YearView yearView = new YearView();
 
     private final CalendarModel calendarModel = new CalendarModel();
@@ -48,7 +44,11 @@ public class CalendarPageController implements Initializable {
         monthView.getCalendarSources().add(calendarSource);
         yearView.getCalendarSources().add(calendarSource);
 
+        monthView.setShowDate(false);
+        monthView.setShowNavigation(false);
+
         eventsInitializer();
+        loadAllEntries();
     }
 
     public void navigateTo(Node node){
@@ -100,6 +100,34 @@ public class CalendarPageController implements Initializable {
             AlertUtil.setErrorAlert("Error when adding an event to the calendar in db");
             ex.printStackTrace();
         }
+    }
+
+    private void loadAllEntries() {
+        try {
+            ArrayList<Entry<?>> examEntries = calendarModel.getAllExamEntries();
+            examEntries.stream().forEach(e -> {
+                examCalendar.addEntry(e);
+            });
+            ArrayList<Entry<?>> lectureEntries = calendarModel.getAllLectureEntries();
+            lectureEntries.stream().forEach(e -> {
+                lectureCalendar.addEntry(e);
+            });
+            ArrayList<Entry<?>> EventEntries = calendarModel.getAllEventEntries();
+            EventEntries.stream().forEach(e -> {
+                eventsCalendar.addEntry(e);
+            });
+            refreshViews();
+        } catch (SQLException e) {
+            AlertUtil.setErrorAlert("Error when loading all entries from the calendar");
+            e.printStackTrace();
+        }
+    }
+
+    private void refreshViews() {
+        weekView.refreshData();
+        dayView.refreshData();
+        monthView.refreshData();
+        yearView.refreshData();
     }
 }
 

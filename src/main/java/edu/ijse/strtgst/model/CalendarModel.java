@@ -67,4 +67,36 @@ public class CalendarModel {
 
         return true;
     }
+
+    public ArrayList<Entry<?>> getAllExamEntries() throws SQLException {
+        ArrayList<Entry<?>> entries = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Exam");
+        return getEntries(entries, rst);
+    }
+
+    public ArrayList<Entry<?>> getAllLectureEntries() throws SQLException {
+        ArrayList<Entry<?>> entries = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Lecture");
+        return getEntries(entries, rst);
+    }
+
+    public ArrayList<Entry<?>> getAllEventEntries() throws SQLException {
+        ArrayList<Entry<?>> entries = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Event");
+        return getEntries(entries, rst);
+    }
+
+    private ArrayList<Entry<?>> getEntries(ArrayList<Entry<?>> entries, ResultSet rst) throws SQLException {
+        while (rst.next()) {
+            Entry<?> entry = new Entry<>();
+            entry.setId(rst.getString(1));
+            entry.setTitle(rst.getString(2));
+            entry.setLocation(rst.getString(3));
+            entry.setFullDay(rst.getBoolean(4));
+            entry.setInterval(rst.getTimestamp(5).toLocalDateTime(), rst.getTimestamp(6).toLocalDateTime());
+            entry.setRecurrenceRule(rst.getString(7));
+            entries.add(entry);
+        }
+        return entries;
+    }
 }
