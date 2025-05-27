@@ -1,6 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.context.ControllerManager;
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.TaskDto;
 import edu.ijse.strtgst.dto.tm.TaskTM;
 import edu.ijse.strtgst.model.TaskModel;
@@ -37,14 +37,14 @@ public class TaskPageController implements Initializable {
     public Label labelDate;
 
     private final TaskModel taskModel = new TaskModel();
-    private final ControllerManager controllerManager = new ControllerManager();
+    private final AppContext appContext = AppContext.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumn();
         updateOverdueStatus();
         updateDateLabel();
-        controllerManager.setTaskPageController(this);
+        appContext.setTaskPageController(this);
         Navigation.navigateTo(ancTaskContainer, View.DEFAULT_TASK);
     }
 
@@ -131,7 +131,7 @@ public class TaskPageController implements Initializable {
     public void onClickTaskTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_TASK);
         TaskTM selectedTask = tblTask.getSelectionModel().getSelectedItem();
-        TaskFormController taskFormController = controllerManager.getTaskFormController();
+        TaskFormController taskFormController = appContext.getTaskFormController();
         if (selectedTask != null){
             taskFormController.populateFormForEdit(selectedTask);
         }
@@ -140,7 +140,7 @@ public class TaskPageController implements Initializable {
     public void onClickCompletedTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_TASK);
         TaskTM selectedTask = tblCompletedTask.getSelectionModel().getSelectedItem();
-        TaskFormController taskFormController = controllerManager.getTaskFormController();
+        TaskFormController taskFormController = appContext.getTaskFormController();
         if (selectedTask != null){
             taskFormController.populateFormForEdit(selectedTask);
         }

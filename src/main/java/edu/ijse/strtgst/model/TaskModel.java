@@ -73,4 +73,12 @@ public class TaskModel {
     public boolean deleteTask(String taskId) throws SQLException {
         return CrudUtil.execute("DELETE FROM Tasks WHERE task_id = ?", taskId);
     }
+
+    public String getPendingOrOverdueTaskCount() throws SQLException{
+        ResultSet rst = CrudUtil.execute("SELECT COUNT(*) FROM Tasks WHERE status = 'Pending' OR status = 'Overdue'");
+        if (rst.next()){
+            return rst.getString(1);
+        }
+        return "0";
+    }
 }

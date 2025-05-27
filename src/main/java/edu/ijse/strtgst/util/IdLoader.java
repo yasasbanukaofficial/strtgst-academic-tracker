@@ -18,4 +18,14 @@ public class IdLoader {
         }
         return firstCharacter + "001";
     }
+
+    public static String fetchIdByName(String tableName, String idColumn, String name) throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT " + idColumn + " FROM " + tableName + "WHERE sub_name = " + name + " ORDER BY sub_name DESC LIMIT 1");
+
+        if (rst.next()){
+            String subId = rst.getString(1);
+            return subId;
+        }
+        return null;
+    }
 }

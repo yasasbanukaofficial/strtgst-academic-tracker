@@ -1,6 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.context.ControllerManager;
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.AssignmentDto;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
@@ -26,8 +26,8 @@ public class AssignmentFormController implements Initializable {
     public TextField txtAssignmentName;
     public TextArea txtAssignmentDescription;
     public ComboBox<String> cmbSubject;
-    public ComboBox<String> cmbMarks;
     public DatePicker dpDueDate;
+    public TextField txtMarks;
     public ComboBox<String> cmbStatus;
     public Button btnAddAssignment;
     public Button btnCancel;
@@ -36,19 +36,15 @@ public class AssignmentFormController implements Initializable {
 
     private AssignmentDto assignmentDto;
     private final AssignmentModel assignmentModel = new AssignmentModel();
-    private final ControllerManager controllerManager = new ControllerManager();
-    private final AssignmentPageController assignmentPageController = ControllerManager.getAssignmentPageController();
+    private final AppContext appContext = AppContext.getInstance();
+    private final AssignmentPageController assignmentPageController = appContext.getAssignmentPageController();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
-    private ObservableList<String> marksOptions = FXCollections.observableArrayList();
     private ObservableList<String> subjectOptions = FXCollections.observableArrayList("Maths", "Science");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controllerManager.setAssignmentFormController(this);
-        for (int i = 0; i <= 100 ; i++) {
-            marksOptions.add(Integer.toString(i));
-        }
+        appContext.setAssignmentFormController(this);
         setupFormDefaults();
     }
 
@@ -60,13 +56,13 @@ public class AssignmentFormController implements Initializable {
         String assignment_id = loadNextID();
         String assignmentName = txtAssignmentName.getText();
         String assignmentDescription = txtAssignmentDescription.getText();
-        String assignmentMarks = cmbMarks.getValue();
+        String assignmentMarks = txtMarks.getText();
         String subName = cmbSubject.getValue();
         LocalDate date = dpDueDate.getValue();
         String status = cmbStatus.getValue();
 
         setButtonStates(false);
-        if (validateAssignmentFields(assignmentName, status, date)) {
+        if (validateAssignmentFields(assignmentName, status, assignmentMarks, date)) {
             assignmentDto = new AssignmentDto(
                     assignment_id,
                     assignmentName,
@@ -116,13 +112,13 @@ public class AssignmentFormController implements Initializable {
         String assignment_id = assignmentTM.getAssignmentId();
         String assignmentName = txtAssignmentName.getText();
         String assignmentDescription = txtAssignmentDescription.getText();
-        String assignmentMarks = cmbMarks.getValue();
+        String assignmentMarks = txtMarks.getText();
         LocalDate date = dpDueDate.getValue();
         String status = cmbStatus.getValue();
         String subName = cmbSubject.getValue();
 
         setButtonStates(false);
-        if (validateAssignmentFields(assignmentName, status, date)) {
+        if (validateAssignmentFields(assignmentName, status, assignmentMarks, date)) {
             assignmentDto = new AssignmentDto(
                     assignment_id,
                     assignmentName,
@@ -151,7 +147,7 @@ public class AssignmentFormController implements Initializable {
         txtAssignmentDescription.setText(assignmentTM.getAssignmentDescription());
         dpDueDate.setValue(assignmentTM.getAssignmentDueDate());
         cmbStatus.setValue(assignmentTM.getAssignmentStatus());
-        cmbMarks.setValue(assignmentTM.getAssignmentMarks());
+        txtMarks.setText(assignmentTM.getAssignmentMarks());
         cmbSubject.setValue(assignmentTM.getSubName());
         setButtonStates(false);
 
@@ -185,8 +181,6 @@ public class AssignmentFormController implements Initializable {
         dpDueDate.setValue(null);
         cmbSubject.setItems(subjectOptions);
         cmbSubject.setValue(subjectOptions.get(0));
-        cmbMarks.setItems(marksOptions);
-        cmbMarks.setValue(marksOptions.get(0));
         cmbStatus.setItems(statusOptions);
         cmbStatus.setValue(statusOptions.get(0));
         setButtonStates(false);
@@ -197,9 +191,14 @@ public class AssignmentFormController implements Initializable {
         btnCancel.setDisable(state);
     }
 
-    private boolean validateAssignmentFields(String assignmentName, String status, LocalDate date) {
+    private boolean validateAssignmentFields(String assignmentName, String status, String marks, LocalDate date) {
         if (!areRequiredFieldsFilled(assignmentName, status, date)){
             AlertUtil.setErrorAlert("You must fill required fields (*)!");
+            return false;
+        }
+
+        if (Integer.parseInt(marks) < 0 || Integer.parseInt(marks) > 100){
+            AlertUtil.setErrorAlert("Marks must be between 0 and 100.");
             return false;
         }
 

@@ -84,4 +84,12 @@ public class AssignmentModel {
                 newStatus, assignmentId
         );
     }
+
+    public String getPendingOrOverdueAssignmentCount() throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT COUNT(*) FROM Assignment WHERE assignment_status = 'Pending' OR assignment_status = 'Overdue'");
+        while (rst.next()){
+            return rst.getString(1);
+        }
+        return "0";
+    }
 }

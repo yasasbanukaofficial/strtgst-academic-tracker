@@ -5,12 +5,11 @@ USE Strtgst;
 -- Table Student
 CREATE TABLE student(
     stud_id VARCHAR(4) NOT NULL,
-    stud_name VARCHAR(50),
+    stud_name VARCHAR(50) DEFAULT 'Student',
     username VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL,
     password VARCHAR(200) NOT NULL,
-    profile_picture MEDIUMBLOB,
-    date_of_birth DATE,
+    date_of_birth TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
@@ -43,37 +42,35 @@ CREATE TABLE assignment (
 
 -- Table Grade
 CREATE TABLE grade (
-    grade_id INT AUTO_INCREMENT,
+    grade_id VARCHAR(5),
+    marks INT,
     grade VARCHAR(2),
+    received_date DATE,
     PRIMARY KEY (grade_id)
 );
 
 -- Table Lecture
 CREATE TABLE lecture (
-    lec_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(5),
-    date DATE NOT NULL,
-    start_time DATETIME NOT NULL,
-    end_time DATETIME NOT NULL,
-    status ENUM('upcoming', 'ongoing', 'ended') DEFAULT 'upcoming',
-    PRIMARY KEY (lec_id),
-    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    lec_id VARCHAR(50),
+    title VARCHAR(250),
+    location VARCHAR(100) DEFAULT 'SCHOOL',
+    full_day BOOLEAN DEFAULT FALSE,
+    from_date DATETIME,
+    to_date DATETIME,
+    repeat_type VARCHAR(50) DEFAULT 'None',
+    PRIMARY KEY (lec_id)
 );
 
 -- Table Exam
 CREATE TABLE exam (
-    exam_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(5),
-    date DATE NOT NULL,
-    start_time DATETIME NOT NULL,
-    end_time DATETIME NOT NULL,
-    exam_type ENUM('written', 'practical', 'oral') DEFAULT 'written',
-    PRIMARY KEY (exam_id),
-    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    exam_id VARCHAR(50),
+    title VARCHAR(250),
+    location VARCHAR(100) DEFAULT 'SCHOOL',
+    full_day BOOLEAN DEFAULT FALSE,
+    from_date DATETIME,
+    to_date DATETIME,
+    repeat_type VARCHAR(50) DEFAULT 'None',
+    PRIMARY KEY (exam_id)
 );
 
 -- Table Tasks
@@ -98,18 +95,14 @@ CREATE TABLE study_session (
 
 -- Table Events
 CREATE TABLE event (
-    event_id INT AUTO_INCREMENT,
-    stud_id VARCHAR(4),
-    event_name VARCHAR(255) NOT NULL,
-    event_description VARCHAR(500),
-    date DATE NOT NULL,
-    start_time DATETIME NOT NULL,
-    end_time DATETIME NOT NULL,
-    status ENUM('upcoming', 'ongoing', 'ended') DEFAULT 'upcoming',
-    PRIMARY KEY (event_id),
-    FOREIGN KEY (stud_id) REFERENCES student(stud_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    event_id VARCHAR(50),
+    title VARCHAR(250),
+    location VARCHAR(100) DEFAULT 'SCHOOL',
+    full_day BOOLEAN DEFAULT FALSE,
+    from_date DATETIME,
+    to_date DATETIME,
+    repeat_type VARCHAR(50) DEFAULT 'None',
+    PRIMARY KEY (event_id)
 );
 
 -- * Associate Tables * --
@@ -118,7 +111,7 @@ CREATE TABLE event (
 CREATE TABLE subject_scores (
     score_id INT AUTO_INCREMENT,
     sub_id VARCHAR(5),
-    grade_id INT,
+    grade_id VARCHAR(5),
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (score_id),

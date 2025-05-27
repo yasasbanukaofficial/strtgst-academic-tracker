@@ -39,4 +39,40 @@ public class StudentModel {
         ResultSet rst = CrudUtil.execute("SELECT email FROM Student WHERE email = ?", email);
         return rst.next();
     }
+
+    public StudentDto fetchStudentDetails(String username) throws SQLException{
+        ResultSet rst = CrudUtil.execute("SELECT * FROM Student WHERE username = ?", username);
+        while (rst.next()){
+            return new StudentDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5),
+                    rst.getDate(6).toLocalDate()
+            );
+        }
+        return null;
+    }
+
+    public String fetchStudentName(String username) throws SQLException{
+        ResultSet rst = CrudUtil.execute("SELECT stud_name FROM Student WHERE username = ?", username);
+        while (rst.next()){
+            return rst.getString(1);
+        }
+        return "Student";
+    }
+
+    public boolean updateStudent(StudentDto studentDto) throws SQLException {
+        return CrudUtil.execute(
+                "UPDATE Student SET stud_name = ?, username = ?, email = ?, password = ?, date_of_birth = ? WHERE stud_id = ?",
+                studentDto.getStudName(),
+                studentDto.getUsername(),
+                studentDto.getEmail(),
+                studentDto.getPassword(),
+                studentDto.getDateOfBirth(),
+                studentDto.getStudId()
+        );
+
+    }
 }

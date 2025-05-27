@@ -1,6 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.context.ControllerManager;
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.TaskDto;
 import edu.ijse.strtgst.dto.tm.TaskTM;
 import edu.ijse.strtgst.model.TaskModel;
@@ -34,14 +34,14 @@ public class TaskFormController implements Initializable {
 
     private TaskDto taskDto;
     private final TaskModel taskModel = new TaskModel();
-    private final ControllerManager controllerManager = new ControllerManager();
-    private final TaskPageController taskPageController = ControllerManager.getTaskPageController();
+    private final AppContext appContext = AppContext.getInstance();
+    private final TaskPageController taskPageController = appContext.getTaskPageController();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controllerManager.setTaskFormController(this);
+        appContext.setTaskFormController(this);
         setupFormDefaults();
     }
 
@@ -56,7 +56,7 @@ public class TaskFormController implements Initializable {
         LocalDate dueDate = dpTaskDueDate.getValue();
         String status = cmbStatus.getValue();
         setButtonStates(false);
-        if (validateAssignmentFields(taskName, status, dueDate)) {
+        if (validateTaskFields(taskName, status, dueDate)) {
              taskDto = new TaskDto(
                     task_id,
                     taskName,
@@ -108,7 +108,7 @@ public class TaskFormController implements Initializable {
         String status = cmbStatus.getValue();
 
         setButtonStates(false);
-        if (validateAssignmentFields(taskName, status, dueDate)) {
+        if (validateTaskFields(taskName, status, dueDate)) {
             taskDto = new TaskDto(
                     task_id,
                     taskName,
@@ -175,7 +175,7 @@ public class TaskFormController implements Initializable {
         btnCancelTask.setDisable(state);
     }
 
-    private boolean validateAssignmentFields(String taskName, String status, LocalDate dueDate) {
+    private boolean validateTaskFields(String taskName, String status, LocalDate dueDate) {
         if (!areRequiredFieldsFilled(taskName, status, dueDate)){
             AlertUtil.setErrorAlert("You must fill required fields (*)!");
             return false;

@@ -1,6 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.context.ControllerManager;
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.AssignmentDto;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.model.AssignmentModel;
@@ -36,14 +36,14 @@ public class AssignmentPageController implements Initializable {
     public TableColumn <AssignmentTM, String> columnCompletedMarks;
 
     private final AssignmentModel assignmentModel = new AssignmentModel();
-    private final ControllerManager controllerManager = new ControllerManager();
+    private final AppContext appContext = AppContext.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumn();
         updateOverdueStatus();
         updateDateLabel();
-        controllerManager.setAssignmentPageController(this);
+        appContext.setAssignmentPageController(this);
         Navigation.navigateTo(ancTaskContainer, View.DEFAULT_ASSIGNMENT);
     }
 
@@ -145,7 +145,7 @@ public class AssignmentPageController implements Initializable {
     public void onClickAssignmentTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
         AssignmentTM selectedAssignment = tblAssignment.getSelectionModel().getSelectedItem();
-        AssignmentFormController assignmentFormController = controllerManager.getAssignmentFormController();
+        AssignmentFormController assignmentFormController = appContext.getAssignmentFormController();
         if (selectedAssignment != null){
             assignmentFormController.populateFormForEdit(selectedAssignment);
         }
@@ -154,9 +154,9 @@ public class AssignmentPageController implements Initializable {
     public void onClickCompletedTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancTaskContainer, View.ADD_ASSIGNMENT);
         AssignmentTM selectedAssignment = tblCompletedAssignment.getSelectionModel().getSelectedItem();
-        AssignmentFormController addNewAssignmentController = controllerManager.getAssignmentFormController();
+        AssignmentFormController assignmentFormController = appContext.getAssignmentFormController();
         if (selectedAssignment != null){
-            addNewAssignmentController.populateFormForEdit(selectedAssignment);
+            assignmentFormController.populateFormForEdit(selectedAssignment);
         }
     }
 
