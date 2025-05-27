@@ -6,6 +6,7 @@ import edu.ijse.strtgst.util.CrudUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CalendarModel {
     private final String [] calendarTableNames = {"Exam", "Lecture", "Event"};
@@ -100,4 +101,8 @@ public class CalendarModel {
         return entries;
     }
 
+    public boolean deleteEntry(String tableName, String id) throws SQLException {
+        String idColumn = tableName.equalsIgnoreCase("Exam") ? "exam_id" : tableName.equalsIgnoreCase("Lecture") ? "lec_id" : "event_id";
+        return CrudUtil.execute("DELETE FROM " + tableName +" WHERE " + idColumn + " = ?", id);
+    }
 }

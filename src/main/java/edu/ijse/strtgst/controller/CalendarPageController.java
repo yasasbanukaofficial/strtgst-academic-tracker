@@ -4,6 +4,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
+import com.calendarfx.util.CalendarFX;
 import com.calendarfx.view.*;
 import com.calendarfx.view.page.MonthPage;
 import edu.ijse.strtgst.model.CalendarModel;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -43,6 +45,7 @@ public class CalendarPageController implements Initializable {
         dayView.getCalendarSources().add(calendarSource);
         monthView.getCalendarSources().add(calendarSource);
         yearView.getCalendarSources().add(calendarSource);
+
 
         monthView.setShowDate(false);
         monthView.setShowNavigation(false);
@@ -93,11 +96,17 @@ public class CalendarPageController implements Initializable {
     private void handleEvent (CalendarEvent e) {
         Entry<?> entry = e.getEntry();
         try {
-            if (!calendarModel.syncEntryWithDatabase(entry)) {
-                AlertUtil.setErrorAlert("Error when adding an event to the calendar");
+            if (e.getCalendar() == null){
+                if (!calendarModel.deleteEntry((e.getOldCalendar().getName()), entry.getId())){
+                    AlertUtil.setErrorAlert("Error when deleting entry from the database");
+                }
+            } else {
+                if (!calendarModel.syncEntryWithDatabase(entry)) {
+                    AlertUtil.setErrorAlert("Error when modifying an event to the calendar");
+                }
             }
-        } catch (SQLException ex) {
-            AlertUtil.setErrorAlert("Error when adding an event to the calendar in db");
+        } catch (Exception ex) {
+            AlertUtil.setErrorAlert("Error when modifying an event to the calendar in db");
             ex.printStackTrace();
         }
     }
