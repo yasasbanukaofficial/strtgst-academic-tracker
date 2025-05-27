@@ -1,5 +1,6 @@
 package edu.ijse.strtgst.controller;
 
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.StudentDto;
 import edu.ijse.strtgst.model.StudentModel;
 import edu.ijse.strtgst.util.AlertUtil;
@@ -21,6 +22,7 @@ public class SignUpPageController{
     public Button btnSignUp;
 
     private final StudentModel studentModel = new StudentModel();
+    private final AppContext appContext = AppContext.getInstance();
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
     private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{6,}$";
@@ -43,6 +45,7 @@ public class SignUpPageController{
             try {
                 if (studentModel.addStudent(studentDto)) {
                     AlertUtil.setInfoAlert("Successfully Saved user");
+                    appContext.setUsername(username);
                     Navigation.navigateTo(signUpAnc, View.MAIN);
                 } else { AlertUtil.setErrorAlert("Failed when saving user"); }
             } catch (Exception e) {

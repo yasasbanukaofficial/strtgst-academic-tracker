@@ -1,13 +1,11 @@
 package edu.ijse.strtgst.model;
 
 import edu.ijse.strtgst.dto.AssignmentDto;
-import edu.ijse.strtgst.dto.tm.AssignmentTM;
 import edu.ijse.strtgst.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class AssignmentModel {
     public boolean addAssignment(AssignmentDto assignmentDto) throws SQLException {
@@ -65,7 +63,7 @@ public class AssignmentModel {
         );
     }
 
-    public ArrayList<ArrayList> getAllSubjectStatus() throws SQLException {
+    public ArrayList<ArrayList> getAllAssignmentStatus() throws SQLException {
         ResultSet rst = CrudUtil.execute("SELECT assignment_status, due_date, assignment_id FROM Assignment");
         ArrayList<ArrayList> list = new ArrayList<>();
 
@@ -85,5 +83,13 @@ public class AssignmentModel {
                 "UPDATE Assignment SET assignment_status = ? WHERE assignment_id = ?",
                 newStatus, assignmentId
         );
+    }
+
+    public String getPendingOrOverdueAssignmentCount() throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT COUNT(*) FROM Assignment WHERE assignment_status = 'Pending' OR assignment_status = 'Overdue'");
+        while (rst.next()){
+            return rst.getString(1);
+        }
+        return "0";
     }
 }

@@ -1,5 +1,6 @@
 package edu.ijse.strtgst.controller;
 
+import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.StudentDto;
 import edu.ijse.strtgst.model.StudentModel;
 import edu.ijse.strtgst.util.AlertUtil;
@@ -15,7 +16,7 @@ public class LoginPageController {
     public TextField txtUsername;
     public PasswordField txtPassword;
 
-    private final LoginService loginService = new LoginService();
+    private final AppContext appContext = AppContext.getInstance();
 
     public void visitSignUpPage() {
         Navigation.navigateTo(loginAnc, View.SIGNUP);
@@ -25,13 +26,14 @@ public class LoginPageController {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
 
-        if (username.equals("") || password.equals("")){
+        if (username.equals("") || password.equals("")) {
             AlertUtil.setErrorAlert("Please enter username and password.");
             return;
         }
 
         try {
-            if (loginService.validateCredentials(username, password)){
+            if (validateCredentials(username, password)) {
+                appContext.setUsername(username);
                 Navigation.navigateTo(loginAnc, View.MAIN);
             } else {
                 AlertUtil.setErrorAlert("Invalid username or password. Please Try again!");
@@ -48,9 +50,7 @@ public class LoginPageController {
         txtUsername.setStyle(errorStyle);
         txtPassword.setStyle(errorStyle);
     }
-}
 
-class LoginService {
     public boolean validateCredentials(String username, String password) throws Exception {
         StudentDto studentDto = StudentModel.getStudent(username);
         return studentDto != null && password.equals(studentDto.getPassword());

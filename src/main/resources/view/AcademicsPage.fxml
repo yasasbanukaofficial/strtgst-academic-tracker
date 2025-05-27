@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1000.0" prefWidth="1600.0" style="-fx-background-color: #F2F6FF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.AcademicsControllerPage">
+   <children>
+      <VBox layoutX="295.0" layoutY="104.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Academics">
+               <font>
+                  <Font name="Poppins Bold" size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="86.0" top="51.0" />
+               </VBox.margin>
+            </Label>
+            <HBox maxHeight="-Infinity" prefHeight="194.0" prefWidth="1428.0" spacing="84.0">
+               <children>
+                  <VBox accessibleRole="BUTTON" prefHeight="212.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 34px; -fx-border-radius: 34px;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Recent Marks">
+                           <font>
+                              <Font name="Poppins Bold" size="22.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="labelTotalTasks" prefHeight="56.0" prefWidth="168.0" text="78">
+                           <font>
+                              <Font name="Poppins Bold" size="40.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Label text="Name :">
+                                 <font>
+                                    <Font name="Poppins Regular" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Maths">
+                                 <font>
+                                    <Font name="Poppins Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="120.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox accessibleRole="BUTTON" prefHeight="254.0" prefWidth="472.0" style="-fx-background-color: white; -fx-background-radius: 34px; -fx-border-radius: 34px;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Upcoming Events">
+                           <font>
+                              <Font name="Poppins Bold" size="22.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="labelTotalTasks1" prefHeight="71.0" prefWidth="441.0" text="Christmas Day">
+                           <font>
+                              <Font name="Poppins Bold" size="40.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Label text="Date :">
+                                 <font>
+                                    <Font name="Poppins Regular" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="May 18">
+                                 <font>
+                                    <Font name="Poppins Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="119.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox accessibleRole="BUTTON" prefHeight="254.0" prefWidth="304.0" style="-fx-background-color: white; -fx-background-radius: 34px; -fx-border-radius: 34px;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="32.0" prefWidth="237.0" text="Upcoming Exams">
+                           <font>
+                              <Font name="Poppins Bold" size="22.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="labelTotalTasks2" prefHeight="56.0" prefWidth="242.0" text="Science">
+                           <font>
+                              <Font name="Poppins Bold" size="40.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Label text="Date :">
+                                 <font>
+                                    <Font name="Poppins Regular" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="May 19">
+                                 <font>
+                                    <Font name="Poppins Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="119.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox accessibleRole="BUTTON" prefHeight="254.0" prefWidth="303.0" style="-fx-background-color: white; -fx-background-radius: 34px; -fx-border-radius: 34px;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Upcoming Lectures">
+                           <font>
+                              <Font name="Poppins Bold" size="22.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="23.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="labelTotalTasks3" prefHeight="56.0" prefWidth="251.0" text="Geometry">
+                           <font>
+                              <Font name="Poppins Bold" size="40.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Label text="Date :">
+                                 <font>
+                                    <Font name="Poppins Regular" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="May 24">
+                                 <font>
+                                    <Font name="Poppins Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="117.0" text="See more ➡">
+                           <font>
+                              <Font name="Poppins Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="17.0" right="14.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="86.0" right="86.0" top="30.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="533.0" prefWidth="1461.0" spacing="30.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="30.0" left="86.0" right="56.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <VBox maxHeight="-Infinity" prefHeight="580.0" prefWidth="684.0" spacing="10.0">
+                     <children>
+                        <Label text="Exams" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tblExams" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnTaskName1" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnTaskDueDate1" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnTaskStatus1" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <Label text="Events" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tblEvents" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnTaskName11" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnTaskDueDate11" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnTaskStatus11" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox maxHeight="-Infinity" prefHeight="580.0" prefWidth="657.0" spacing="10.0">
+                     <children>
+                        <Label text="Exams" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tblExams1" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnTaskName11" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnTaskDueDate11" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnTaskStatus11" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <Label text="Events" textFill="#03004c">
+                           <font>
+                              <Font name="Poppins Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tblEvents1" prefHeight="288.0" prefWidth="1428.0" stylesheets="@styles/tableView.css">
+                           <columns>
+                              <TableColumn fx:id="columnTaskName111" prefWidth="432.0" text="Name" />
+                              <TableColumn fx:id="columnTaskDueDate111" prefWidth="194.0" text="Due Date" />
+                              <TableColumn fx:id="columnTaskStatus111" prefWidth="189.0" styleClass="status-column" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
+                     </children>
+                  </VBox>
+                  <HBox accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onMouseClicked="#showOptionsPage" prefHeight="63.0" prefWidth="63.0" style="-fx-background-color: #ffffff; -fx-background-radius: 25px; -fx-border-radius: 25px;">
+                     <children>
+                        <StackPane prefHeight="63.0" prefWidth="69.0">
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/Frame%201.png" />
+                                 </image>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </ImageView>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </StackPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets top="510.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

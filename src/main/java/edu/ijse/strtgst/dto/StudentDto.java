@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @AllArgsConstructor
@@ -17,8 +18,7 @@ public class StudentDto {
     private String username;
     private String email;
     private String password;
-    private byte[] profilePicture;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
@@ -27,5 +27,14 @@ public class StudentDto {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public StudentDto(String studId, String studName, String username, String email, String password, LocalDate dateOfBirth) {
+        this.studId = studId;
+        this.studName = studName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
     }
 }

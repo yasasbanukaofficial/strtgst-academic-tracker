@@ -41,7 +41,7 @@
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="93.0" prefWidth="53.0" text="0" textFill="#5fda92">
+                        <Label fx:id="labelTotalTasks" prefHeight="93.0" prefWidth="53.0" text="0" textFill="#5fda92">
                            <font>
                               <Font name="Poppins Bold" size="86.0" />
                            </font>
@@ -97,7 +97,7 @@
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f79cc2">
+                        <Label fx:id="labelTotalAssignments" prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f79cc2">
                            <font>
                               <Font name="Poppins Bold" size="86.0" />
                            </font>
@@ -115,7 +115,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitGradesPage" prefHeight="212.0" prefWidth="263.0" style="-fx-background-color: #D4EDEB; -fx-background-radius: 34px; -fx-border-radius: 34px;">
+                  <VBox accessibleRole="BUTTON" onMouseClicked="#visitAcademicsPage" prefHeight="212.0" prefWidth="263.0" style="-fx-background-color: #D4EDEB; -fx-background-radius: 34px; -fx-border-radius: 34px;">
                      <children>
                         <Label text="GPA Calculation">
                            <font>

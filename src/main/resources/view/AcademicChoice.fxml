@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancOption" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="857.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.AcademicChoiceController">
+   <children>
+      <VBox layoutX="148.0" layoutY="164.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox maxHeight="-Infinity" prefHeight="0.0" prefWidth="476.0" spacing="83.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="19.0" top="41.0" />
+               </padding>
+               <children>
+                  <Label fx:id="labelAssignmentHeader" prefHeight="32.0" prefWidth="336.0" text="Choose an option:" textFill="#03004c">
+                     <font>
+                        <Font name="Poppins Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelAssignmentHeader1" onMouseClicked="#closeEditor" prefHeight="32.0" prefWidth="98.0" text="Close " textFill="#ab0036" underline="true">
+                     <font>
+                        <Font name="Poppins Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox maxHeight="-Infinity" prefHeight="0.0" prefWidth="476.0" spacing="40.0" VBox.vgrow="ALWAYS">
+               <padding>
+                  <Insets left="19.0" top="41.0" />
+               </padding>
+               <children>
+                  <HBox maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#visitLecturesPage" prefHeight="45.0" prefWidth="457.0" style="-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+                     <VBox.margin>
+                        <Insets right="15.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label text="Manage Lectures">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="16.0" right="10.0" top="8.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#visitExamsPage" prefHeight="45.0" prefWidth="457.0" style="-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+                     <children>
+                        <Label text="Manage Exams">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="16.0" right="10.0" top="8.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#visitSubjectsPage" prefHeight="45.0" prefWidth="457.0" style="-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+                     <children>
+                        <Label text="Manage Subjects">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="16.0" right="10.0" top="8.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#visitEventsPage" prefHeight="45.0" prefWidth="457.0" style="-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+                     <children>
+                        <Label text="Manage Events">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="16.0" right="10.0" top="8.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="476.0" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
