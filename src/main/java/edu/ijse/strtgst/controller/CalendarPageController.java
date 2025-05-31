@@ -4,7 +4,6 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
-import com.calendarfx.util.CalendarFX;
 import com.calendarfx.view.*;
 import com.calendarfx.view.page.MonthPage;
 import edu.ijse.strtgst.model.CalendarModel;
@@ -14,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -39,17 +37,7 @@ public class CalendarPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showWeekView(new ActionEvent());
-        calendarSource.getCalendars().addAll(examCalendar, lectureCalendar, eventsCalendar);
-        weekView.getCalendarSources().add(calendarSource);
-        dayView.getCalendarSources().add(calendarSource);
-        monthView.getCalendarSources().add(calendarSource);
-        yearView.getCalendarSources().add(calendarSource);
-
-
-        monthView.setShowDate(false);
-        monthView.setShowNavigation(false);
-
+        setupCalendarViews();
         eventsInitializer();
         loadAllEntries();
     }
@@ -129,12 +117,38 @@ public class CalendarPageController implements Initializable {
         }
     }
 
-
     private void refreshViews() {
         weekView.refreshData();
         dayView.refreshData();
         monthView.refreshData();
         yearView.refreshData();
+    }
+
+    private void setupCalendarViews(){
+        showWeekView(new ActionEvent());
+        setupCalendarStyles();
+        calendarSource.getCalendars().addAll(lectureCalendar, eventsCalendar, examCalendar);
+
+        weekView.getCalendarSources().clear();
+        weekView.getCalendarSources().add(calendarSource);
+
+        dayView.getCalendarSources().clear();
+        dayView.getCalendarSources().add(calendarSource);
+
+        monthView.getCalendarSources().clear();
+        monthView.getCalendarSources().add(calendarSource);
+
+        yearView.getCalendarSources().clear();
+        yearView.getCalendarSources().add(calendarSource);
+
+        monthView.setShowDate(false);
+        monthView.setShowNavigation(false);
+    }
+
+    private void setupCalendarStyles() {
+        examCalendar.setStyle(Calendar.Style.STYLE5);
+        lectureCalendar.setStyle(Calendar.Style.STYLE2);
+        eventsCalendar.setStyle(Calendar.Style.STYLE4);
     }
 }
 
