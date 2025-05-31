@@ -11,10 +11,10 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 
-public class ExamDto {
-    private int examId;
-    private String examTitle;
-    private String examLocation;
+public class AcademicDto {
+    private String id;
+    private String title;
+    private String location;
     private Boolean isFullDay;
     private Timestamp fromDateTime;
     private Timestamp toDateTime;
