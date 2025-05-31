@@ -41,15 +41,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#showMonthView" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 20px; -fx-background-color: #F2F6FF; -fx-border-color: #03004c; -fx-border-width: 2px;" text="Month View" textFill="#03004c">
-                           <font>
-                              <Font name="Poppins Bold" size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#showYearView" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 20px; -fx-background-color: #F2F6FF; -fx-border-radius: 0px 20px 20px 0px; -fx-border-color: #03004c; -fx-border-width: 2px;" text="Year View" textFill="#03004c">
+                        <Button mnemonicParsing="false" onAction="#showMonthView" prefHeight="31.0" prefWidth="174.0" style="-fx-background-radius: 20px; -fx-background-color: #F2F6FF; -fx-border-color: #03004c; -fx-border-width: 2px; -fx-border-radius: 0px 20px 20px 0px;" text="Month View" textFill="#03004c">
                            <font>
                               <Font name="Poppins Bold" size="14.0" />
                            </font>
@@ -59,7 +51,7 @@
                         </Button>
                      </children>
                      <padding>
-                        <Insets left="20.0" top="46.0" />
+                        <Insets left="170.0" top="46.0" />
                      </padding>
                   </HBox>
                   <Label prefHeight="63.0" prefWidth="154.0" text="May 19" textFill="#03004c" HBox.hgrow="ALWAYS">
@@ -72,14 +64,40 @@
                   </Label>
                </children>
             </HBox>
-            <VBox fx:id="ancTimeline" prefHeight="833.0" prefWidth="1430.0" style="-fx-background-color: white; -fx-border-radius: 25px; -fx-background-radius: 25px;" VBox.vgrow="ALWAYS">
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="903.0" prefWidth="1384.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox fx:id="ancAgendaView" prefHeight="737.0" prefWidth="777.0" style="-fx-background-color: white; -fx-border-radius: 25px; -fx-background-radius: 25px;" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="25.0" left="86.0" right="20.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox fx:id="ancChatBot" prefHeight="833.0" prefWidth="1430.0" style="-fx-background-color: white; -fx-border-radius: 25px; -fx-background-radius: 25px;" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="86.0" right="20.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children></VBox>
+                  <VBox fx:id="ancTimeline" prefHeight="833.0" prefWidth="1430.0" style="-fx-background-color: white; -fx-border-radius: 25px; -fx-background-radius: 25px;" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
                <VBox.margin>
-                  <Insets bottom="20.0" left="90.0" right="80.0" top="10.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
-               <padding>
-                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-               </padding>
-            </VBox>
+            </HBox>
          </children>
       </VBox>
    </children>

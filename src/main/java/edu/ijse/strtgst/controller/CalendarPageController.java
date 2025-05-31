@@ -6,6 +6,7 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.*;
 import com.calendarfx.view.page.MonthPage;
+import com.calendarfx.view.page.WeekPage;
 import edu.ijse.strtgst.model.CalendarModel;
 import edu.ijse.strtgst.util.AlertUtil;
 import javafx.application.Platform;
@@ -24,14 +25,16 @@ import java.util.ResourceBundle;
 
 public class CalendarPageController implements Initializable {
     public VBox ancTimeline;
+    public VBox ancAgendaView;
+    public VBox ancChatBot;
     private Calendar examCalendar = new Calendar("Exam");
     private Calendar lectureCalendar = new Calendar("Lecture");
     private Calendar eventsCalendar = new Calendar("Event");
     private CalendarSource calendarSource = new CalendarSource("My Calendar");
-    private final DetailedWeekView weekView = new DetailedWeekView();
+    private final WeekPage weekView = new WeekPage();
     private final DetailedDayView dayView = new DetailedDayView();
     private final MonthPage monthView = new MonthPage();
-    private final YearView yearView = new YearView();
+    private final AgendaView agendaView = new AgendaView();
 
     private final CalendarModel calendarModel = new CalendarModel();
 
@@ -42,37 +45,35 @@ public class CalendarPageController implements Initializable {
         loadAllEntries();
     }
 
-    public void navigateTo(Node node){
-        ancTimeline.getChildren().clear();
-        ancTimeline.getChildren().add(node);
+    public void navigateTo(VBox anchor, Node node){
+        anchor.getChildren().clear();
+        anchor.getChildren().add(node);
     }
 
-    public void setupView(DateControl view){
-        ancTimeline.getStylesheets().add(getClass().getResource("/view/styles/popOver.css").toExternalForm());
-        double width = ancTimeline.getPrefWidth() - 20.0;
-        double height = ancTimeline.getPrefHeight() - 20.0;
+    public void setupView(VBox anchor, DateControl view){
+        anchor.getStylesheets().add(getClass().getResource("/view/styles/popOver.css").toExternalForm());
+        double width = anchor.getPrefWidth() - 20.0;
+        double height = anchor.getPrefHeight() - 20.0;
         view.setPrefSize(width, height);
         view.refreshData();
         view.requestLayout();
         UpdateThread.startThread(view);
-        navigateTo(view);
+        navigateTo(anchor, view);
     }
 
     public void showWeekView(ActionEvent actionEvent) {
-        setupView(weekView);
+        setupView(ancTimeline, weekView);
     }
 
     public void showDayView(ActionEvent actionEvent) {
-        setupView(dayView);
+        setupView(ancTimeline, dayView);
     }
 
     public void showMonthView(ActionEvent actionEvent) {
-        setupView(monthView);
+        setupView(ancTimeline, monthView);
     }
 
-    public void showYearView(ActionEvent actionEvent) {
-        setupView(yearView);
-    }
+    public void showAgendaView(ActionEvent actionEvent) {setupView(ancAgendaView, agendaView);}
 
     private void eventsInitializer(){
         EventHandler<CalendarEvent> event = e -> handleEvent(e);
@@ -121,11 +122,11 @@ public class CalendarPageController implements Initializable {
         weekView.refreshData();
         dayView.refreshData();
         monthView.refreshData();
-        yearView.refreshData();
     }
 
     private void setupCalendarViews(){
-        showWeekView(new ActionEvent());
+        showDayView(new ActionEvent());
+        showAgendaView(new ActionEvent());
         setupCalendarStyles();
         calendarSource.getCalendars().addAll(lectureCalendar, eventsCalendar, examCalendar);
 
@@ -138,11 +139,12 @@ public class CalendarPageController implements Initializable {
         monthView.getCalendarSources().clear();
         monthView.getCalendarSources().add(calendarSource);
 
-        yearView.getCalendarSources().clear();
-        yearView.getCalendarSources().add(calendarSource);
+        agendaView.getCalendarSources().clear();
+        agendaView.getCalendarSources().add(calendarSource);
 
         monthView.setShowDate(false);
         monthView.setShowNavigation(false);
+        weekView.setShowDate(false);
     }
 
     private void setupCalendarStyles() {
