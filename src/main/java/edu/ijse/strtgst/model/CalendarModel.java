@@ -6,7 +6,6 @@ import edu.ijse.strtgst.util.CrudUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class CalendarModel {
     private final String [] calendarTableNames = {"Exam", "Lecture", "Event"};
@@ -94,7 +93,11 @@ public class CalendarModel {
                         rst.getTimestamp(5).toLocalDateTime(),
                         rst.getTimestamp(6).toLocalDateTime()
                 );
-                entry.setRecurrenceRule(rst.getString(7));
+                if (rst.getString(7) == null || rst.getString(7).isEmpty()) {
+                    entry.setRecurrenceRule(null);
+                } else {
+                    entry.setRecurrenceRule(rst.getString(7));
+                }
                 entries.add(entry);
             }
         }
@@ -104,5 +107,9 @@ public class CalendarModel {
     public boolean deleteEntry(String tableName, String id) throws SQLException {
         String idColumn = tableName.equalsIgnoreCase("Exam") ? "exam_id" : tableName.equalsIgnoreCase("Lecture") ? "lec_id" : "event_id";
         return CrudUtil.execute("DELETE FROM " + tableName +" WHERE " + idColumn + " = ?", id);
+    }
+
+    public boolean syncEntryByAi(String query) throws SQLException {
+        return CrudUtil.execute(query);
     }
 }

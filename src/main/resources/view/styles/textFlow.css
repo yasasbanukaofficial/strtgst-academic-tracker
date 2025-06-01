@@ -1,0 +1,11 @@
+TextFlow {
+    -fx-font-family: Poppins;
+    -fx-font-size: 18px;
+    -fx-text-fill: #262626;
+    -fx-padding: 6px 10px;
+    -fx-line-spacing: 4px;
+}
+
+Text {
+    -fx-fill: #262626;
+}

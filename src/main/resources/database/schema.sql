@@ -55,9 +55,9 @@ CREATE TABLE lecture (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (lec_id)
 );
 
@@ -67,9 +67,9 @@ CREATE TABLE exam (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (exam_id)
 );
 
@@ -99,9 +99,9 @@ CREATE TABLE event (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (event_id)
 );
 
