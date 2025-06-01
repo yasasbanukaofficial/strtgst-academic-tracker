@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class AcademicModel {
     public AcademicDto getRecentDetails(String tableName) throws SQLException {
         ResultSet rst = CrudUtil.execute(
-                "SELECT * FROM " + tableName + " WHERE from_date >= CURRENT_DATE"
+                "SELECT * FROM " + tableName + " WHERE from_date >= CURRENT_DATE ORDER BY from_date ASC LIMIT 1"
         );
         while (rst.next()) {
             return new AcademicDto(

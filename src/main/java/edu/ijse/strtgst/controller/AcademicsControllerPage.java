@@ -44,12 +44,12 @@ public class AcademicsControllerPage implements Initializable {
                     "Exam");
 
             setupSection(academicModel.getRecentDetails("Lecture"),
-                    labelUpcomingLecture, labelUpcomingLectureDate, labelExamLocation,
-                    "Lectures");
+                    labelUpcomingLecture, labelUpcomingLectureDate, labelLectureLocation,
+                    "Lecture");
 
             setupSection(academicModel.getRecentDetails("Event"),
                     labelUpcomingEvent, labelUpcomingEventDate, labelEventLocation,
-                    "Events");
+                    "Event");
 
         } catch (SQLException e) {
             AlertUtil.setErrorAlert("Error when loading data to display");
@@ -64,18 +64,17 @@ public class AcademicsControllerPage implements Initializable {
             locationLabel.setText("");
         } else {
             titleLabel.setText(dto.getTitle());
+
             LocalDateTime date = dto.getFromDateTime().toLocalDateTime();
             if (date != null) {
-                dateLabel.setText("");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                dateLabel.setText(date.format(formatter));
             }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-            dateLabel.setText(date.format(formatter));
 
             String location = dto.getLocation();
             if (location != null) {
-                dateLabel.setText("");
+                locationLabel.setText(location);
             }
-            locationLabel.setText(location);
         }
     }
 
