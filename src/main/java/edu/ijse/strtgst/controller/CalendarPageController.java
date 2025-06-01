@@ -134,7 +134,6 @@ public class CalendarPageController implements Initializable {
         }
     }
 
-
     private void loadEntriesForCalendar(Calendar calendar, ArrayList<Entry<?>> entries) {
         for (Entry<?> entry : entries) {
             calendar.addEntry(entry);
@@ -195,11 +194,6 @@ public class CalendarPageController implements Initializable {
         } catch (SQLException e) {
             AlertUtil.setErrorAlert("Error when sending the message " + e.getMessage());
         }
-
-    }
-
-    private void disableButtons() {
-        btnSendMsg.setDisable(true);
     }
 }
 
