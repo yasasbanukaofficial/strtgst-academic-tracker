@@ -12,6 +12,7 @@ import com.google.genai.types.GenerateContentResponse;
 import edu.ijse.strtgst.model.CalendarModel;
 import edu.ijse.strtgst.model.ChatBotModel;
 import edu.ijse.strtgst.util.AlertUtil;
+import edu.ijse.strtgst.util.PromptBuilder;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -179,22 +180,38 @@ public class CalendarPageController implements Initializable {
         txtChatFlow.getChildren().clear();
         try {
             String userInput = txtEnterMsg.getText();
-            if (userInput.trim().equals("")) {
+            if (userInput.trim().isEmpty()) {
                 AlertUtil.setErrorAlert("Please enter a valid entry message to send");
                 return;
             }
-            boolean isSynced = calendarModel.syncEntryByAi(ChatBotModel.getResponse(userInput));
-            String response = isSynced == true ? "Your Event is successfully added. Add some more!" : "Failed to add an Event. Try with an internet connection";
+
+            String aiResponse = ChatBotModel.getResponse(PromptBuilder.buildSqlInsertPrompt(userInput));
+
+            boolean isValid = aiResponse != null && aiResponse.trim().toLowerCase().startsWith("insert into");
+
+            String response;
+            if (isValid) {
+                boolean isSynced = calendarModel.syncEntryByAi(aiResponse);
+                response = isSynced ?
+                        "Your event is successfully added. Add some more!" :
+                        "Failed to add an event. Try with a stable internet connection.";
+            } else {
+                response = "Sorry, I couldn’t understand that. Please describe an event like: “I have a lecture on June 6 at 10 AM.”";
+            }
+
             Text userTxt = new Text("User:      " + userInput + "\n");
             Text responseTxt = new Text("Chat:      " + response);
-            txtChatFlow.getChildren().add(userTxt);
-            txtChatFlow.getChildren().add(responseTxt);
+            txtChatFlow.getChildren().addAll(userTxt, responseTxt);
+
             txtEnterMsg.setText("");
-            loadAllEntries();
+
+            if (isValid) loadAllEntries();
+
         } catch (SQLException e) {
-            AlertUtil.setErrorAlert("Error when sending the message " + e.getMessage());
+            AlertUtil.setErrorAlert("Error when sending the message: " + e.getMessage());
         }
     }
+
 }
 
 class UpdateThread{

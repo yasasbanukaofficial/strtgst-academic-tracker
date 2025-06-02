@@ -2,14 +2,21 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.dto.AcademicDto;
 import edu.ijse.strtgst.model.AcademicModel;
+import edu.ijse.strtgst.model.ChatBotModel;
 import edu.ijse.strtgst.util.AlertUtil;
+import edu.ijse.strtgst.util.PromptBuilder;
 import edu.ijse.strtgst.util.View;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,8 +36,15 @@ public class AcademicsControllerPage implements Initializable {
     public Label labelEventLocation;
     public Label labelExamLocation;
     public Label labelLectureLocation;
+    public Label labelTotalTasks;
+    public VBox ancChatBot;
+
+    public TextField txtEnterMsg;
+    public TextFlow txtChatFlow;
+    public StackPane btnSendMsg;
 
     private final AcademicModel academicModel = new AcademicModel();
+    private StringBuilder previousMsg = new StringBuilder();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,6 +90,22 @@ public class AcademicsControllerPage implements Initializable {
                 locationLabel.setText(location);
             }
         }
+    }
+
+    public void sendMessage(MouseEvent mouseEvent) {
+        txtChatFlow.getChildren().clear();
+        String userInput = txtEnterMsg.getText();
+        if (userInput.trim().equals("")) {
+            AlertUtil.setErrorAlert("Please enter a valid entry message to send");
+            return;
+        }
+        String response = ChatBotModel.getResponse(PromptBuilder.askAboutStudies(userInput, previousMsg));
+        Text userTxt = new Text("User:      " + userInput + "\n");
+        Text responseTxt = new Text("Chat:      " + response);
+        txtChatFlow.getChildren().add(userTxt);
+        txtChatFlow.getChildren().add(responseTxt);
+        previousMsg.append(userInput).append("\n");
+        txtEnterMsg.setText("");
     }
 
     public void showOptionsPage(MouseEvent mouseEvent) {
