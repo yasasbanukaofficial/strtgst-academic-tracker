@@ -69,7 +69,7 @@
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f7a27e">
+                        <Label fx:id="labelEventsToday" prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f7a27e">
                            <font>
                               <Font name="Poppins Bold" size="86.0" />
                            </font>
@@ -125,7 +125,7 @@
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="121.0" prefWidth="233.0" text="0.00" textFill="#86d7dc">
+                        <Label fx:id="labelGpaCalculation" prefHeight="121.0" prefWidth="233.0" text="0.00" textFill="#86d7dc">
                            <font>
                               <Font name="Poppins Bold" size="86.0" />
                            </font>
@@ -156,7 +156,7 @@
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="121.0" prefWidth="233.0" text="0.00" textFill="#d4d4d4">
+                        <Label fx:id="labelLecturesToday" prefHeight="121.0" prefWidth="233.0" text="0" textFill="#d4d4d4">
                            <font>
                               <Font name="Poppins Bold" size="86.0" />
                            </font>

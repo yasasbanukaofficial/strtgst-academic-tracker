@@ -1,6 +1,7 @@
 package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.model.AssignmentModel;
+import edu.ijse.strtgst.model.CalendarModel;
 import edu.ijse.strtgst.model.TaskModel;
 import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.Navigation;
@@ -17,9 +18,13 @@ public class DashboardPageController implements Initializable {
     public AnchorPane ancDashboard;
     public Label labelTotalTasks;
     public Label labelTotalAssignments;
+    public Label labelEventsToday;
+    public Label labelGpaCalculation;
+    public Label labelLecturesToday;
 
-    private TaskModel taskModel = new TaskModel();
-    private AssignmentModel assignmentModel = new AssignmentModel();
+    private final TaskModel taskModel = new TaskModel();
+    private final AssignmentModel assignmentModel = new AssignmentModel();
+    private final CalendarModel calendarModel = new CalendarModel();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,6 +51,8 @@ public class DashboardPageController implements Initializable {
         try {
             labelTotalTasks.setText(taskModel.getPendingOrOverdueTaskCount());
             labelTotalAssignments.setText(assignmentModel.getPendingOrOverdueAssignmentCount());
+            labelEventsToday.setText(calendarModel.getAllFutureEntries("Event"));
+            labelLecturesToday.setText(calendarModel.getAllFutureEntries("Lecture"));
         } catch (Exception e) {
             AlertUtil.setErrorAlert("Error when fetching total");
             e.printStackTrace();

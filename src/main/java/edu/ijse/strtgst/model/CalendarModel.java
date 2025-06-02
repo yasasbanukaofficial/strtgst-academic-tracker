@@ -112,4 +112,12 @@ public class CalendarModel {
     public boolean syncEntryByAi(String query) throws SQLException {
         return CrudUtil.execute(query);
     }
+
+    public String getAllFutureEntries(String tableName) throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT COUNT(*) FROM " + tableName + " WHERE to_date > CURRENT_DATE");
+        while (rst.next()){
+            return rst.getString(1);
+        }
+        return "0";
+    }
 }
