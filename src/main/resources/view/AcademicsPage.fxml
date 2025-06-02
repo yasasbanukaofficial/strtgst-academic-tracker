@@ -324,7 +324,7 @@
                               </HBox>
                               <HBox accessibleRole="BUTTON" prefHeight="54.0" prefWidth="650.0" style="-fx-background-color: #ffffff; -fx-background-radius: 25px; -fx-border-radius: 25px;">
                                  <children>
-                                    <TextField fx:id="txtEnterMsg" prefHeight="54.0" prefWidth="690.0" promptText="I have an Maths exam today at 9am" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: black;" HBox.hgrow="ALWAYS">
+                                    <TextField fx:id="txtEnterMsg" prefHeight="54.0" prefWidth="690.0" promptText="Explain about mitochondria." style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: black;" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -334,7 +334,7 @@
                                     </TextField>
                                     <StackPane fx:id="btnSendMsg" onMouseClicked="#sendMessage" prefHeight="53.0" prefWidth="69.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="36.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../images/png-clipart-computer-icons-symbol-send-email-button-miscellaneous-blue-removebg-preview.png" />
                                              </image>
@@ -356,39 +356,64 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="ancAgendaView" prefHeight="459.0" prefWidth="531.0" style="-fx-background-color: white; -fx-border-radius: 25px; -fx-background-radius: 25px;" HBox.hgrow="ALWAYS">
+                  <VBox fx:id="ancQueryView" prefHeight="459.0" prefWidth="531.0" style="-fx-background-color: white; -fx-border-radius: 25px; -fx-background-radius: 25px;" HBox.hgrow="ALWAYS">
                      <padding>
                         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                      </padding>
                      <HBox.margin>
                         <Insets bottom="5.0" top="106.0" />
                      </HBox.margin>
-                  </VBox>
-                  <HBox accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onMouseClicked="#showOptionsPage" prefHeight="63.0" prefWidth="63.0" style="-fx-background-color: #ffffff; -fx-background-radius: 25px; -fx-border-radius: 25px;">
                      <children>
-                        <StackPane prefHeight="63.0" prefWidth="69.0">
+                        <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/Frame%201.png" />
-                                 </image>
-                                 <StackPane.margin>
-                                    <Insets />
-                                 </StackPane.margin>
-                              </ImageView>
+                              <Label prefHeight="32.0" prefWidth="475.0" text="• Daily Reminder">
+                                 <font>
+                                    <Font name="Poppins Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblDailyQuotes" prefHeight="19.0" prefWidth="578.0" text="Daily Reminder">
+                                 <font>
+                                    <Font name="Segoe UI Italic" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="13.0" />
+                                 </padding>
+                              </Label>
+                              <TextFlow fx:id="txtRespondFlow" lineSpacing="5.0" prefHeight="356.0" prefWidth="516.0" stylesheets="@styles/textFlow.css" />
                            </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </StackPane>
+                        </VBox>
+                        <HBox accessibleRole="BUTTON" prefHeight="54.0" prefWidth="650.0" style="-fx-background-color: #ffffff; -fx-background-radius: 25px; -fx-border-radius: 25px;">
+                           <children>
+                              <TextField fx:id="txtEnterQuery" prefHeight="54.0" prefWidth="690.0" promptText="I have an Maths exam today at 9am" style="-fx-background-color: #ffffff; -fx-border-color: #DBDBDB; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: black;" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="10.0" right="3.0" />
+                                 </padding>
+                              </TextField>
+                              <StackPane fx:id="btnSendQuery" onMouseClicked="#sendQuery" prefHeight="53.0" prefWidth="69.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/Frame%201.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </HBox>
                      </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <HBox.margin>
-                        <Insets top="510.0" />
-                     </HBox.margin>
-                  </HBox>
+                  </VBox>
                </children>
             </HBox>
          </children>

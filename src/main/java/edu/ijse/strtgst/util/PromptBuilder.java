@@ -91,4 +91,12 @@ public class PromptBuilder {
                  If the user ask about something related to previous chat/message, if its null or nothing there just ignore it here's the previous message passed as a Stringbuilder in java= """ + previousMsg.toString() + """
                  User's Question: """ + userInput;
     }
+
+    public static String reminderGenerator() {
+        return """
+                You are a reminder generator AI for an educational app aimed at students and teenagers.
+                Your task is to generate a random educational reminder that is inspiring, relevant, and informative.
+                The reminder must be between 50 and 70 characters long.
+                Only return the reminder — no explanations, no formatting, no extra text.""";
+    }
 }

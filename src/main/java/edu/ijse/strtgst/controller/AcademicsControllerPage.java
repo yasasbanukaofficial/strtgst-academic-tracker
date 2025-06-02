@@ -37,18 +37,27 @@ public class AcademicsControllerPage implements Initializable {
     public Label labelExamLocation;
     public Label labelLectureLocation;
     public Label labelTotalTasks;
-    public VBox ancChatBot;
 
+    public VBox ancChatBot;
     public TextField txtEnterMsg;
     public TextFlow txtChatFlow;
     public StackPane btnSendMsg;
 
+    public VBox ancQueryView;
+    public Label lblDailyQuotes;
+    public TextFlow txtRespondFlow;
+    public TextField txtEnterQuery;
+    public StackPane btnSendQuery;
+
     private final AcademicModel academicModel = new AcademicModel();
     private StringBuilder previousMsg = new StringBuilder();
+    private final ChatBotModel chatBotModel = new ChatBotModel();
+    private final PromptBuilder promptBuilder = new PromptBuilder();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupData();
+        randomReminderGenerator();
     }
 
     private void setupData() {
@@ -99,7 +108,7 @@ public class AcademicsControllerPage implements Initializable {
             AlertUtil.setErrorAlert("Please enter a valid entry message to send");
             return;
         }
-        String response = ChatBotModel.getResponse(PromptBuilder.askAboutStudies(userInput, previousMsg));
+        String response = chatBotModel.getResponse(promptBuilder.askAboutStudies(userInput, previousMsg));
         Text userTxt = new Text("User:      " + userInput + "\n");
         Text responseTxt = new Text("Chat:      " + response);
         txtChatFlow.getChildren().add(userTxt);
@@ -108,15 +117,10 @@ public class AcademicsControllerPage implements Initializable {
         txtEnterMsg.setText("");
     }
 
-    public void showOptionsPage(MouseEvent mouseEvent) {
-        try {
-            Parent parent = FXMLLoader.load(getClass().getResource(View.ACADEMIC_CHOICE.getPath()));
-            Scene scene = new Scene(parent);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void randomReminderGenerator() {
+        lblDailyQuotes.setText(chatBotModel.getResponse(promptBuilder.reminderGenerator()));
+    }
+
+    public void sendQuery(MouseEvent mouseEvent) {
     }
 }
