@@ -61,7 +61,7 @@ public class PromptBuilder {
                             - Convert expressions like “Monday at 9pm” to full `YYYY-MM-DD HH:MM:SS` datetime.
                             - Do NOT use SQL functions like CONCAT, just give the final datetime.
                             - Set `full_day = TRUE` if the user says "full day" or similar.
-                            - Default location is `'SCHOOL'` if not mentioned.
+                            - Default location is `'SCHOOL'` for exams and lectures, `'Cafe'` for events if not mentioned.
                             - Always generate a random ID for each row (e.g., `'EXM123456'`, `'EVT987654'`, `'LEC456789'`).
                             - Do not generate any statement if any of the details are missing because the database going to add the default values. Don't even add null to it.
                             - Do not pass null. If nay required value is missing just dont add that single data to the db since the db will add their default values.
