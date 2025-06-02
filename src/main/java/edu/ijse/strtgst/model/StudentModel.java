@@ -75,4 +75,12 @@ public class StudentModel {
         );
 
     }
+
+    public static String getStudentIdByUsername(String username) throws SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT stud_id FROM Student WHERE username = ?", username);
+        while (rst.next()){
+            return rst.getString(1);
+        }
+        return null;
+    }
 }

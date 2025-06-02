@@ -122,5 +122,34 @@ public class AcademicsControllerPage implements Initializable {
     }
 
     public void sendQuery(MouseEvent mouseEvent) {
+        txtRespondFlow.getChildren().clear();
+        try {
+            String userInput = txtEnterQuery.getText();
+            if (userInput.trim().equals("")) {
+                AlertUtil.setErrorAlert("Please enter a valid query message to send");
+                return;
+            }
+            String aiResponse = chatBotModel.getResponse(promptBuilder.buildSqlInsertAcademicsPrompt(userInput));
+            boolean isValid = aiResponse != null && aiResponse.trim().toLowerCase().startsWith("insert into");
+
+            String response;
+            if (isValid) {
+                boolean isSynced = academicModel.syncEntryByAi(aiResponse);
+                response = isSynced ?
+                        "Your subject/grade is successfully added. Add some more!" :
+                        "Failed to add an event. Try with a stable internet connection.";
+            } else {
+                response = "Sorry, I couldn’t understand that. Please describe an entry like: “Add the subject named Maths which has total marks of 75.”";
+            }
+            Text userTxt = new Text("User:      " + userInput + "\n");
+            Text responseTxt = new Text("Response:  " + response);
+            txtRespondFlow.getChildren().add(userTxt);
+            txtRespondFlow.getChildren().add(responseTxt);
+            previousMsg.append(userInput).append("\n");
+            txtEnterQuery.setText("");
+        } catch (Exception e){
+            AlertUtil.setErrorAlert("Error when sending the message: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

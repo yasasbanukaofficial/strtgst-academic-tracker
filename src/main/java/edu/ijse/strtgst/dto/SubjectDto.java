@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class SubjectDto {
     private String subId;
-    private int studId;
+    private String studId;
     private String subName;
     private int totalMarks;
 }

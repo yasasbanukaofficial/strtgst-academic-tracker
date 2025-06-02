@@ -1,9 +1,14 @@
 package edu.ijse.strtgst.util;
 
-import java.time.LocalDate;
+import edu.ijse.strtgst.context.AppContext;
+import edu.ijse.strtgst.model.StudentModel;
+
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class PromptBuilder {
+    private static AppContext appContext = AppContext.getInstance();
+
     public static String buildSqlInsertPrompt(String userInput){
         return """
                             You are an AI that only returns plain SQL INSERT statements — no code blocks, no labels, no explanations, no markdown formatting.
@@ -98,5 +103,65 @@ public class PromptBuilder {
                 Your task is to generate a random educational reminder that is inspiring, relevant, and informative.
                 The reminder must be between 50 and 70 characters long.
                 Only return the reminder — no explanations, no formatting, no extra text.""";
+    }
+
+    public static String buildSqlInsertAcademicsPrompt(String userInput){
+        String currentLoggedInUser = "";
+        try {
+            currentLoggedInUser = StudentModel.getStudentIdByUsername(appContext.getUsername());
+            return """
+                You are an AI that only returns plain SQL INSERT statements — no code blocks, no labels, no explanations, no markdown formatting.
+                
+                Today's Date and Time is: """ + LocalDateTime.now() + """
+                
+                There are 2 tables in the MySQL database:
+                
+                Table: grade
+                
+                CREATE TABLE grade (
+                    grade_id VARCHAR(5),
+                    marks INT,
+                    grade VARCHAR(2),
+                    received_date DATE,
+                    PRIMARY KEY (grade_id)
+                );
+                
+                Table: subject
+                
+                CREATE TABLE subject (
+                    sub_id VARCHAR(5) NOT NULL,
+                    stud_id VARCHAR(4),
+                    sub_name VARCHAR(50) NOT NULL,
+                    total_marks INT,
+                    PRIMARY KEY (sub_id),
+                    FOREIGN KEY (stud_id) REFERENCES student(stud_id)
+                        ON UPDATE CASCADE
+                        ON DELETE CASCADE
+                );
+                
+                Instructions:
+                    You only return valid SQL INSERT INTO statements.
+                    Never include code blocks, markdown, labels, or explanations — only the raw SQL query.
+                    Only respond to clear, actionable user inputs (e.g., "Add subject Math for student").
+                    Ignore casual, vague, or incomplete sentences (e.g., "I have a grade", "hello").
+                    Always generate a new random ID (grade_id, sub_id) for each row like 'G1234' or 'S4567'.
+                    Do not insert null values — skip columns that were not mentioned.
+                    Do not generate anything if required values are missing.
+                    Use the current date for received_date if no specific date is given.
+                    The subject title (sub_name) must be 100% present — if it’s missing or unclear, skip insertion.
+                    Convert expressions like “today”, “yesterday”, or “Monday” into full YYYY-MM-DD format.
+                    Never include irrelevant things like event, exam, or lecture — this is only about subjects and grades now.
+                    An example for a user input is somewhat like this so get an idea, Add a Maths subject to the database
+                    Remember you are required to enter the student id too know so here's the current logged in student id = """ + currentLoggedInUser + """
+                    Remember to show the insert query too.
+                
+                Now generate a valid SQL INSERT statement based only on the following user input. Do not wrap it, label it, or explain it.
+                Here's the user's input
+                user input = 
+                """ + userInput;
+        } catch (SQLException e) {
+            AlertUtil.setErrorAlert("Error when fetching student id");
+        }
+        return null;
     }
 }

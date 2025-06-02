@@ -24,4 +24,8 @@ public class AcademicModel {
         }
         return null;
     }
+
+    public boolean syncEntryByAi(String query) throws SQLException {
+        return CrudUtil.execute(query);
+    }
 }
