@@ -43,10 +43,14 @@ CREATE TABLE assignment (
 -- Table Grade
 CREATE TABLE grade (
     grade_id VARCHAR(5),
+    sub_id VARCHAR(5),
     marks INT,
     grade VARCHAR(2),
-    received_date DATE,
-    PRIMARY KEY (grade_id)
+    received_date DATETIME,
+    PRIMARY KEY (grade_id),
+    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 -- Table Lecture

@@ -2,7 +2,9 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.AssignmentDto;
+import edu.ijse.strtgst.dto.SubjectDto;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
+import edu.ijse.strtgst.model.AcademicModel;
 import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.IdLoader;
@@ -18,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -38,15 +41,27 @@ public class AssignmentFormController implements Initializable {
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final AppContext appContext = AppContext.getInstance();
     private final AssignmentPageController assignmentPageController = appContext.getAssignmentPageController();
-
+    private final AcademicModel academicModel = new AcademicModel();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
-    private ObservableList<String> subjectOptions = FXCollections.observableArrayList("Maths", "Science");
+    private ObservableList<String> subjectOptions = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appContext.setAssignmentFormController(this);
+        loadSubjects();
         setupFormDefaults();
+    }
+
+    private void loadSubjects() {
+        try {
+            ArrayList<SubjectDto> subjects = academicModel.getAllSubjects();
+            for (SubjectDto dto : subjects) {
+                subjectOptions.add(dto.getSubName());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void cancelTask(ActionEvent actionEvent) {

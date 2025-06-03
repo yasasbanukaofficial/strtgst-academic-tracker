@@ -1,6 +1,7 @@
 package edu.ijse.strtgst.util;
 
 import edu.ijse.strtgst.context.AppContext;
+import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.model.StudentModel;
 
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 public class PromptBuilder {
     private static AppContext appContext = AppContext.getInstance();
+    private static String gradeId = AssignmentModel.loadNextID();
 
     public static String buildSqlInsertPrompt(String userInput){
         return """
@@ -154,7 +156,8 @@ public class PromptBuilder {
                     An example for a user input is somewhat like this so get an idea, Add a Maths subject to the database
                     Remember you are required to enter the student id too know so here's the current logged in student id = """ + currentLoggedInUser + """
                     Remember to show the insert query too.
-                
+                    Remember after inserting into the subject table, also insert a corresponding row into the grade table using the same subject ID and total marks, for the received_date use the current date & time and use this as the id for the grade = """ + gradeId + """
+                    Remember to use the semicolon at the end of each query ';'
                 Now generate a valid SQL INSERT statement based only on the following user input. Do not wrap it, label it, or explain it.
                 Here's the user's input
                 user input = 

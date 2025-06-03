@@ -5,6 +5,7 @@ module edu.ijse.strtgst {
     requires static lombok;
     requires java.desktop;
     requires google.genai;
+    requires org.checkerframework.checker.qual;
 
 
     opens edu.ijse.strtgst.controller to javafx.fxml;

@@ -1,14 +1,20 @@
 package edu.ijse.strtgst.model;
 
+import edu.ijse.strtgst.db.DBConnection;
 import edu.ijse.strtgst.dto.AssignmentDto;
+import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.CrudUtil;
+import edu.ijse.strtgst.util.IdLoader;
+import org.checkerframework.checker.units.qual.C;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class AssignmentModel {
-    public boolean addAssignment(AssignmentDto assignmentDto) throws SQLException {
+    private boolean saveAssignment(AssignmentDto assignmentDto) throws SQLException {
         return CrudUtil.execute(
                 "INSERT INTO Assignment VALUES (?, ?, ?, ?, ?, ?, ?)",
                 assignmentDto.getAssignmentId(),
@@ -19,6 +25,54 @@ public class AssignmentModel {
                 assignmentDto.getDueDate(),
                 assignmentDto.getAssignmentStatus()
         );
+    }
+
+    public boolean addAssignment(AssignmentDto assignmentDto) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+
+            boolean isSaved = saveAssignment(assignmentDto);
+            if (isSaved){
+                String subId = fetchExistingID(assignmentDto.getSubName());
+                boolean subMarksUpdated = updateSubMarks(subId, assignmentDto.getAssignmentMarks());
+                if (subMarksUpdated){
+                    boolean gradeMarksUpdate = addGradeMarks(subId, assignmentDto.getAssignmentMarks());
+                    if (gradeMarksUpdate){
+                        connection.commit();
+                        return true;
+                    }
+                }
+            }
+            connection.rollback();
+            return false;
+        } catch (Exception e){
+            AlertUtil.setErrorAlert("Error when adding an assignment");
+            e.printStackTrace();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+            return true;
+        }
+    }
+
+    private boolean addGradeMarks(String subId, String assignmentMarks) throws SQLException {
+        String gradeId = loadNextID();
+        int marks = Integer.parseInt(assignmentMarks);
+        String grade = (marks >= 75) ? "A" : (marks >= 65) ? "B" : (marks >= 55) ? "C" : (marks >= 45) ? "D" : "F";
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return CrudUtil.execute(
+                "INSERT INTO GRADE VALUES (?, ?, ?, ?, ?)",
+                gradeId,
+                subId,
+                assignmentMarks,
+                grade,
+                currentDateTime
+        );
+    }
+
+    private boolean updateSubMarks(String subId, String assignmentMarks) throws SQLException {
+        return CrudUtil.execute("UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?", assignmentMarks, subId);
     }
 
     public boolean deleteAssignment(String assignmentId) throws SQLException {
@@ -91,5 +145,15 @@ public class AssignmentModel {
             return rst.getString(1);
         }
         return "0";
+    }
+
+     public static String loadNextID(){
+        try {
+            return IdLoader.getNextID("Grade", "grade_id");
+        } catch (SQLException e) {
+            AlertUtil.setErrorAlert("Error when loading a Grade ID");
+            e.printStackTrace();
+        }
+        return "G001";
     }
 }
