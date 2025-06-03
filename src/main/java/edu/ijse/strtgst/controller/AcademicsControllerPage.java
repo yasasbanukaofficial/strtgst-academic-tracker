@@ -152,4 +152,20 @@ public class AcademicsControllerPage implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void btnAddManually(MouseEvent mouseEvent) {
+        showOptionsPage(mouseEvent);
+    }
+
+    public void showOptionsPage(MouseEvent mouseEvent) {
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource(View.ACADEMIC_CHOICE.getPath()));
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

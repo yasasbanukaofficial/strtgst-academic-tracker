@@ -3,7 +3,6 @@ package edu.ijse.strtgst.model;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 import edu.ijse.strtgst.util.AlertUtil;
-import edu.ijse.strtgst.util.PromptBuilder;
 
 public class ChatBotModel {
     private static final String GOOGLE_API_KEY = "AIzaSyAboDpPm77ZEmlnGyyRK-Ta518yv6e9p9Q";
