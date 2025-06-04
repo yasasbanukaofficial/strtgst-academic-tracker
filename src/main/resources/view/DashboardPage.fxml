@@ -182,6 +182,19 @@
                   <Insets top="31.0" />
                </VBox.margin>
             </HBox>
+            <Label prefHeight="32.0" prefWidth="475.0" text="• Daily Reminder">
+               <font>
+                  <Font name="Poppins Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDailyQuotes" prefHeight="19.0" prefWidth="578.0" text="Daily Reminder">
+               <font>
+                  <Font name="Segoe UI Italic" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="13.0" />
+               </padding>
+            </Label>
          </children>
       </VBox>
    </children>

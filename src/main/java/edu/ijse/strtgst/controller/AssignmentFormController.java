@@ -218,10 +218,7 @@ public class AssignmentFormController implements Initializable {
             return false;
         }
 
-        if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
-            AlertUtil.setErrorAlert("Assignments due before today must be marked as overdue. ");
-            return false;
-        } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
+        if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
             AlertUtil.setErrorAlert("Cannot mark a future assignment as overdue.");
             return false;
         }

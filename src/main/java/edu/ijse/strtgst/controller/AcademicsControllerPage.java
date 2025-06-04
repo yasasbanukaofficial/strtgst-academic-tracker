@@ -129,8 +129,8 @@ public class AcademicsControllerPage implements Initializable {
                 AlertUtil.setErrorAlert("Please enter a valid query message to send");
                 return;
             }
-            String aiResponse = chatBotModel.getResponse(promptBuilder.buildSqlInsertAcademicsPrompt(userInput));
-            boolean isValid = aiResponse != null && aiResponse.trim().toLowerCase().startsWith("insert into");
+            String aiResponse = chatBotModel.getResponse(promptBuilder.buildSqlInsertAcademicsPrompt(userInput, previousMsg));
+            boolean isValid = aiResponse != null && (aiResponse.trim().toLowerCase().startsWith("insert into") || aiResponse.trim().toLowerCase().startsWith("update"));
 
             String response;
             if (isValid) {
@@ -139,7 +139,7 @@ public class AcademicsControllerPage implements Initializable {
                         "Your subject/grade is successfully added. Add some more!" :
                         "Failed to add an event. Try with a stable internet connection.";
             } else {
-                response = "Sorry, I couldn’t understand that. Please describe an entry like: “Add the subject named Maths which has total marks of 75.”";
+                response = "Sorry, I couldn’t understand that. Please describe an entry like: “Add the subject named Maths with 70 or you can add manually by clicking see more at the top of subject tab.”";
             }
             Text userTxt = new Text("User:      " + userInput + "\n");
             Text responseTxt = new Text("Response:  " + response);

@@ -6,10 +6,10 @@ import edu.ijse.strtgst.model.StudentModel;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PromptBuilder {
     private static AppContext appContext = AppContext.getInstance();
-    private static String gradeId = AssignmentModel.loadNextID();
 
     public static String buildSqlInsertPrompt(String userInput){
         return """
@@ -107,14 +107,19 @@ public class PromptBuilder {
                 Only return the reminder — no explanations, no formatting, no extra text.""";
     }
 
-    public static String buildSqlInsertAcademicsPrompt(String userInput){
+    public static String buildSqlInsertAcademicsPrompt(String userInput, StringBuilder chatHistory){
+        String gradeId = AssignmentModel.loadNextGradeID();
+        String subjectId = AssignmentModel.loadNextSubjectID();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        String formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String currentLoggedInUser = "";
         try {
             currentLoggedInUser = StudentModel.getStudentIdByUsername(appContext.getUsername());
+            chatHistory.append(userInput);
             return """
                 You are an AI that only returns plain SQL INSERT statements — no code blocks, no labels, no explanations, no markdown formatting.
                 
-                Today's Date and Time is: """ + LocalDateTime.now() + """
+                Today's Date and Time is: """ + formattedDate + """
                 
                 There are 2 tables in the MySQL database:
                 
@@ -146,7 +151,6 @@ public class PromptBuilder {
                     Never include code blocks, markdown, labels, or explanations — only the raw SQL query.
                     Only respond to clear, actionable user inputs (e.g., "Add subject Math for student").
                     Ignore casual, vague, or incomplete sentences (e.g., "I have a grade", "hello").
-                    Always generate a new random ID (grade_id, sub_id) for each row like 'G1234' or 'S4567'.
                     Do not insert null values — skip columns that were not mentioned.
                     Do not generate anything if required values are missing.
                     Use the current date for received_date if no specific date is given.
@@ -154,10 +158,27 @@ public class PromptBuilder {
                     Convert expressions like “today”, “yesterday”, or “Monday” into full YYYY-MM-DD format.
                     Never include irrelevant things like event, exam, or lecture — this is only about subjects and grades now.
                     An example for a user input is somewhat like this so get an idea, Add a Maths subject to the database
-                    Remember you are required to enter the student id too know so here's the current logged in student id = """ + currentLoggedInUser + """
                     Remember to show the insert query too.
                     Remember after inserting into the subject table, also insert a corresponding row into the grade table using the same subject ID and total marks, for the received_date use the current date & time and use this as the id for the grade = """ + gradeId + """
                     Remember to use the semicolon at the end of each query ';'
+                    Remember if there are no inputs of a total_marks for subject you dont need to add a grade record just send one query.
+                    Remember sub_name is not case sensitive Maths is also equal to maths not different words
+                    Be more careful user might enter simple inputs like 'Maths with 10' , 'Maths 10' it means the sub_name is Maths with total_marks of 10 and in the grade table add the corresponding sub_id related to that sub_name in this case sub_id for the Maths properly.
+                    
+                    Finally Remember these are what you need to add
+                    For subject you need to add the sub_id """ + subjectId + """
+                    , stud_id = """ + currentLoggedInUser + """
+                    sub_name (provided by the user input), total_marks (provided by the user input sometimes the user won't input it so make it 0 as the default value)
+                    And remember to add Grade if user enter the marks (Sometimes the user might input it shortly like Add Maths with 10, 10 is the marks for the subject and you should add it to the subject total_marks and grade marks columns respectively) for the subject.
+                    For grade you need to add the grade_id = """ + gradeId + """ 
+                    , sub_id = """ + subjectId + """
+                    , marks (provided by the user input), grade (input it like this 75 or more → Grade = "A", 65 to 74 → Grade = "B", 55 to 64 → Grade = "C", 45 to 54 → Grade = "D", Below 45 → Grade = "F"), received_date (put today's date and time provided above)
+                    You should follow this.
+                    
+                    Any of this shouldn't be null specially the sub_id, stud_id, grade_id
+                    
+                    Finally if the user enter the same subject name in another way like for Maths as maths just update the name of the subject put a update query with relevant data. To do this you need access to the past conversations know so here's the past conversations user had the entire time = """ + chatHistory.toString() + """ 
+                    
                 Now generate a valid SQL INSERT statement based only on the following user input. Do not wrap it, label it, or explain it.
                 Here's the user's input
                 user input = 

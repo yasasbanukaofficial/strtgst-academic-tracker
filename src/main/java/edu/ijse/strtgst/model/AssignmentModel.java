@@ -5,7 +5,6 @@ import edu.ijse.strtgst.dto.AssignmentDto;
 import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.CrudUtil;
 import edu.ijse.strtgst.util.IdLoader;
-import org.checkerframework.checker.units.qual.C;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,6 +34,9 @@ public class AssignmentModel {
             boolean isSaved = saveAssignment(assignmentDto);
             if (isSaved){
                 String subId = fetchExistingID(assignmentDto.getSubName());
+                if (subId == null){
+                    AlertUtil.setErrorAlert("Assignment not saved");
+                }
                 boolean subMarksUpdated = updateSubMarks(subId, assignmentDto.getAssignmentMarks());
                 if (subMarksUpdated){
                     boolean gradeMarksUpdate = addGradeMarks(subId, assignmentDto.getAssignmentMarks());
@@ -57,18 +59,25 @@ public class AssignmentModel {
     }
 
     private boolean addGradeMarks(String subId, String assignmentMarks) throws SQLException {
-        String gradeId = loadNextID();
         int marks = Integer.parseInt(assignmentMarks);
         String grade = (marks >= 75) ? "A" : (marks >= 65) ? "B" : (marks >= 55) ? "C" : (marks >= 45) ? "D" : "F";
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        return CrudUtil.execute(
-                "INSERT INTO GRADE VALUES (?, ?, ?, ?, ?)",
-                gradeId,
-                subId,
-                assignmentMarks,
-                grade,
-                currentDateTime
-        );
+
+        ResultSet rst = CrudUtil.execute("SELECT * FROM GRADE WHERE sub_id = ?", subId);
+        if (rst.next()){
+            return CrudUtil.execute("UPDATE GRADE SET marks = marks + ?, grade = ? WHERE sub_id = ?", assignmentMarks, grade, subId);
+        } else {
+            String gradeId = loadNextGradeID();
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            return CrudUtil.execute(
+                    "INSERT INTO GRADE VALUES (?, ?, ?, ?, ?)",
+                    gradeId,
+                    subId,
+                    assignmentMarks,
+                    grade,
+                    currentDateTime
+            );
+        }
+
     }
 
     private boolean updateSubMarks(String subId, String assignmentMarks) throws SQLException {
@@ -147,7 +156,7 @@ public class AssignmentModel {
         return "0";
     }
 
-     public static String loadNextID(){
+     public static String loadNextGradeID(){
         try {
             return IdLoader.getNextID("Grade", "grade_id");
         } catch (SQLException e) {
@@ -155,5 +164,15 @@ public class AssignmentModel {
             e.printStackTrace();
         }
         return "G001";
+    }
+
+    public static String loadNextSubjectID(){
+        try {
+            return IdLoader.getNextIdForTwoChar("Subject", "sub_id");
+        } catch (SQLException e) {
+            AlertUtil.setErrorAlert("Error when loading a Grade ID");
+            e.printStackTrace();
+        }
+        return "SU001";
     }
 }

@@ -17,6 +17,7 @@ public class AppInitializer extends Application {
         Parent parent = FXMLLoader.load(getClass().getResource(View.SIGNUP.getPath()));
         Scene scene = new Scene(parent);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 }

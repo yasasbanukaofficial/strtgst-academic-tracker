@@ -18,10 +18,10 @@ CREATE TABLE student(
 
 -- Table Subject
 CREATE TABLE subject (
-    sub_id VARCHAR(5) NOT NULL,
+    sub_id VARCHAR(6) NOT NULL,
     stud_id VARCHAR(4),
     sub_name VARCHAR(50) NOT NULL,
-    total_marks INT,
+    total_marks INT DEFAULT 0,
     PRIMARY KEY (sub_id),
     FOREIGN KEY (stud_id) REFERENCES student(stud_id)
         ON UPDATE CASCADE
@@ -43,7 +43,7 @@ CREATE TABLE assignment (
 -- Table Grade
 CREATE TABLE grade (
     grade_id VARCHAR(5),
-    sub_id VARCHAR(5),
+    sub_id VARCHAR(6),
     marks INT,
     grade VARCHAR(2),
     received_date DATETIME,
@@ -114,7 +114,7 @@ CREATE TABLE event (
 -- Table Subject_Scores (Subject -> Grade) -> Grade History/Updating
 CREATE TABLE subject_scores (
     score_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(5),
+    sub_id VARCHAR(6),
     grade_id VARCHAR(5),
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
@@ -155,7 +155,9 @@ CREATE TABLE subject_study_sessions (
         ON DELETE CASCADE
 );
 
-
+-- Quick Entry purpose.
+INSERT INTO student (stud_id, username, email, password)
+VALUES ('S001', 'yasas', 'y@mail.com', 'Yasas@123');
 
 /*
 DROP TABLE student;
