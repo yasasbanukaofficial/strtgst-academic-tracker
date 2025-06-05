@@ -34,13 +34,10 @@ public class SubjectModel {
                 if (subId == null){
                     AlertUtil.setErrorAlert("Subject not saved");
                 }
-                boolean subMarksUpdated = updateSubMarks(subId, subjectDto.getTotalMarks());
-                if (subMarksUpdated){
-                    boolean gradeMarksUpdate = addGradeMarks(subId, subjectDto.getTotalMarks());
-                    if (gradeMarksUpdate){
-                        connection.commit();
-                        return true;
-                    }
+                boolean gradeMarksUpdate = addGradeMarks(subId, subjectDto.getTotalMarks());
+                if (gradeMarksUpdate){
+                    connection.commit();
+                    return true;
                 }
             }
             connection.rollback();
@@ -75,12 +72,70 @@ public class SubjectModel {
         }
     }
 
-    private boolean updateSubMarks(String subId, String SubjectMarks) throws SQLException {
-        return CrudUtil.execute("UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?", SubjectMarks, subId);
+    private boolean updateGradeMarks(String subId, String subjectMarks) throws SQLException {
+        int marks = Integer.parseInt(subjectMarks);
+        String grade = (marks >= 75) ? "A" : (marks >= 65) ? "B" : (marks >= 55) ? "C" : (marks >= 45) ? "D" : "F";
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return CrudUtil.execute("UPDATE Grade SET marks = ?, grade = ?, received_date = ?, WHERE sub_id = ?", subjectMarks, grade, currentDateTime, subId);
     }
 
-    public boolean deleteSubject(String SubjectId) throws SQLException {
-        return CrudUtil.execute("DELETE FROM Subject WHERE Subject_id = ?", SubjectId);
+    private boolean deleteGrade(String subId) throws SQLException {
+        return CrudUtil.execute("DELETE FROM Grade WHERE sub_id = ?", subId);
+    }
+
+    public boolean editSubject(SubjectDto subjectDto) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+            boolean isSubMarksUpdated = CrudUtil.execute(
+                    "UPDATE Subject SET sub_name = ?, description = ?, total_marks = ? WHERE sub_id = ?",
+                    subjectDto.getSubName(),
+                    subjectDto.getSubDescription(),
+                    subjectDto.getTotalMarks(),
+                    subjectDto.getSubId()
+            );
+            if (isSubMarksUpdated){
+                boolean isGradeMarksUpdated = updateGradeMarks(subjectDto.getSubId(), subjectDto.getTotalMarks());
+                if (isGradeMarksUpdated){
+                    connection.commit();
+                    return true;
+                }
+            }
+            connection.rollback();
+            return false;
+        } catch (Exception e){
+            AlertUtil.setErrorAlert("Error when editing an Subject");
+            e.printStackTrace();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+            return true;
+        }
+    }
+
+    public boolean deleteSubject(String subjectId) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+            boolean isSubDeleted = CrudUtil.execute("DELETE FROM Subject WHERE sub_id = ?", subjectId);
+            if (isSubDeleted) {
+                boolean isGradeDeleted = deleteGrade(subjectId);
+                if (isGradeDeleted) {
+                    connection.commit();
+                    return true;
+                }
+            }
+            connection.rollback();
+            return false;
+        } catch (Exception e) {
+            AlertUtil.setErrorAlert("Error when deleting an Subject");
+            e.printStackTrace();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+            return true;
+        }
+
     }
 
     public static String fetchExistingID(String subjectName) throws SQLException {
@@ -104,29 +159,6 @@ public class SubjectModel {
         return subjectDtos;
     }
 
-    public boolean editSubject(SubjectDto subjectDto) throws SQLException {
-        return CrudUtil.execute(
-                "UPDATE Subject SET sub_name = ?, description = ?, total_marks = ? WHERE sub_id = ?",
-                subjectDto.getSubName(),
-                subjectDto.getSubDescription(),
-                subjectDto.getTotalMarks(),
-                subjectDto.getSubId()
-        );
-    }
-
-    public ArrayList<ArrayList> getAllSubjectStatus() throws SQLException {
-        ResultSet rst = CrudUtil.execute("SELECT Subject_status, due_date, Subject_id FROM Subject");
-        ArrayList<ArrayList> list = new ArrayList<>();  
-        while (rst.next()) {
-            ArrayList<String> row = new ArrayList<>();
-            row.add(rst.getString("Subject_status"));
-            row.add(rst.getString("due_date"));
-            row.add(rst.getString("Subject_id"));
-            list.add(row);
-        }
-        return list;
-    }
-
     public static String loadNextGradeID(){
         try {
             return IdLoader.getNextID("Grade", "grade_id");
@@ -136,8 +168,5 @@ public class SubjectModel {
         }
         return "G001";
     }
-
-
-    
 
 }
