@@ -6,6 +6,7 @@ module edu.ijse.strtgst {
     requires java.desktop;
     requires google.genai;
     requires org.checkerframework.checker.qual;
+    requires java.mail;
 
 
     opens edu.ijse.strtgst.controller to javafx.fxml;

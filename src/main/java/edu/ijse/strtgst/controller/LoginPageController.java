@@ -7,9 +7,17 @@ import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class LoginPageController {
     public AnchorPane loginAnc;
@@ -17,6 +25,7 @@ public class LoginPageController {
     public PasswordField txtPassword;
 
     private final AppContext appContext = AppContext.getInstance();
+    public Label lblForgotPassword;
 
     public void visitSignUpPage() {
         Navigation.navigateTo(loginAnc, View.SIGNUP);
@@ -54,5 +63,17 @@ public class LoginPageController {
     public boolean validateCredentials(String username, String password) throws Exception {
         StudentDto studentDto = StudentModel.getStudent(username);
         return studentDto != null && password.equals(studentDto.getPassword());
+    }
+
+    public void forgotPassword(MouseEvent mouseEvent) {
+        try {
+            Parent parent = FXMLLoader.load(getClass().getResource(View.FORGOT_PASSWORD.getPath()));
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

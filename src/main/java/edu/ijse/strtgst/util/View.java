@@ -17,6 +17,8 @@ public enum View {
 
     ACADEMIC_CHOICE("AcademicChoice.fxml"),
     LECTURES_FORM("LecturesForm.fxml"),
+    FORGOT_PASSWORD("ForgotPasswordPage.fxml"),
+    UPDATE_PASSWORD("UpdatePasswordPage.fxml"),
 
     DEFAULT_ASSIGNMENT("DefaultAssignmentDisplay.fxml"),
     DEFAULT_TASK("DefaultTaskDisplay.fxml");
