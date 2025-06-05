@@ -47,7 +47,8 @@ public class AcademicModel {
                     rst.getString(1),
                     rst.getString(2),
                     rst.getString(3),
-                    rst.getInt(4)
+                    rst.getString(4),
+                    rst.getString(5)
             ));
         }
         return subjectDtos;

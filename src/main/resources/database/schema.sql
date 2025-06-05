@@ -21,6 +21,7 @@ CREATE TABLE subject (
     sub_id VARCHAR(6) NOT NULL,
     stud_id VARCHAR(4),
     sub_name VARCHAR(50) NOT NULL,
+    description VARCHAR(200),
     total_marks INT DEFAULT 0,
     PRIMARY KEY (sub_id),
     FOREIGN KEY (stud_id) REFERENCES student(stud_id)
