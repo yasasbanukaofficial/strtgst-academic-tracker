@@ -111,7 +111,7 @@ public class AssignmentModel {
                     newMarks = Math.max(0, newMarks);
 
 
-                    String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" : 
+                    String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" :
                                   (newMarks >= 55) ? "C" : (newMarks >= 45) ? "D" : "F";
 
                     boolean isGradeUpdated = CrudUtil.execute(
@@ -176,7 +176,6 @@ public class AssignmentModel {
         try {
             connection.setAutoCommit(false);
 
-            // Get the existing assignment data
             ResultSet existingAssignment = CrudUtil.execute(
                 "SELECT * FROM Assignment WHERE assignment_id = ?", 
                 assignmentDto.getAssignmentId()
@@ -191,7 +190,6 @@ public class AssignmentModel {
             String oldMarks = existingAssignment.getString("assignment_marks");
             String oldStatus = existingAssignment.getString("assignment_status");
 
-            // Update the assignment record
             boolean isUpdated = CrudUtil.execute(
                 "UPDATE Assignment SET assignment_name = ?, assignment_description = ?, assignment_marks = ?, sub_name = ?, due_date = ?, assignment_status = ? WHERE assignment_id = ?",
                 assignmentDto.getAssignmentName(),
@@ -208,21 +206,16 @@ public class AssignmentModel {
                 return false;
             }
 
-            // Handle marks update based on status changes
             String oldSubId = fetchExistingID(oldSubName);
             String newSubId = fetchExistingID(assignmentDto.getSubName());
 
-            // If subject was changed, we need to handle both old and new subjects
             if (!oldSubName.equals(assignmentDto.getSubName())) {
-                // If the old assignment was completed, remove the marks from old subject
                 if ("Completed".equals(oldStatus)) {
-                    // Subtract marks from old subject
                     CrudUtil.execute(
                         "UPDATE Subject SET total_marks = total_marks - ? WHERE sub_id = ?",
                         oldMarks, oldSubId
                     );
 
-                    // Update grade for old subject
                     ResultSet oldGradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", oldSubId);
                     if (oldGradeRst.next()) {
                         int currentMarks = oldGradeRst.getInt("marks");
@@ -239,7 +232,6 @@ public class AssignmentModel {
                     }
                 }
 
-                // If the new assignment is completed, add marks to new subject
                 if ("Completed".equals(assignmentDto.getAssignmentStatus())) {
                     boolean subMarksUpdated = CrudUtil.execute(
                         "UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?",
@@ -258,17 +250,12 @@ public class AssignmentModel {
                     }
                 }
             } else {
-                // Same subject, but need to handle status or marks changes
-
-                // If status changed from completed to not completed
                 if ("Completed".equals(oldStatus) && !"Completed".equals(assignmentDto.getAssignmentStatus())) {
-                    // Remove marks from subject
                     CrudUtil.execute(
                         "UPDATE Subject SET total_marks = total_marks - ? WHERE sub_id = ?",
                         oldMarks, oldSubId
                     );
 
-                    // Update grade
                     ResultSet gradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", oldSubId);
                     if (gradeRst.next()) {
                         int currentMarks = gradeRst.getInt("marks");
@@ -284,21 +271,16 @@ public class AssignmentModel {
                         );
                     }
                 }
-                // If status changed from not completed to completed
                 else if (!"Completed".equals(oldStatus) && "Completed".equals(assignmentDto.getAssignmentStatus())) {
-                    // Add marks to subject
                     CrudUtil.execute(
                         "UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?",
                         assignmentDto.getAssignmentMarks(), oldSubId
                     );
 
-                    // Update grade
                     addGradeMarks(oldSubId, assignmentDto.getAssignmentMarks());
                 }
-                // If status remained completed but marks changed
-                else if ("Completed".equals(oldStatus) && "Completed".equals(assignmentDto.getAssignmentStatus()) 
+                else if ("Completed".equals(oldStatus) && "Completed".equals(assignmentDto.getAssignmentStatus())
                          && !oldMarks.equals(assignmentDto.getAssignmentMarks())) {
-                    // Update subject marks (subtract old, add new)
                     int marksDifference = Integer.parseInt(assignmentDto.getAssignmentMarks()) - Integer.parseInt(oldMarks);
 
                     CrudUtil.execute(
@@ -306,7 +288,6 @@ public class AssignmentModel {
                         String.valueOf(marksDifference), oldSubId
                     );
 
-                    // Update grade
                     ResultSet gradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", oldSubId);
                     if (gradeRst.next()) {
                         int currentMarks = gradeRst.getInt("marks");
@@ -358,7 +339,6 @@ public class AssignmentModel {
         try {
             connection.setAutoCommit(false);
 
-            // Get assignment details before update
             ResultSet assignmentRst = CrudUtil.execute(
                 "SELECT * FROM Assignment WHERE assignment_id = ?", 
                 assignmentId
@@ -373,13 +353,11 @@ public class AssignmentModel {
             String assignmentMarks = assignmentRst.getString("assignment_marks");
             String subName = assignmentRst.getString("sub_name");
 
-            // If status is already the same, no need to update
             if (oldStatus.equals(newStatus)) {
                 connection.rollback();
                 return true;
             }
 
-            // Update the status
             boolean statusUpdated = CrudUtil.execute(
                 "UPDATE Assignment SET assignment_status = ? WHERE assignment_id = ?",
                 newStatus, assignmentId
@@ -396,16 +374,13 @@ public class AssignmentModel {
                 return false;
             }
 
-            // If status changed from not completed to completed
             if (!"Completed".equals(oldStatus) && "Completed".equals(newStatus) && !"Overdue".equals(newStatus)) {
-                // Add marks to subject
                 boolean subjectUpdated = CrudUtil.execute(
                     "UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?",
                     assignmentMarks, subId
                 );
 
                 if (subjectUpdated) {
-                    // Update grade
                     boolean gradeUpdated = addGradeMarks(subId, assignmentMarks);
                     if (!gradeUpdated) {
                         connection.rollback();
@@ -416,23 +391,20 @@ public class AssignmentModel {
                     return false;
                 }
             }
-            // If status changed from completed to not completed
             else if ("Completed".equals(oldStatus) && !"Completed".equals(newStatus)) {
-                // Remove marks from subject
                 boolean subjectUpdated = CrudUtil.execute(
                     "UPDATE Subject SET total_marks = total_marks - ? WHERE sub_id = ?",
                     assignmentMarks, subId
                 );
 
                 if (subjectUpdated) {
-                    // Update grade
                     ResultSet gradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", subId);
                     if (gradeRst.next()) {
                         int currentMarks = gradeRst.getInt("marks");
                         int newMarks = currentMarks - Integer.parseInt(assignmentMarks);
                         newMarks = Math.max(0, newMarks);
 
-                        String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" : 
+                        String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" :
                                      (newMarks >= 55) ? "C" : (newMarks >= 45) ? "D" : "F";
 
                         boolean gradeUpdated = CrudUtil.execute(
