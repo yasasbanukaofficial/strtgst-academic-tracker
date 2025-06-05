@@ -29,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.net.URL;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -54,6 +55,8 @@ public class CalendarPageController implements Initializable {
     private final AgendaView agendaView = new AgendaView();
 
     private final CalendarModel calendarModel = new CalendarModel();
+    private static ArrayList<CalendarEvent> events = new ArrayList<>();
+    private static ArrayList<Entry> entries = new ArrayList<>();
     private boolean isLoading = false;
 
     @Override
@@ -105,21 +108,45 @@ public class CalendarPageController implements Initializable {
     private void handleEvent (CalendarEvent e) {
         if (isLoading) return;
         Entry<?> entry = e.getEntry();
-        try {
-            if (e.getCalendar() == null){
-                if (!calendarModel.deleteEntry((e.getOldCalendar().getName()), entry.getId())){
-                    AlertUtil.setErrorAlert("Error when deleting entry from the database");
-                }
-            } else {
-                if (!calendarModel.syncEntryWithDatabase(entry)) {
-                    AlertUtil.setErrorAlert("Error when modifying an event to the calendar");
+        entries.add(entry);
+        events.add(e);
+    }
+
+    public void addEntriesToDB() {
+        for (Entry<?> entry : entries) {
+            CalendarEvent matchingEvent = null;
+
+            for (CalendarEvent event : events) {
+                if (event.getEntry() == entry) {
+                    matchingEvent = event;
+                    break;
                 }
             }
-        } catch (Exception ex) {
-            AlertUtil.setErrorAlert("Error when modifying an event to the calendar in db");
-            ex.printStackTrace();
+
+            try {
+                if (entry.getCalendar() == null) {
+                    if (matchingEvent != null && matchingEvent.getOldCalendar() != null) {
+                        if (!calendarModel.deleteEntry(matchingEvent.getOldCalendar().getName(), entry.getId())) {
+                            AlertUtil.setErrorAlert("Error when deleting entry from the database");
+                        }
+                    } else {
+                        AlertUtil.setErrorAlert("Could not determine old calendar for deleted entry: " + entry.getId());
+                    }
+                } else {
+                    if (!calendarModel.syncEntryWithDatabase(entry)) {
+                        AlertUtil.setErrorAlert("Error when modifying an event to the calendar");
+                    }
+                }
+            } catch (Exception ex) {
+                AlertUtil.setErrorAlert("Error when syncing entry with the database");
+                ex.printStackTrace();
+            }
         }
+
+        entries.clear();
+        events.clear();
     }
+
 
     private void loadAllEntries() {
         isLoading = true;
@@ -230,16 +257,17 @@ class UpdateThread{
     private static Thread updateTimeThread;
     private static volatile boolean running = false;
     private static DateControl currentView;
-
+    private static CalendarPageController calendarPageController = new CalendarPageController();
     public static Thread startThread(DateControl view) {
         currentView = view;
         if (updateTimeThread == null){
             running = true;
-            updateTimeThread = new Thread("Calendar: Update Time"){
+            updateTimeThread = new Thread("Calendar: Update Time & Database"){
                 @Override
                 public void run() {
                     while (running){
                         Platform.runLater(() -> {
+                            calendarPageController.addEntriesToDB();
                             if (currentView != null && currentView.getScene() != null){
                                 currentView.setDate(LocalDate.now());
                                 currentView.setTime(LocalTime.now());
@@ -247,7 +275,7 @@ class UpdateThread{
                         });
 
                         try{
-                            sleep(5000);
+                            sleep(10000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
