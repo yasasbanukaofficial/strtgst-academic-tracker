@@ -5,7 +5,6 @@ public enum View {
     CALENDAR("CalendarPage.fxml"),
     TASK("TaskPage.fxml"),
     ASSIGNMENT("AssignmentPage.fxml"),
-    ACADEMICS("AcademicsPage.fxml"),
     SETTINGS("SettingsPage.fxml"),
     LOGIN("LoginPage.fxml"),
     SIGNUP("SignUpPage.fxml"),
@@ -15,7 +14,6 @@ public enum View {
     ADD_EVENT("AddNewEvent.fxml"),
     ADD_TASK("TaskForm.fxml"),
 
-    ACADEMIC_CHOICE("AcademicChoice.fxml"),
     LECTURES_FORM("LecturesForm.fxml"),
     FORGOT_PASSWORD("ForgotPasswordPage.fxml"),
     UPDATE_PASSWORD("UpdatePasswordPage.fxml"),

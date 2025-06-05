@@ -132,32 +132,6 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitAcademicsPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #F6F6F6; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
-                                 <children>
-                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/emojione-monotone_letter-a.jpg" />
-                                       </image>
-                                    </ImageView>
-                                    <Label text="Academics">
-                                       <font>
-                                          <Font name="Poppins Regular" size="24.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets top="-5.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="62.0" right="26.0" top="12.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets right="55.0" top="35.0" />
-                                 </VBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </HBox>
                               <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" onMouseClicked="#visitSettingsPage" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #03004c; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="75.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
@@ -190,7 +164,7 @@
                                     </VBox>
                                  </children>
                                  <VBox.margin>
-                                    <Insets right="55.0" top="222.0" />
+                                    <Insets right="55.0" top="322.0" />
                                  </VBox.margin>
                                  <padding>
                                     <Insets left="42.0" />
