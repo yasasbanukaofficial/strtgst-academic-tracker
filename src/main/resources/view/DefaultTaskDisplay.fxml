@@ -53,7 +53,7 @@
                   <Image url="@../images/palm-tree-4453182%201.jpg" />
                </image>
                <VBox.margin>
-                  <Insets top="208.0" />
+                  <Insets top="214.0" />
                </VBox.margin>
             </ImageView>
          </children>
