@@ -46,6 +46,7 @@ public class CalendarPageController implements Initializable {
     private Calendar examCalendar = new Calendar("Exam");
     private Calendar lectureCalendar = new Calendar("Lecture");
     private Calendar eventsCalendar = new Calendar("Event");
+    private Calendar studySessionCalendar = new Calendar("Study Session");
     private CalendarSource calendarSource = new CalendarSource("My Calendar");
     private final WeekPage weekView = new WeekPage();
     private final DetailedDayView dayView = new DetailedDayView();
@@ -98,6 +99,7 @@ public class CalendarPageController implements Initializable {
         examCalendar.addEventHandler(event);
         lectureCalendar.addEventHandler(event);
         eventsCalendar.addEventHandler(event);
+        studySessionCalendar.addEventHandler(event);
     }
 
     private void handleEvent (CalendarEvent e) {
@@ -125,10 +127,12 @@ public class CalendarPageController implements Initializable {
             examCalendar.clear();
             lectureCalendar.clear();
             eventsCalendar.clear();
+            studySessionCalendar.clear();
 
             loadEntriesForCalendar(examCalendar, calendarModel.getAllExamEntries());
             loadEntriesForCalendar(lectureCalendar, calendarModel.getAllLectureEntries());
             loadEntriesForCalendar(eventsCalendar, calendarModel.getAllEventEntries());
+            loadEntriesForCalendar(studySessionCalendar, calendarModel.getAllStudySessionEntries());
 
             refreshViews();
         } catch (SQLException e) {
@@ -155,7 +159,7 @@ public class CalendarPageController implements Initializable {
         showDayView(new ActionEvent());
         showAgendaView(new ActionEvent());
         setupCalendarStyles();
-        calendarSource.getCalendars().addAll(lectureCalendar, eventsCalendar, examCalendar);
+        calendarSource.getCalendars().addAll(lectureCalendar, eventsCalendar, examCalendar, studySessionCalendar);
 
         weekView.getCalendarSources().clear();
         weekView.getCalendarSources().add(calendarSource);
@@ -178,6 +182,7 @@ public class CalendarPageController implements Initializable {
         examCalendar.setStyle(Calendar.Style.STYLE5);
         lectureCalendar.setStyle(Calendar.Style.STYLE2);
         eventsCalendar.setStyle(Calendar.Style.STYLE4);
+        studySessionCalendar.setStyle(Calendar.Style.STYLE6);
     }
 
     public void sendMessage(MouseEvent mouseEvent) {

@@ -134,5 +134,4 @@ public class SubjectPageController implements Initializable {
     private void updateDateLabel() {
         labelDate.setText(DateUtil.setDate());
     }
-
 }
