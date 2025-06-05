@@ -4,6 +4,7 @@ import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
 public class IntroPageController implements Initializable {
     public MediaView mediaViewer;
     public AnchorPane ancIntro;
+    public Button btnStartJourney;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,7 +42,7 @@ public class IntroPageController implements Initializable {
         }
     }
 
-    public void visitSignUpPage(ActionEvent actionEvent) {
+    public void visitLoginPage(ActionEvent actionEvent) {
         Navigation.navigateTo(ancIntro, View.LOGIN);
     }
 

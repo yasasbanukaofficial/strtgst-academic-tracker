@@ -10,9 +10,9 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancIntro" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.IntroPageController">
+<AnchorPane fx:id="ancIntro" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.IntroPageController">
    <children>
-      <MediaView fx:id="mediaViewer" fitHeight="1080.0" fitWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <MediaView fx:id="mediaViewer" fitHeight="1000.0" fitWidth="1600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="STRTGST" textFill="WHITE">
@@ -33,7 +33,7 @@
             </Label>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#visitSignUpPage" prefHeight="65.0" prefWidth="243.0" style="-fx-background-color: transparent;" stylesheets="@styles/introButton.css" text="Start Journey" textFill="WHITE">
+                  <Button fx:id="btnStartJourney" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#visitLoginPage" prefHeight="65.0" prefWidth="243.0" style="-fx-background-color: transparent;" stylesheets="@styles/introButton.css" text="Start Journey" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
