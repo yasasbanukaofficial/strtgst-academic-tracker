@@ -15,20 +15,25 @@ public class StudySessionModel {
                 "INSERT INTO study_session VALUES (?, ?, ?, ?, ?, ?, ?)",
                 studySessionDto.getSsId(),
                 studySessionDto.getSsName(),
-                "",
-                false,
-                new Timestamp(studySessionDto.getDate().getTime()),
+                studySessionDto.getLocation() != null ? studySessionDto.getLocation() : "",
+                studySessionDto.isFullDay(),
+                studySessionDto.getStartTime() != null ? studySessionDto.getStartTime() : 
+                    new Timestamp(studySessionDto.getDate().getTime()),
                 studySessionDto.getEndTime(),
-                ""
+                studySessionDto.getRecurrenceRule() != null ? studySessionDto.getRecurrenceRule() : ""
         );
     }
 
     public boolean updateStudySession(StudySessionDto studySessionDto) throws SQLException {
         return CrudUtil.execute(
-                "UPDATE study_session SET ss_name = ?, from_date = ?, to_date = ? WHERE ss_id = ?",
+                "UPDATE study_session SET ss_name = ?, location = ?, full_day = ?, from_date = ?, to_date = ?, repeat_type = ? WHERE ss_id = ?",
                 studySessionDto.getSsName(),
-                new Timestamp(studySessionDto.getDate().getTime()),
+                studySessionDto.getLocation() != null ? studySessionDto.getLocation() : "",
+                studySessionDto.isFullDay(),
+                studySessionDto.getStartTime() != null ? studySessionDto.getStartTime() : 
+                    new Timestamp(studySessionDto.getDate().getTime()),
                 studySessionDto.getEndTime(),
+                studySessionDto.getRecurrenceRule() != null ? studySessionDto.getRecurrenceRule() : "",
                 studySessionDto.getSsId()
         );
     }
@@ -45,9 +50,12 @@ public class StudySessionModel {
             StudySessionDto studySessionDto = new StudySessionDto(
                     rst.getInt("ss_id"),
                     rst.getString("ss_name"),
+                    rst.getString("location"),
+                    rst.getBoolean("full_day"),
                     rst.getDate("from_date"),
                     rst.getTimestamp("from_date"),
-                    rst.getTimestamp("to_date")
+                    rst.getTimestamp("to_date"),
+                    rst.getString("repeat_type")
             );
             studySessionDtos.add(studySessionDto);
         }

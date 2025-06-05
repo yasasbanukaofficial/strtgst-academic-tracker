@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CalendarModel {
-    private final String [] calendarTableNames = {"Exam", "Lecture", "Event", "Study_Session"};
+    private final String [] calendarTableNames = {"Exam", "Lecture", "Event", "study_session"};
     private final String [] calendarTableIdColumns = {"exam_id", "lec_id", "event_id", "ss_id"};
 
     public boolean syncEntryWithDatabase(Entry<?> entry) throws SQLException {
@@ -49,9 +49,10 @@ public class CalendarModel {
 
         if (!foundInOldTable) {
             for (int i = 0; i < calendarTableNames.length; i++) {
-                // Handle StudySession calendar to map to study_session table
-                if ((calendarName.equalsIgnoreCase("StudySession") && calendarTableNames[i].equalsIgnoreCase("study_session")) || 
-                    calendarName.equalsIgnoreCase(calendarTableNames[i])) {
+                // Check if we need to insert data based on the calendar name
+                if (calendarName.equalsIgnoreCase(calendarTableNames[i]) || 
+                    (calendarName.equalsIgnoreCase("Study Session") && calendarTableNames[i].equalsIgnoreCase("study_session"))) {
+
                     CrudUtil.execute(
                             "INSERT INTO " + calendarTableNames[i] + " VALUES (?, ?, ?, ?, ?, ?, ?)",
                             entryId,
@@ -112,18 +113,21 @@ public class CalendarModel {
 
     public boolean deleteEntry(String tableName, String id) throws SQLException {
         String idColumn;
+        String actualTableName = tableName;
+
         if (tableName.equalsIgnoreCase("Exam")) {
             idColumn = "exam_id";
         } else if (tableName.equalsIgnoreCase("Lecture")) {
             idColumn = "lec_id";
         } else if (tableName.equalsIgnoreCase("Event")) {
             idColumn = "event_id";
-        } else if (tableName.equalsIgnoreCase("StudySession")) {
+        } else if (tableName.equalsIgnoreCase("Study Session")) {
             idColumn = "ss_id";
+            actualTableName = "study_session";
         } else {
             idColumn = "id";
         }
-        return CrudUtil.execute("DELETE FROM " + tableName +" WHERE " + idColumn + " = ?", id);
+        return CrudUtil.execute("DELETE FROM " + actualTableName +" WHERE " + idColumn + " = ?", id);
     }
 
     public boolean syncEntryByAi(String query) throws SQLException {
