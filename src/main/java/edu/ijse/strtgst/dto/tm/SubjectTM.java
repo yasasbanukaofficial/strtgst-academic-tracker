@@ -13,4 +13,5 @@ public class SubjectTM {
     private String subName;
     private String subDescription;
     private String totalMarks;
+    private String grade;
 }

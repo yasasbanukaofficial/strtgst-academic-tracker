@@ -116,6 +116,7 @@ public class SubjectFormController implements Initializable {
                 if (subjectModel.addSubject(subjectDto)) {
                     AlertUtil.setInfoAlert("Successfully added a subject");
                     Navigation.navigateTo(ancAddNewSubject, View.DEFAULT_SUBJECT);
+                    subjectPageController.loadTableData();
                 } else AlertUtil.setErrorAlert("Failed to save a Subject");
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Failed when adding a subject");
@@ -136,6 +137,7 @@ public class SubjectFormController implements Initializable {
                     subjectPageController.setupTableColumn();
                     setupFormDefaults();
                     AlertUtil.setInfoAlert("Successfully deleted a subject");
+                    subjectPageController.loadTableData();
                 } else { AlertUtil.setErrorAlert("Failed to deleted a subject"); }
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Error when deleting a subject");
@@ -164,6 +166,7 @@ public class SubjectFormController implements Initializable {
                 if (subjectModel.editSubject(subjectDto)) {
                     AlertUtil.setInfoAlert("Successfully edited the subject");
                     Navigation.navigateTo(ancAddNewSubject, View.DEFAULT_SUBJECT);
+                    subjectPageController.loadTableData();
                 } else AlertUtil.setErrorAlert("Failed to edit the subject");
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Failed when editing the subject");

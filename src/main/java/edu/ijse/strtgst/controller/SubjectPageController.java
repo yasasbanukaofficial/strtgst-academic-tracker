@@ -37,6 +37,7 @@ public class SubjectPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumn();
+        loadTableData();
         appContext.setSubjectPageController(this);
         Navigation.navigateTo(ancSubjectContainer, View.DEFAULT_SUBJECT);
     }
@@ -46,21 +47,21 @@ public class SubjectPageController implements Initializable {
     }
 
     public void setupTableColumn() {
-        columnSubjectName.setCellValueFactory(new PropertyValueFactory<>("subjectName"));
-        columnSubjectDescription.setCellValueFactory(new PropertyValueFactory<>("subjectDescription"));
-        columnSubjectMarks.setCellValueFactory(new PropertyValueFactory<>("subjectMarks"));
-        columnSubjectGrade.setCellValueFactory(new PropertyValueFactory<>("subjectGrade"));
+        columnSubjectName.setCellValueFactory(new PropertyValueFactory<>("subName"));
+        columnSubjectDescription.setCellValueFactory(new PropertyValueFactory<>("subDescription"));
+        columnSubjectMarks.setCellValueFactory(new PropertyValueFactory<>("totalMarks"));
+        columnSubjectGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
 
         columnSubjectMarks.setCellFactory(c -> new TableCell<>(){
             @Override
-            protected void updateItem(String status, boolean empty) {
-                super.updateItem(status, empty);
-                if(empty || status == null){
+            protected void updateItem(String marks, boolean empty) {
+                super.updateItem(marks, empty);
+                if (empty || marks == null) {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    Label label = new Label(status);
-                    label.setStyle(getStatusStyle(status));
+                    Label label = new Label(marks);
+                    label.setStyle(getMarksStyle(marks));
                     setGraphic(label);
                     setText(null);
                 }
@@ -70,7 +71,7 @@ public class SubjectPageController implements Initializable {
         loadTableData();
     }
 
-    private void loadTableData(){
+    public void loadTableData(){
         try {
             ArrayList<SubjectDto> allSubjects = subjectModel.getAllSubjects();
             tblSubject.setItems(FXCollections.observableArrayList(
@@ -79,7 +80,8 @@ public class SubjectPageController implements Initializable {
                                     subjectDto.getStudId(),
                                     subjectDto.getSubName(),
                                     subjectDto.getSubDescription(),
-                                    subjectDto.getTotalMarks()
+                                    subjectDto.getTotalMarks(),
+                                    calculateGrade(subjectDto.getTotalMarks())
                                     )
                             ).toList()
             ));
@@ -89,14 +91,21 @@ public class SubjectPageController implements Initializable {
         }
     }
 
-    private String getStatusStyle(String status) {
-        return switch (status.toLowerCase()) {
-            case "completed" -> "-fx-background-color: #11C759; -fx-text-fill: white; -fx-padding: 4 8; -fx-background-radius: 10;";
-            case "pending" -> "-fx-background-color: #f1c40f; -fx-text-fill: white; -fx-padding: 4 8; -fx-background-radius: 10;";
-            case "overdue" -> "-fx-background-color: #d90429; -fx-text-fill: white; -fx-padding: 4 8; -fx-background-radius: 10;";
-            default -> "-fx-background-color: #bdc3c7; -fx-text-fill: black; -fx-padding: 4 8; -fx-background-radius: 10;";
-        };
+    private String getMarksStyle(String marksStr) {
+        try {
+            double marks = Double.parseDouble(marksStr);
+            if (marks >= 75) {
+                return "-fx-background-color: #27ae60; -fx-text-fill: black; -fx-padding: 4 8; -fx-background-radius: 10;";
+            } else if (marks >= 50) {
+                return "-fx-background-color: #f39c12; -fx-text-fill: black; -fx-padding: 4 8; -fx-background-radius: 10;";
+            } else {
+                return "-fx-background-color: #e74c3c; -fx-text-fill: black; -fx-padding: 4 8; -fx-background-radius: 10;";
+            }
+        } catch (NumberFormatException e) {
+            return "-fx-background-color: #bdc3c7; -fx-text-fill: black; -fx-padding: 4 8; -fx-background-radius: 10;";
+        }
     }
+
 
     public void onClickSubjectTable(MouseEvent mouseEvent) {
         Navigation.navigateTo(ancSubjectContainer, View.ADD_SUBJECT);
@@ -106,4 +115,17 @@ public class SubjectPageController implements Initializable {
             subjectFormController.populateFormForEdit(selectedSubject);
         }
     }
+
+    private String calculateGrade(String marksStr) {
+        try {
+            double marks = Double.parseDouble(marksStr);
+            if (marks >= 75) return "A";
+            else if (marks >= 65) return "B";
+            else if (marks >= 50) return "C";
+            else return "F";
+        } catch (NumberFormatException e) {
+            return "-";
+        }
+    }
+
 }

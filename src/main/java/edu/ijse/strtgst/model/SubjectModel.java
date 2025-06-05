@@ -106,7 +106,7 @@ public class SubjectModel {
 
     public boolean editSubject(SubjectDto subjectDto) throws SQLException {
         return CrudUtil.execute(
-                "UPDATE Subject SET sub_name = ?, description = ?, total_marks = ?, WHERE sub_id = ?",
+                "UPDATE Subject SET sub_name = ?, description = ?, total_marks = ? WHERE sub_id = ?",
                 subjectDto.getSubName(),
                 subjectDto.getSubDescription(),
                 subjectDto.getTotalMarks(),
