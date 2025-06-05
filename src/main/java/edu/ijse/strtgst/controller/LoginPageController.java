@@ -15,17 +15,19 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginPageController {
+public class LoginPageController{
     public AnchorPane loginAnc;
     public TextField txtUsername;
     public PasswordField txtPassword;
 
     private final AppContext appContext = AppContext.getInstance();
     public Label lblForgotPassword;
+    public MediaView mediaViewer;
 
     public void visitSignUpPage() {
         Navigation.navigateTo(loginAnc, View.SIGNUP);

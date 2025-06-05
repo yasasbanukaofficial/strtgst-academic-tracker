@@ -22,7 +22,9 @@ public enum View {
 
     DEFAULT_ASSIGNMENT("DefaultAssignmentDisplay.fxml"),
     DEFAULT_TASK("DefaultTaskDisplay.fxml"),
-    DEFAULT_SUBJECT("DefaultSubjectDisplay.fxml");
+    DEFAULT_SUBJECT("DefaultSubjectDisplay.fxml"),
+
+    INTRO("IntroPage.fxml");
 
 
     private final String fileName;
