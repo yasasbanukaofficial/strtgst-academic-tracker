@@ -1,9 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.model.AssignmentModel;
-import edu.ijse.strtgst.model.CalendarModel;
-import edu.ijse.strtgst.model.ChatBotModel;
-import edu.ijse.strtgst.model.TaskModel;
+import edu.ijse.strtgst.model.*;
 import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.PromptBuilder;
@@ -36,6 +33,7 @@ public class DashboardPageController implements Initializable {
 
     private final TaskModel taskModel = new TaskModel();
     private final AssignmentModel assignmentModel = new AssignmentModel();
+    private final SubjectModel subjectModel = new SubjectModel();
     private final CalendarModel calendarModel = new CalendarModel();
     private StringBuilder previousMsg = new StringBuilder();
     private final ChatBotModel chatBotModel = new ChatBotModel();
@@ -43,7 +41,21 @@ public class DashboardPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setUpTexts();
         countTotal();
+    }
+
+    private void setUpTexts() {
+        Text intialText = new Text("""
+                ~  Welcome to Strtgst AI Bot
+                
+                -  Ask Anything
+                •  Ask about Science (What is mitochondria?)
+                •  Ask about History (Who is Napoleon Bonaparte?)
+                """);
+        txtChatFlow.getChildren().add(intialText);
+        double gpa = subjectModel.getGPACalculation();
+        labelGpaCalculation.setText(String.format("%.2f", gpa));
     }
 
     public void visitTasksPage(MouseEvent mouseEvent) {

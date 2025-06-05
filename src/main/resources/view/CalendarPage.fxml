@@ -91,7 +91,7 @@
                                     <Font name="Poppins Bold" size="22.0" />
                                  </font>
                               </Label>
-                              <Label prefHeight="23.0" prefWidth="663.0" text="Add an entry with just text. But remember to add only a single entry at a time.">
+                              <Label prefHeight="23.0" prefWidth="663.0" text="Add entries with just text. But remember to add only a single entry at a time. ">
                                  <font>
                                     <Font name="Poppins Regular" size="16.0" />
                                  </font>

@@ -222,9 +222,9 @@
                            <children>
                               <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: grey; -fx-border-width: 2px; -fx-border-radius: 10px;" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <VBox prefHeight="263.0" prefWidth="443.0">
+                                    <VBox prefHeight="391.0" prefWidth="588.0">
                                        <children>
-                                          <TextFlow fx:id="txtChatFlow" lineSpacing="5.0" prefHeight="356.0" prefWidth="516.0" stylesheets="@styles/textFlow.css" />
+                                          <TextFlow fx:id="txtChatFlow" lineSpacing="5.0" prefHeight="356.0" prefWidth="477.0" stylesheets="@styles/textFlow.css" />
                                        </children>
                                     </VBox>
                                     <StackPane alignment="TOP_RIGHT" prefHeight="150.0" prefWidth="200.0" HBox.hgrow="ALWAYS">

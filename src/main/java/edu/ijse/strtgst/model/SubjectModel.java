@@ -169,4 +169,36 @@ public class SubjectModel {
         return "G001";
     }
 
+    public static Double getGPACalculation() {
+        try {
+            ResultSet rst = CrudUtil.execute("SELECT marks FROM grade");
+
+            double totalGPA = 0;
+            int subjectCount = 0;
+
+            while (rst.next()) {
+                double marks = rst.getDouble("marks");
+                double gpaPoint = convertMarksToGPA(marks);
+                totalGPA += gpaPoint;
+                subjectCount++;
+            }
+
+            if (subjectCount == 0) return 0.00;
+
+            return totalGPA / subjectCount;
+
+        } catch (SQLException e) {
+            AlertUtil.setErrorAlert("Error calculating GPA: " + e.getMessage());
+            e.printStackTrace();
+            return 0.00;
+        }
+    }
+
+    private static double convertMarksToGPA(double marks) {
+        if (marks >= 75) return 4.00;
+        if (marks >= 65) return 3.00;
+        if (marks >= 55) return 2.00;
+        if (marks >= 45) return 1.00;
+        return 0.00;
+    }
 }
