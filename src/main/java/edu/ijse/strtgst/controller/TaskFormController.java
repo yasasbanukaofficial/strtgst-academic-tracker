@@ -92,6 +92,8 @@ public class TaskFormController implements Initializable {
                     taskPageController.setupTableColumn();
                     setupFormDefaults();
                     AlertUtil.setInfoAlert("Successfully deleted the task");
+                    Navigation.navigateTo(ancAddNewTask, View.DEFAULT_TASK);
+                    taskPageController.updateOverdueStatus();
                 } else { AlertUtil.setErrorAlert("Failed to deleted the task"); }
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Error when deleting the task");

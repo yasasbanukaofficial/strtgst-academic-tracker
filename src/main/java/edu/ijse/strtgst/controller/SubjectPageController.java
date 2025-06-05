@@ -5,6 +5,7 @@ import edu.ijse.strtgst.dto.SubjectDto;
 import edu.ijse.strtgst.dto.tm.SubjectTM;
 import edu.ijse.strtgst.model.SubjectModel;
 import edu.ijse.strtgst.util.AlertUtil;
+import edu.ijse.strtgst.util.DateUtil;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.collections.FXCollections;
@@ -38,6 +39,7 @@ public class SubjectPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumn();
         loadTableData();
+        updateDateLabel();
         appContext.setSubjectPageController(this);
         Navigation.navigateTo(ancSubjectContainer, View.DEFAULT_SUBJECT);
     }
@@ -127,6 +129,10 @@ public class SubjectPageController implements Initializable {
         } catch (NumberFormatException e) {
             return "-";
         }
+    }
+
+    private void updateDateLabel() {
+        labelDate.setText(DateUtil.setDate());
     }
 
 }

@@ -59,7 +59,7 @@
                         <Insets left="170.0" top="46.0" />
                      </padding>
                   </HBox>
-                  <Label prefHeight="63.0" prefWidth="154.0" text="May 19" textFill="#03004c" HBox.hgrow="ALWAYS">
+                  <Label fx:id="labelDate" prefHeight="63.0" prefWidth="154.0" text="May 19" textFill="#03004c" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Poppins Bold" size="44.0" />
                      </font>

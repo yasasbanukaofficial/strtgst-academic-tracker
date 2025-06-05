@@ -12,12 +12,14 @@ import com.google.genai.types.GenerateContentResponse;
 import edu.ijse.strtgst.model.CalendarModel;
 import edu.ijse.strtgst.model.ChatBotModel;
 import edu.ijse.strtgst.util.AlertUtil;
+import edu.ijse.strtgst.util.DateUtil;
 import edu.ijse.strtgst.util.PromptBuilder;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -40,6 +42,7 @@ public class CalendarPageController implements Initializable {
     public TextFlow txtChatFlow;
     public TextField txtEnterMsg;
     public StackPane btnSendMsg;
+    public Label labelDate;
     private Calendar examCalendar = new Calendar("Exam");
     private Calendar lectureCalendar = new Calendar("Lecture");
     private Calendar eventsCalendar = new Calendar("Event");
@@ -57,6 +60,7 @@ public class CalendarPageController implements Initializable {
         setupCalendarViews();
         eventsInitializer();
         loadAllEntries();
+        updateDateLabel();
     }
 
     public void navigateTo(VBox anchor, Node node){
@@ -212,6 +216,9 @@ public class CalendarPageController implements Initializable {
         }
     }
 
+    private void updateDateLabel() {
+        labelDate.setText(DateUtil.setDate());
+    }
 }
 
 class UpdateThread{

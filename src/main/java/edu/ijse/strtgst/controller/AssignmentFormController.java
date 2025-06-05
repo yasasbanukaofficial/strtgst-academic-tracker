@@ -116,6 +116,7 @@ public class AssignmentFormController implements Initializable {
                     assignmentPageController.setupTableColumn();
                     setupFormDefaults();
                     AlertUtil.setInfoAlert("Successfully deleted an assignment");
+                    Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
                 } else { AlertUtil.setErrorAlert("Failed to deleted an assignment"); }
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Error when deleting an assignment");
