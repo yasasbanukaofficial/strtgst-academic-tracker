@@ -121,7 +121,8 @@ public class SubjectPageController implements Initializable {
             double marks = Double.parseDouble(marksStr);
             if (marks >= 75) return "A";
             else if (marks >= 65) return "B";
-            else if (marks >= 50) return "C";
+            else if (marks >= 55) return "C";
+            else if (marks >= 45) return "D";
             else return "F";
         } catch (NumberFormatException e) {
             return "-";

@@ -52,12 +52,12 @@ public class SubjectModel {
         }
     }
 
-    private boolean addGradeMarks(String subId, String subjectMarks) throws SQLException {
-        int marks = Integer.parseInt(subjectMarks);
+    public boolean addGradeMarks(String subId, String newMarks) throws SQLException {
+        int marks = Integer.parseInt(newMarks);
         String grade = (marks >= 75) ? "A" : (marks >= 65) ? "B" : (marks >= 55) ? "C" : (marks >= 45) ? "D" : "F";
         ResultSet rst = CrudUtil.execute("SELECT * FROM GRADE WHERE sub_id = ?", subId);
         if (rst.next()){
-            return CrudUtil.execute("UPDATE GRADE SET marks = marks + ?, grade = ? WHERE sub_id = ?", subjectMarks, grade, subId);
+            return CrudUtil.execute("UPDATE GRADE SET marks = marks + ?, grade = ? WHERE sub_id = ?", newMarks, grade, subId);
         } else {
             String gradeId = loadNextGradeID();
             LocalDateTime currentDateTime = LocalDateTime.now();
@@ -65,21 +65,21 @@ public class SubjectModel {
                     "INSERT INTO GRADE VALUES (?, ?, ?, ?, ?)",
                     gradeId,
                     subId,
-                    subjectMarks,
+                    newMarks,
                     grade,
                     currentDateTime
             );
         }
     }
 
-    private boolean updateGradeMarks(String subId, String subjectMarks) throws SQLException {
+    public boolean updateGradeMarks(String subId, String subjectMarks) throws SQLException {
         int marks = Integer.parseInt(subjectMarks);
         String grade = (marks >= 75) ? "A" : (marks >= 65) ? "B" : (marks >= 55) ? "C" : (marks >= 45) ? "D" : "F";
         LocalDateTime currentDateTime = LocalDateTime.now();
-        return CrudUtil.execute("UPDATE Grade SET marks = ?, grade = ?, received_date = ?, WHERE sub_id = ?", subjectMarks, grade, currentDateTime, subId);
+        return CrudUtil.execute("UPDATE Grade SET marks = ?, grade = ?, received_date = ? WHERE sub_id = ?", subjectMarks, grade, currentDateTime, subId);
     }
 
-    private boolean deleteGrade(String subId) throws SQLException {
+    public boolean deleteGrade(String subId) throws SQLException {
         return CrudUtil.execute("DELETE FROM Grade WHERE sub_id = ?", subId);
     }
 

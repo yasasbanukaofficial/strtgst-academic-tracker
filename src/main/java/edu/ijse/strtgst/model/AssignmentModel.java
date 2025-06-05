@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class AssignmentModel {
+    private final SubjectModel subjectModel = new SubjectModel();
     private boolean saveAssignment(AssignmentDto assignmentDto) throws SQLException {
         return CrudUtil.execute(
                 "INSERT INTO Assignment VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -36,14 +37,24 @@ public class AssignmentModel {
                 String subId = fetchExistingID(assignmentDto.getSubName());
                 if (subId == null){
                     AlertUtil.setErrorAlert("Assignment not saved");
+                    connection.rollback();
+                    return false;
                 }
-                boolean subMarksUpdated = updateSubMarks(subId, assignmentDto.getAssignmentMarks());
-                if (subMarksUpdated){
-                    boolean gradeMarksUpdate = addGradeMarks(subId, assignmentDto.getAssignmentMarks());
-                    if (gradeMarksUpdate){
-                        connection.commit();
-                        return true;
+
+                if ("Completed".equals(assignmentDto.getAssignmentStatus())) {
+                    boolean subMarksUpdated = updateSubMarks(subId, assignmentDto.getAssignmentMarks());
+                    if (subMarksUpdated){
+                        boolean gradeMarksUpdate = addGradeMarks(subId, assignmentDto.getAssignmentMarks());
+                        if (gradeMarksUpdate){
+                            connection.commit();
+                            return true;
+                        }
                     }
+                    connection.rollback();
+                    return false;
+                } else {
+                    connection.commit();
+                    return true;
                 }
             }
             connection.rollback();
@@ -51,41 +62,88 @@ public class AssignmentModel {
         } catch (Exception e){
             AlertUtil.setErrorAlert("Error when adding an assignment");
             e.printStackTrace();
+            connection.rollback();
+            return false;
         } finally {
             connection.setAutoCommit(true);
             connection.close();
-            return true;
         }
     }
 
     private boolean addGradeMarks(String subId, String assignmentMarks) throws SQLException {
-        int marks = Integer.parseInt(assignmentMarks);
-        String grade = (marks >= 75) ? "A" : (marks >= 65) ? "B" : (marks >= 55) ? "C" : (marks >= 45) ? "D" : "F";
-
-        ResultSet rst = CrudUtil.execute("SELECT * FROM GRADE WHERE sub_id = ?", subId);
-        if (rst.next()){
-            return CrudUtil.execute("UPDATE GRADE SET marks = marks + ?, grade = ? WHERE sub_id = ?", assignmentMarks, grade, subId);
-        } else {
-            String gradeId = loadNextGradeID();
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            return CrudUtil.execute(
-                    "INSERT INTO GRADE VALUES (?, ?, ?, ?, ?)",
-                    gradeId,
-                    subId,
-                    assignmentMarks,
-                    grade,
-                    currentDateTime
-            );
-        }
-
+        return subjectModel.addGradeMarks(subId, assignmentMarks);
     }
 
     private boolean updateSubMarks(String subId, String assignmentMarks) throws SQLException {
-        return CrudUtil.execute("UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?", assignmentMarks, subId);
+        return subjectModel.updateGradeMarks(subId, assignmentMarks);
     }
 
     public boolean deleteAssignment(String assignmentId) throws SQLException {
-        return CrudUtil.execute("DELETE FROM Assignment WHERE assignment_id = ?", assignmentId);
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+
+            ResultSet assignmentRst = CrudUtil.execute("SELECT * FROM Assignment WHERE assignment_id = ?", assignmentId);
+            if (!assignmentRst.next()) {
+                connection.rollback();
+                return false;
+            }
+
+            String subName = assignmentRst.getString("sub_name");
+            String assignmentMarks = assignmentRst.getString("assignment_marks");
+
+            String subId = fetchExistingID(subName);
+            if (subId == null) {
+                connection.rollback();
+                return false;
+            }
+
+            boolean isSubjectUpdated = CrudUtil.execute(
+                "UPDATE Subject SET total_marks = total_marks - ? WHERE sub_id = ?",
+                assignmentMarks, subId
+            );
+
+            if (isSubjectUpdated) {
+                ResultSet gradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", subId);
+                if (gradeRst.next()) {
+                    int currentMarks = gradeRst.getInt("marks");
+                    int newMarks = currentMarks - Integer.parseInt(assignmentMarks);
+                    newMarks = Math.max(0, newMarks);
+
+
+                    String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" : 
+                                  (newMarks >= 55) ? "C" : (newMarks >= 45) ? "D" : "F";
+
+                    boolean isGradeUpdated = CrudUtil.execute(
+                        "UPDATE Grade SET marks = ?, grade = ? WHERE sub_id = ?",
+                        newMarks, grade, subId
+                    );
+
+                    if (isGradeUpdated) {
+                        boolean isAssignmentDeleted = CrudUtil.execute(
+                            "DELETE FROM Assignment WHERE assignment_id = ?", 
+                            assignmentId
+                        );
+
+                        if (isAssignmentDeleted) {
+                            connection.commit();
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            connection.rollback();
+            return false;
+        } catch (Exception e) {
+            AlertUtil.setErrorAlert("Error when deleting an assignment");
+            e.printStackTrace();
+            connection.rollback();
+            return false;
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
     }
 
     public static String fetchExistingID(String subjectName) throws SQLException {
@@ -114,7 +172,27 @@ public class AssignmentModel {
     }
 
     public boolean editAssignment(AssignmentDto assignmentDto) throws SQLException {
-        return CrudUtil.execute(
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+
+            // Get the existing assignment data
+            ResultSet existingAssignment = CrudUtil.execute(
+                "SELECT * FROM Assignment WHERE assignment_id = ?", 
+                assignmentDto.getAssignmentId()
+            );
+
+            if (!existingAssignment.next()) {
+                connection.rollback();
+                return false;
+            }
+
+            String oldSubName = existingAssignment.getString("sub_name");
+            String oldMarks = existingAssignment.getString("assignment_marks");
+            String oldStatus = existingAssignment.getString("assignment_status");
+
+            // Update the assignment record
+            boolean isUpdated = CrudUtil.execute(
                 "UPDATE Assignment SET assignment_name = ?, assignment_description = ?, assignment_marks = ?, sub_name = ?, due_date = ?, assignment_status = ? WHERE assignment_id = ?",
                 assignmentDto.getAssignmentName(),
                 assignmentDto.getAssignmentDescription(),
@@ -123,7 +201,141 @@ public class AssignmentModel {
                 assignmentDto.getDueDate(),
                 assignmentDto.getAssignmentStatus(),
                 assignmentDto.getAssignmentId()
-        );
+            );
+
+            if (!isUpdated) {
+                connection.rollback();
+                return false;
+            }
+
+            // Handle marks update based on status changes
+            String oldSubId = fetchExistingID(oldSubName);
+            String newSubId = fetchExistingID(assignmentDto.getSubName());
+
+            // If subject was changed, we need to handle both old and new subjects
+            if (!oldSubName.equals(assignmentDto.getSubName())) {
+                // If the old assignment was completed, remove the marks from old subject
+                if ("Completed".equals(oldStatus)) {
+                    // Subtract marks from old subject
+                    CrudUtil.execute(
+                        "UPDATE Subject SET total_marks = total_marks - ? WHERE sub_id = ?",
+                        oldMarks, oldSubId
+                    );
+
+                    // Update grade for old subject
+                    ResultSet oldGradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", oldSubId);
+                    if (oldGradeRst.next()) {
+                        int currentMarks = oldGradeRst.getInt("marks");
+                        int newMarks = currentMarks - Integer.parseInt(oldMarks);
+                        newMarks = Math.max(0, newMarks);
+
+                        String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" : 
+                                     (newMarks >= 55) ? "C" : (newMarks >= 45) ? "D" : "F";
+
+                        CrudUtil.execute(
+                            "UPDATE Grade SET marks = ?, grade = ? WHERE sub_id = ?",
+                            newMarks, grade, oldSubId
+                        );
+                    }
+                }
+
+                // If the new assignment is completed, add marks to new subject
+                if ("Completed".equals(assignmentDto.getAssignmentStatus())) {
+                    boolean subMarksUpdated = CrudUtil.execute(
+                        "UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?",
+                        assignmentDto.getAssignmentMarks(), newSubId
+                    );
+
+                    if (subMarksUpdated) {
+                        boolean gradeMarksUpdate = addGradeMarks(newSubId, assignmentDto.getAssignmentMarks());
+                        if (!gradeMarksUpdate) {
+                            connection.rollback();
+                            return false;
+                        }
+                    } else {
+                        connection.rollback();
+                        return false;
+                    }
+                }
+            } else {
+                // Same subject, but need to handle status or marks changes
+
+                // If status changed from completed to not completed
+                if ("Completed".equals(oldStatus) && !"Completed".equals(assignmentDto.getAssignmentStatus())) {
+                    // Remove marks from subject
+                    CrudUtil.execute(
+                        "UPDATE Subject SET total_marks = total_marks - ? WHERE sub_id = ?",
+                        oldMarks, oldSubId
+                    );
+
+                    // Update grade
+                    ResultSet gradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", oldSubId);
+                    if (gradeRst.next()) {
+                        int currentMarks = gradeRst.getInt("marks");
+                        int newMarks = currentMarks - Integer.parseInt(oldMarks);
+                        newMarks = Math.max(0, newMarks);
+
+                        String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" : 
+                                     (newMarks >= 55) ? "C" : (newMarks >= 45) ? "D" : "F";
+
+                        CrudUtil.execute(
+                            "UPDATE Grade SET marks = ?, grade = ? WHERE sub_id = ?",
+                            newMarks, grade, oldSubId
+                        );
+                    }
+                }
+                // If status changed from not completed to completed
+                else if (!"Completed".equals(oldStatus) && "Completed".equals(assignmentDto.getAssignmentStatus())) {
+                    // Add marks to subject
+                    CrudUtil.execute(
+                        "UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?",
+                        assignmentDto.getAssignmentMarks(), oldSubId
+                    );
+
+                    // Update grade
+                    addGradeMarks(oldSubId, assignmentDto.getAssignmentMarks());
+                }
+                // If status remained completed but marks changed
+                else if ("Completed".equals(oldStatus) && "Completed".equals(assignmentDto.getAssignmentStatus()) 
+                         && !oldMarks.equals(assignmentDto.getAssignmentMarks())) {
+                    // Update subject marks (subtract old, add new)
+                    int marksDifference = Integer.parseInt(assignmentDto.getAssignmentMarks()) - Integer.parseInt(oldMarks);
+
+                    CrudUtil.execute(
+                        "UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?",
+                        String.valueOf(marksDifference), oldSubId
+                    );
+
+                    // Update grade
+                    ResultSet gradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", oldSubId);
+                    if (gradeRst.next()) {
+                        int currentMarks = gradeRst.getInt("marks");
+                        int newMarks = currentMarks + marksDifference;
+                        newMarks = Math.max(0, newMarks);
+
+                        String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" : 
+                                     (newMarks >= 55) ? "C" : (newMarks >= 45) ? "D" : "F";
+
+                        CrudUtil.execute(
+                            "UPDATE Grade SET marks = ?, grade = ? WHERE sub_id = ?",
+                            newMarks, grade, oldSubId
+                        );
+                    }
+                }
+            }
+
+            connection.commit();
+            return true;
+
+        } catch (Exception e) {
+            AlertUtil.setErrorAlert("Error when updating assignment");
+            e.printStackTrace();
+            connection.rollback();
+            return false;
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
     }
 
     public ArrayList<ArrayList> getAllAssignmentStatus() throws SQLException {
@@ -142,10 +354,115 @@ public class AssignmentModel {
 
 
     public boolean updateAssignmentStatus(String assignmentId, String newStatus) throws SQLException {
-        return CrudUtil.execute(
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+
+            // Get assignment details before update
+            ResultSet assignmentRst = CrudUtil.execute(
+                "SELECT * FROM Assignment WHERE assignment_id = ?", 
+                assignmentId
+            );
+
+            if (!assignmentRst.next()) {
+                connection.rollback();
+                return false;
+            }
+
+            String oldStatus = assignmentRst.getString("assignment_status");
+            String assignmentMarks = assignmentRst.getString("assignment_marks");
+            String subName = assignmentRst.getString("sub_name");
+
+            // If status is already the same, no need to update
+            if (oldStatus.equals(newStatus)) {
+                connection.rollback();
+                return true;
+            }
+
+            // Update the status
+            boolean statusUpdated = CrudUtil.execute(
                 "UPDATE Assignment SET assignment_status = ? WHERE assignment_id = ?",
                 newStatus, assignmentId
-        );
+            );
+
+            if (!statusUpdated) {
+                connection.rollback();
+                return false;
+            }
+
+            String subId = fetchExistingID(subName);
+            if (subId == null) {
+                connection.rollback();
+                return false;
+            }
+
+            // If status changed from not completed to completed
+            if (!"Completed".equals(oldStatus) && "Completed".equals(newStatus) && !"Overdue".equals(newStatus)) {
+                // Add marks to subject
+                boolean subjectUpdated = CrudUtil.execute(
+                    "UPDATE Subject SET total_marks = total_marks + ? WHERE sub_id = ?",
+                    assignmentMarks, subId
+                );
+
+                if (subjectUpdated) {
+                    // Update grade
+                    boolean gradeUpdated = addGradeMarks(subId, assignmentMarks);
+                    if (!gradeUpdated) {
+                        connection.rollback();
+                        return false;
+                    }
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+            }
+            // If status changed from completed to not completed
+            else if ("Completed".equals(oldStatus) && !"Completed".equals(newStatus)) {
+                // Remove marks from subject
+                boolean subjectUpdated = CrudUtil.execute(
+                    "UPDATE Subject SET total_marks = total_marks - ? WHERE sub_id = ?",
+                    assignmentMarks, subId
+                );
+
+                if (subjectUpdated) {
+                    // Update grade
+                    ResultSet gradeRst = CrudUtil.execute("SELECT marks FROM GRADE WHERE sub_id = ?", subId);
+                    if (gradeRst.next()) {
+                        int currentMarks = gradeRst.getInt("marks");
+                        int newMarks = currentMarks - Integer.parseInt(assignmentMarks);
+                        newMarks = Math.max(0, newMarks);
+
+                        String grade = (newMarks >= 75) ? "A" : (newMarks >= 65) ? "B" : 
+                                     (newMarks >= 55) ? "C" : (newMarks >= 45) ? "D" : "F";
+
+                        boolean gradeUpdated = CrudUtil.execute(
+                            "UPDATE Grade SET marks = ?, grade = ? WHERE sub_id = ?",
+                            newMarks, grade, subId
+                        );
+
+                        if (!gradeUpdated) {
+                            connection.rollback();
+                            return false;
+                        }
+                    }
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+            }
+
+            connection.commit();
+            return true;
+
+        } catch (Exception e) {
+            AlertUtil.setErrorAlert("Error when updating assignment status");
+            e.printStackTrace();
+            connection.rollback();
+            return false;
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
     }
 
     public String getPendingOrOverdueAssignmentCount() throws SQLException {
