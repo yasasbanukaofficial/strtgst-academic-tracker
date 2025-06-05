@@ -147,7 +147,6 @@ public class CalendarPageController implements Initializable {
         events.clear();
     }
 
-
     private void loadAllEntries() {
         isLoading = true;
         try {
@@ -290,6 +289,7 @@ class UpdateThread{
     }
 
     public static void stopThread() {
+        calendarPageController.addEntriesToDB();
         running = false;
         if (updateTimeThread != null){
             updateTimeThread.interrupt();
