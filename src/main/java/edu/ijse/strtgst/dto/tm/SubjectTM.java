@@ -1,4 +1,4 @@
-package edu.ijse.strtgst.dto;
+package edu.ijse.strtgst.dto.tm;
 
 import lombok.*;
 
@@ -7,10 +7,11 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class SubjectDto {
+public class SubjectTM {
     private String subId;
     private String studId;
     private String subName;
     private String subDescription;
     private String totalMarks;
+    private String grade;
 }

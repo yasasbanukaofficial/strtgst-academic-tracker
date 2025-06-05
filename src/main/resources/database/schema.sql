@@ -18,10 +18,11 @@ CREATE TABLE student(
 
 -- Table Subject
 CREATE TABLE subject (
-    sub_id VARCHAR(5) NOT NULL,
+    sub_id VARCHAR(6) NOT NULL,
     stud_id VARCHAR(4),
     sub_name VARCHAR(50) NOT NULL,
-    total_marks INT,
+    description VARCHAR(200),
+    total_marks INT DEFAULT 0,
     PRIMARY KEY (sub_id),
     FOREIGN KEY (stud_id) REFERENCES student(stud_id)
         ON UPDATE CASCADE
@@ -43,10 +44,14 @@ CREATE TABLE assignment (
 -- Table Grade
 CREATE TABLE grade (
     grade_id VARCHAR(5),
+    sub_id VARCHAR(6),
     marks INT,
     grade VARCHAR(2),
-    received_date DATE,
-    PRIMARY KEY (grade_id)
+    received_date DATETIME,
+    PRIMARY KEY (grade_id),
+    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 -- Table Lecture
@@ -55,9 +60,9 @@ CREATE TABLE lecture (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (lec_id)
 );
 
@@ -67,9 +72,9 @@ CREATE TABLE exam (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (exam_id)
 );
 
@@ -99,9 +104,9 @@ CREATE TABLE event (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (event_id)
 );
 
@@ -110,7 +115,7 @@ CREATE TABLE event (
 -- Table Subject_Scores (Subject -> Grade) -> Grade History/Updating
 CREATE TABLE subject_scores (
     score_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(5),
+    sub_id VARCHAR(6),
     grade_id VARCHAR(5),
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
@@ -151,7 +156,9 @@ CREATE TABLE subject_study_sessions (
         ON DELETE CASCADE
 );
 
-
+-- Quick Entry purpose.
+INSERT INTO student (stud_id, username, email, password)
+VALUES ('S001', 'yasas', 'y@mail.com', 'Yasas@123');
 
 /*
 DROP TABLE student;

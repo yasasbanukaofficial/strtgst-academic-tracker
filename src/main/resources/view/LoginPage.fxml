@@ -119,6 +119,17 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
+                              <Label fx:id="lblForgotPassword" onMouseClicked="#forgotPassword" text="Forgot Password ?">
+                                 <font>
+                                    <Font name="Poppins Bold" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="137.0" top="21.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
                            </children>
                            <VBox.margin>
                               <Insets left="192.0" right="180.0" top="35.0" />

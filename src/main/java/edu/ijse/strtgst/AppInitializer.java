@@ -14,9 +14,10 @@ public class AppInitializer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource(View.MAIN.getPath()));
+        Parent parent = FXMLLoader.load(getClass().getResource(View.LOGIN.getPath()));
         Scene scene = new Scene(parent);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 }

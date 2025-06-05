@@ -70,7 +70,7 @@ public class MainPageController implements Initializable {
         stopAndNavigate(ancMainPage, View.LOGIN);
     }
 
-    public void visitAcademicsPage(MouseEvent mouseEvent) {
-        stopAndNavigate(ancTabDisplay, View.ACADEMICS);
+    public void visitSubjectPage(MouseEvent mouseEvent) {
+        stopAndNavigate(ancTabDisplay, View.SUBJECT);
     }
 }
