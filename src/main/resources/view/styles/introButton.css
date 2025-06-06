@@ -17,7 +17,7 @@
 }
 
 .button:hover {
-    -fx-text-fill: rgba(255, 255, 255, 1.0);
+    -fx-text-fill: rgba(0, 204, 255, 0.8);
     -fx-border-width: 0 0 3 0;
     -fx-padding: 10 20 4 20;
     -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.2), 10, 0, 0, 0);
