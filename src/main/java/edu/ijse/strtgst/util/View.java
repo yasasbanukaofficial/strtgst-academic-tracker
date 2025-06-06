@@ -7,8 +7,6 @@ public enum View {
     ASSIGNMENT("AssignmentPage.fxml"),
     SUBJECT("SubjectPage.fxml"),
     SETTINGS("SettingsPage.fxml"),
-    LOGIN("LoginPage.fxml"),
-    SIGNUP("SignUpPage.fxml"),
     MAIN("MainPage.fxml"),
 
     ADD_ASSIGNMENT("AssignmentForm.fxml"),
@@ -25,7 +23,8 @@ public enum View {
     DEFAULT_TASK("DefaultTaskDisplay.fxml"),
     DEFAULT_SUBJECT("DefaultSubjectDisplay.fxml"),
 
-    INTRO("IntroPage.fxml");
+    INTRO("IntroPage.fxml"),
+    SIGNUP_FORM("SignUpForm.fxml");
 
 
     private final String fileName;

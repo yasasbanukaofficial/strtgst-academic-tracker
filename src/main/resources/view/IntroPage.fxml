@@ -98,7 +98,7 @@
                               <Glow />
                            </effect>
                         </Button>
-                        <Button fx:id="btnSignUp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#visitSignUp" prefHeight="65.0" prefWidth="154.0" style="-fx-background-color: transparent;" stylesheets="@styles/introButton.css" text="Sign up" textFill="WHITE">
+                        <Button fx:id="btnSignUp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showSignUpFields" prefHeight="65.0" prefWidth="154.0" style="-fx-background-color: transparent;" stylesheets="@styles/introButton.css" text="Sign up" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="30.0" />
                            </font>

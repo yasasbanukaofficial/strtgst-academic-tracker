@@ -86,16 +86,21 @@ public class IntroPageController implements Initializable {
     }
 
     public void showLoginFields(ActionEvent actionEvent) {
+        btnSignUp.setDisable(false);
         lblMain.setText("LOGIN");
         lblComment.setText("Enter your username and password to continue.");
         setVisibility(true);
         Navigation.navigateTo(ancForms, View.LOGIN_FORM);
+        btnLogin.setDisable(true);
     }
 
     public void showSignUpFields(ActionEvent actionEvent) {
+        btnLogin.setDisable(false);
         lblMain.setText("SIGNUP");
-        lblComment.setText("Start your education journey with us by creating an account.");
+        lblComment.setText("Create your account and start the journey.");
         setVisibility(true);
+        Navigation.navigateTo(ancForms, View.SIGNUP_FORM);
+        btnSignUp.setDisable(true);
     }
 
     public void closeApp(ActionEvent actionEvent) {
