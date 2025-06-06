@@ -17,6 +17,7 @@ public enum View {
     ADD_SUBJECT("SubjectForm.fxml"),
 
     LECTURES_FORM("LecturesForm.fxml"),
+    LOGIN_FORM("LoginForm.fxml"),
     FORGOT_PASSWORD("ForgotPasswordPage.fxml"),
     UPDATE_PASSWORD("UpdatePasswordPage.fxml"),
 
