@@ -12,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -35,6 +38,7 @@ public class DashboardPageController implements Initializable {
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final SubjectModel subjectModel = new SubjectModel();
     private final CalendarModel calendarModel = new CalendarModel();
+    public MediaView mediaViewer;
     private StringBuilder previousMsg = new StringBuilder();
     private final ChatBotModel chatBotModel = new ChatBotModel();
     private final PromptBuilder promptBuilder = new PromptBuilder();
@@ -43,7 +47,30 @@ public class DashboardPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUpTexts();
         countTotal();
+//        playBackgroundVideo();
     }
+
+//    private void playBackgroundVideo() {
+//        try {
+//            String videoPath = getClass().getResource("/videos/dirt.mp4").toExternalForm();
+//            Media media = new Media(videoPath);
+//            MediaPlayer mediaPlayer = new MediaPlayer(media);
+//            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+//            mediaPlayer.setMute(true);
+//            mediaPlayer.play();
+//            mediaViewer.toBack();
+//            mediaViewer.fitWidthProperty().bind(ancDashboard.widthProperty());
+//            mediaViewer.fitHeightProperty().bind(ancDashboard.heightProperty());
+//            mediaViewer.setPreserveRatio(false);
+//            mediaPlayer.setOnReady(() -> {
+//                mediaViewer.setOpacity(1);
+//            });
+//
+//            mediaViewer.setMediaPlayer(mediaPlayer);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void setUpTexts() {
         Text intialText = new Text("""
