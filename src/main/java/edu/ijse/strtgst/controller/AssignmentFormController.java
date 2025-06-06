@@ -62,6 +62,10 @@ public class AssignmentFormController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (subjectOptions.isEmpty()) {
+            AlertUtil.setErrorAlert("Please add some subjects before adding an assignment.");
+            return;
+        }
     }
 
     public void cancelTask(ActionEvent actionEvent) {

@@ -43,6 +43,12 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.0.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>23</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api -->
         <dependency>
             <groupId>com.sun.mail</groupId>

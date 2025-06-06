@@ -70,7 +70,8 @@ public class LoginFormController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertUtil.setErrorAlert("Something went wrong while trying to navigate to Forgot Password page.");
+            e.printStackTrace();
         }
     }
 }

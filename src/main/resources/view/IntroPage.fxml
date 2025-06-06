@@ -86,13 +86,13 @@
                      <children>
                         <Button fx:id="btnLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showLoginFields" prefHeight="65.0" prefWidth="124.0" style="-fx-background-color: transparent;" stylesheets="@styles/introButton.css" text="Login" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="30.0" />
+                              <Font name="DM Serif Display Regular" size="30.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <HBox.margin>
-                              <Insets left="110.0" top="20.0" />
+                              <Insets left="110.0" right="40.0" top="20.0" />
                            </HBox.margin>
                            <effect>
                               <Glow />
@@ -100,7 +100,7 @@
                         </Button>
                         <Button fx:id="btnSignUp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showSignUpFields" prefHeight="65.0" prefWidth="154.0" style="-fx-background-color: transparent;" stylesheets="@styles/introButton.css" text="Sign up" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="30.0" />
+                              <Font name="DM Serif Display Regular" size="30.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -117,7 +117,7 @@
                         </Button>
                         <Button fx:id="btnExit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeApp" prefHeight="65.0" prefWidth="90.0" style="-fx-background-color: transparent;" stylesheets="@styles/introButton.css" text="Exit" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="30.0" />
+                              <Font name="DM Serif Display Regular" size="30.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -135,7 +135,7 @@
             </VBox>
             <AnchorPane fx:id="ancForms" prefHeight="1000.0" prefWidth="437.0" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets top="350.0" />
+                  <Insets right="25.0" top="350.0" />
                </HBox.margin>
             </AnchorPane>
          </children>

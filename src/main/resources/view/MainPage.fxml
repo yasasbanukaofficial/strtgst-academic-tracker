@@ -19,11 +19,11 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox maxWidth="362.0" minWidth="335.0" prefHeight="1000.0" prefWidth="335.0" style="-fx-background-color: transparent; -fx-background-radius: 0 40px 40px 0; -fx-border-radius: 40px;">
+                        <VBox maxWidth="362.0" minWidth="335.0" prefHeight="1000.0" prefWidth="335.0" style="-fx-background-color: white; -fx-background-radius: 0 40px 40px 0; -fx-border-radius: 40px;">
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/Logo%202.png" />
+                                    <Image url="@../images/Logo.jpg" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="59.0" top="37.0" />
@@ -32,7 +32,7 @@
                                     <Glow />
                                  </effect>
                               </ImageView>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" minWidth="83.0" onMouseClicked="#visitDashboardPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: white + grey;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" minWidth="83.0" onMouseClicked="#visitDashboardPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #FDFBFB; -fx-background-radius: 0px 10px 10px 0px;">
                                  <VBox.margin>
                                     <Insets right="55.0" top="75.0" />
                                  </VBox.margin>
@@ -42,16 +42,13 @@
                                           <Image url="@../images/mynaui_grid-solid.png" />
                                        </image>
                                     </ImageView>
-                                    <Label prefHeight="36.0" prefWidth="163.0" text="Dashboard" textFill="WHITE">
+                                    <Label prefHeight="36.0" prefWidth="163.0" text="Dashboard">
                                        <font>
-                                          <Font name="DM Serif Display Regular" size="24.0" />
+                                          <Font name="Poppins Regular" size="24.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets top="-5.0" />
                                        </HBox.margin>
-                                       <effect>
-                                          <Glow />
-                                       </effect>
                                     </Label>
                                  </children>
                                  <padding>
@@ -60,27 +57,21 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                                 <effect>
-                                    <Glow />
-                                 </effect>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitCalendarPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: white + grey;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitCalendarPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #FDFBFB; -fx-background-radius: 0px 10px 10px 0px;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/solar_calendar-bold.png" />
                                        </image>
                                     </ImageView>
-                                    <Label text="Calendar" textFill="WHITE">
+                                    <Label text="Calendar">
                                        <font>
-                                          <Font name="DM Serif Display Regular" size="24.0" />
+                                          <Font name="Poppins Regular" size="24.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets top="-5.0" />
                                        </HBox.margin>
-                                       <effect>
-                                          <Glow />
-                                       </effect>
                                     </Label>
                                  </children>
                                  <padding>
@@ -92,27 +83,21 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                                 <effect>
-                                    <Glow />
-                                 </effect>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitTaskPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: white + grey;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitTaskPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #FDFBFB; -fx-background-radius: 0px 10px 10px 0px;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/mdi_clipboard-tick.png" />
                                        </image>
                                     </ImageView>
-                                    <Label text="Tasks" textFill="WHITE">
+                                    <Label text="Tasks">
                                        <font>
-                                          <Font name="DM Serif Display Regular" size="24.0" />
+                                          <Font name="Poppins Regular" size="24.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets top="-5.0" />
                                        </HBox.margin>
-                                       <effect>
-                                          <Glow />
-                                       </effect>
                                     </Label>
                                  </children>
                                  <padding>
@@ -124,27 +109,21 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                                 <effect>
-                                    <Glow />
-                                 </effect>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitAssignmentPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: white + grey;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitAssignmentPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #FDFBFB; -fx-background-radius: 0px 10px 10px 0px;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/emojione-monotone_letter-a.png" />
                                        </image>
                                     </ImageView>
-                                    <Label prefHeight="35.0" prefWidth="160.0" text="Assignment" textFill="WHITE">
+                                    <Label prefHeight="35.0" prefWidth="160.0" text="Assignment">
                                        <font>
-                                          <Font name="DM Serif Display Regular" size="24.0" />
+                                          <Font name="Poppins Regular" size="24.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets top="-5.0" />
                                        </HBox.margin>
-                                       <effect>
-                                          <Glow />
-                                       </effect>
                                     </Label>
                                  </children>
                                  <padding>
@@ -156,27 +135,21 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                                 <effect>
-                                    <Glow />
-                                 </effect>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitSubjectPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: white + grey;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitSubjectPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #FDFBFB; -fx-background-radius: 0px 10px 10px 0px;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/material-symbols_assignment.png" />
                                        </image>
                                     </ImageView>
-                                    <Label prefHeight="35.0" prefWidth="160.0" text="Subject" textFill="WHITE">
+                                    <Label prefHeight="35.0" prefWidth="160.0" text="Subject">
                                        <font>
-                                          <Font name="DM Serif Display Regular" size="24.0" />
+                                          <Font name="Poppins Regular" size="24.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets top="-5.0" />
                                        </HBox.margin>
-                                       <effect>
-                                          <Glow />
-                                       </effect>
                                     </Label>
                                  </children>
                                  <padding>
@@ -188,11 +161,8 @@
                                  <VBox.margin>
                                     <Insets right="55.0" top="35.0" />
                                  </VBox.margin>
-                                 <effect>
-                                    <Glow />
-                                 </effect>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" onMouseClicked="#visitSettingsPage" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: transparent; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0; -fx-border-color: #00ccff;">
+                              <HBox accessibleRole="BUTTON" maxHeight="73.0" maxWidth="307.0" onMouseClicked="#visitSettingsPage" prefHeight="73.0" prefWidth="307.0" style="-fx-background-color: #00072d; -fx-border-radius: 0 10px 10px 0; -fx-background-radius: 0 10px 10px 0;">
                                  <children>
                                     <ImageView fitHeight="75.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -236,23 +206,20 @@
                                     <Glow />
                                  </effect>
                               </HBox>
-                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitLoginPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: white + grey;">
+                              <HBox accessibleRole="BUTTON" maxHeight="48.0" maxWidth="307.0" onMouseClicked="#visitLoginPage" prefHeight="48.0" prefWidth="307.0" spacing="25.0" style="-fx-background-color: #FDFBFB; -fx-background-radius: 0px 10px 10px 0px;">
                                  <children>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/majesticons_logout(1).png" />
                                        </image>
                                     </ImageView>
-                                    <Label text="Log out" textFill="WHITE">
+                                    <Label text="Log out">
                                        <font>
-                                          <Font name="DM Serif Display Regular" size="24.0" />
+                                          <Font name="Poppins Regular" size="24.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets top="-5.0" />
                                        </HBox.margin>
-                                       <effect>
-                                          <Glow />
-                                       </effect>
                                     </Label>
                                  </children>
                                  <padding>
@@ -264,9 +231,6 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                                 <effect>
-                                    <Glow />
-                                 </effect>
                               </HBox>
                            </children>
                            <HBox.margin>

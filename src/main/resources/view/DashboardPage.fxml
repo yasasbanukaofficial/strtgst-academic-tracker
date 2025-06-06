@@ -50,9 +50,6 @@
                            <VBox.margin>
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label fx:id="labelTotalTasks" prefHeight="93.0" prefWidth="53.0" text="0" textFill="#5fda92">
                            <font>
@@ -61,9 +58,6 @@
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="225.0" text="See more ➡" textFill="#34dd78">
                            <font>
@@ -72,9 +66,6 @@
                            <VBox.margin>
                               <Insets bottom="17.0" right="14.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                      </children>
                   </VBox>
@@ -87,9 +78,6 @@
                            <VBox.margin>
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label fx:id="labelEventsToday" prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f7a27e">
                            <font>
@@ -98,9 +86,6 @@
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="225.0" text="See more ➡" textFill="#eb7a52">
                            <font>
@@ -109,9 +94,6 @@
                            <VBox.margin>
                               <Insets bottom="17.0" right="14.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                      </children>
                   </VBox>
@@ -124,9 +106,6 @@
                            <VBox.margin>
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label fx:id="labelTotalAssignments" prefHeight="93.0" prefWidth="53.0" text="0" textFill="#f79cc2">
                            <font>
@@ -135,9 +114,6 @@
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="254.0" text="See more ➡" textFill="#f566a6">
                            <font>
@@ -146,9 +122,6 @@
                            <VBox.margin>
                               <Insets bottom="17.0" right="14.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                      </children>
                   </VBox>
@@ -161,9 +134,6 @@
                            <VBox.margin>
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label fx:id="labelGpaCalculation" prefHeight="121.0" prefWidth="233.0" text="0.00" textFill="#86d7dc">
                            <font>
@@ -172,9 +142,6 @@
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="225.0" text="See more ➡" textFill="#41dce4">
                            <font>
@@ -183,9 +150,6 @@
                            <VBox.margin>
                               <Insets bottom="17.0" right="14.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                      </children>
                      <HBox.margin>
@@ -201,9 +165,6 @@
                            <VBox.margin>
                               <Insets left="20.0" top="23.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label fx:id="labelLecturesToday" prefHeight="121.0" prefWidth="233.0" text="0" textFill="#d4d4d4">
                            <font>
@@ -212,9 +173,6 @@
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                         <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="225.0" text="See more ➡">
                            <font>
@@ -223,9 +181,6 @@
                            <VBox.margin>
                               <Insets bottom="17.0" right="14.0" />
                            </VBox.margin>
-                           <effect>
-                              <Glow />
-                           </effect>
                         </Label>
                      </children>
                      <HBox.margin>
