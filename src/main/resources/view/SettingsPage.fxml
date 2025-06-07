@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,19 +17,22 @@
 
 <AnchorPane fx:id="ancSettings" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.strtgst.controller.SettingsPageController">
    <children>
-      <VBox layoutX="285.0" layoutY="159.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F2F6FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="285.0" layoutY="159.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Settings">
+                        <Label text="Settings" textFill="WHITE">
                            <font>
                               <Font name="Poppins Bold" size="28.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="86.0" top="51.0" />
                            </VBox.margin>
+                           <effect>
+                              <Glow />
+                           </effect>
                         </Label>
                         <HBox prefHeight="195.0" prefWidth="775.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 20px; -fx-border-radius: 20px;">
                            <VBox.margin>
@@ -265,13 +269,6 @@
                   <VBox prefHeight="1000.0" prefWidth="675.0">
                      <children>
                         <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fitHeight="411.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: darken;">
-                                 <image>
-                                    <Image url="@../images/ebhl_t6x9_230517%201.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
                            <padding>
                               <Insets right="107.0" />
                            </padding>
@@ -279,15 +276,7 @@
                               <Insets top="294.0" />
                            </VBox.margin>
                         </StackPane>
-                        <StackPane alignment="BOTTOM_RIGHT" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <ImageView fitHeight="168.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: darken;">
-                                 <image>
-                                    <Image url="@../images/palm2.jpg" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
+                        <StackPane alignment="BOTTOM_RIGHT" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                      </children></VBox>
                </children>
             </HBox>

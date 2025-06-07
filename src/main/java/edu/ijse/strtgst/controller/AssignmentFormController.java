@@ -62,6 +62,10 @@ public class AssignmentFormController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (subjectOptions.isEmpty()) {
+            AlertUtil.setErrorAlert("Please add some subjects before adding an assignment.");
+            return;
+        }
     }
 
     public void cancelTask(ActionEvent actionEvent) {
@@ -116,6 +120,7 @@ public class AssignmentFormController implements Initializable {
                     assignmentPageController.setupTableColumn();
                     setupFormDefaults();
                     AlertUtil.setInfoAlert("Successfully deleted an assignment");
+                    Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
                 } else { AlertUtil.setErrorAlert("Failed to deleted an assignment"); }
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Error when deleting an assignment");

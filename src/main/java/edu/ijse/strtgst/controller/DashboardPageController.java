@@ -1,9 +1,6 @@
 package edu.ijse.strtgst.controller;
 
-import edu.ijse.strtgst.model.AssignmentModel;
-import edu.ijse.strtgst.model.CalendarModel;
-import edu.ijse.strtgst.model.ChatBotModel;
-import edu.ijse.strtgst.model.TaskModel;
+import edu.ijse.strtgst.model.*;
 import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.PromptBuilder;
@@ -15,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -36,14 +36,53 @@ public class DashboardPageController implements Initializable {
 
     private final TaskModel taskModel = new TaskModel();
     private final AssignmentModel assignmentModel = new AssignmentModel();
+    private final SubjectModel subjectModel = new SubjectModel();
     private final CalendarModel calendarModel = new CalendarModel();
+    public MediaView mediaViewer;
     private StringBuilder previousMsg = new StringBuilder();
     private final ChatBotModel chatBotModel = new ChatBotModel();
     private final PromptBuilder promptBuilder = new PromptBuilder();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setUpTexts();
         countTotal();
+//        playBackgroundVideo();
+    }
+
+//    private void playBackgroundVideo() {
+//        try {
+//            String videoPath = getClass().getResource("/videos/dirt.mp4").toExternalForm();
+//            Media media = new Media(videoPath);
+//            MediaPlayer mediaPlayer = new MediaPlayer(media);
+//            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+//            mediaPlayer.setMute(true);
+//            mediaPlayer.play();
+//            mediaViewer.toBack();
+//            mediaViewer.fitWidthProperty().bind(ancDashboard.widthProperty());
+//            mediaViewer.fitHeightProperty().bind(ancDashboard.heightProperty());
+//            mediaViewer.setPreserveRatio(false);
+//            mediaPlayer.setOnReady(() -> {
+//                mediaViewer.setOpacity(1);
+//            });
+//
+//            mediaViewer.setMediaPlayer(mediaPlayer);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    private void setUpTexts() {
+        Text intialText = new Text("""
+                ~  Welcome to Strtgst AI Bot
+                
+                -  Ask Anything
+                •  Ask about Science (What is mitochondria?)
+                •  Ask about History (Who is Napoleon Bonaparte?)
+                """);
+        txtChatFlow.getChildren().add(intialText);
+        double gpa = subjectModel.getGPACalculation();
+        labelGpaCalculation.setText(String.format("%.2f", gpa));
     }
 
     public void visitTasksPage(MouseEvent mouseEvent) {

@@ -84,6 +84,10 @@ public class ForgotPasswordController {
     }
 
     public void visitUpdatePassword(ActionEvent actionEvent) {
+        if (txtOtpCode.getText().trim().isEmpty()){
+            AlertUtil.setErrorAlert("Please enter OTP code.");
+            return;
+        }
         if (Integer.parseInt(txtOtpCode.getText()) == otpCode){
             Navigation.navigateTo(ancOtpPage, View.UPDATE_PASSWORD);
         } else {

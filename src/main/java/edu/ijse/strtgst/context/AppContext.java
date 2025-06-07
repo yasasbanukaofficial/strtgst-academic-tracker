@@ -7,6 +7,7 @@ public class AppContext {
     private static AssignmentPageController assignmentPageController;
     private static AssignmentFormController assignmentFormController;
     private static SubjectFormController subjectFormController;
+    private static IntroPageController introPageController;
     private static TaskFormController taskFormController;
     private static TaskPageController taskPageController;
     private static MainPageController mainPageController;
@@ -66,6 +67,10 @@ public class AppContext {
         return this.subjectFormController;
     }
 
+    public IntroPageController getIntroPageController() {
+        return this.introPageController;
+    }
+
     public void setAssignmentPageController(AssignmentPageController assignmentPageController) {
         this.assignmentPageController = assignmentPageController;
     }
@@ -96,5 +101,9 @@ public class AppContext {
 
     public void setSubjectFormController(SubjectFormController subjectFormController) {
         this.subjectFormController = subjectFormController;
+    }
+
+    public void setIntroPageController(IntroPageController introPageController) {
+        this.introPageController = introPageController;
     }
 }

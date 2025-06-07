@@ -138,6 +138,7 @@ public class SubjectFormController implements Initializable {
                     setupFormDefaults();
                     AlertUtil.setInfoAlert("Successfully deleted a subject");
                     subjectPageController.loadTableData();
+                    Navigation.navigateTo(ancAddNewSubject, View.DEFAULT_SUBJECT);
                 } else { AlertUtil.setErrorAlert("Failed to deleted a subject"); }
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Error when deleting a subject");

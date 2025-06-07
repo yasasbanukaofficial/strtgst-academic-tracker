@@ -9,6 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -19,6 +22,7 @@ public class MainPageController implements Initializable {
     public AnchorPane ancMainPage;
     public Label txtStudentName;
     public Label txtUsername;
+    public MediaView mediaViewer;
 
     private AppContext appContext = AppContext.getInstance();
     private final StudentModel studentModel = new StudentModel();
@@ -67,7 +71,7 @@ public class MainPageController implements Initializable {
     }
 
     public void visitLoginPage(MouseEvent mouseEvent) {
-        stopAndNavigate(ancMainPage, View.LOGIN);
+        stopAndNavigate(ancMainPage, View.INTRO);
     }
 
     public void visitSubjectPage(MouseEvent mouseEvent) {

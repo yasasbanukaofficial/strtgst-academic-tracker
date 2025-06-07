@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -19,19 +19,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginPageController {
-    public AnchorPane loginAnc;
+public class LoginFormController {
+    public AnchorPane ancLoginForm;
     public TextField txtUsername;
     public PasswordField txtPassword;
 
     private final AppContext appContext = AppContext.getInstance();
-    public Label lblForgotPassword;
+    private final IntroPageController introPageController = appContext.getIntroPageController();
+    public Button btnForgotPassword;
 
-    public void visitSignUpPage() {
-        Navigation.navigateTo(loginAnc, View.SIGNUP);
-    }
-
-    public void visitDashboard(ActionEvent actionEvent) {
+    public void loginUser(ActionEvent actionEvent) {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
 
@@ -43,7 +40,7 @@ public class LoginPageController {
         try {
             if (validateCredentials(username, password)) {
                 appContext.setUsername(username);
-                Navigation.navigateTo(loginAnc, View.MAIN);
+                introPageController.visitDashboard();
             } else {
                 AlertUtil.setErrorAlert("Invalid username or password. Please Try again!");
                 showLoginError();
@@ -55,7 +52,7 @@ public class LoginPageController {
     }
 
     private void showLoginError() {
-        String errorStyle = "-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
+        String errorStyle = "-fx-border-color: #ce0101; -fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
         txtUsername.setStyle(errorStyle);
         txtPassword.setStyle(errorStyle);
     }
@@ -73,7 +70,8 @@ public class LoginPageController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertUtil.setErrorAlert("Something went wrong while trying to navigate to Forgot Password page.");
+            e.printStackTrace();
         }
     }
 }

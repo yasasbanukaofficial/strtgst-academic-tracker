@@ -8,33 +8,30 @@ import edu.ijse.strtgst.util.IdLoader;
 import edu.ijse.strtgst.util.Navigation;
 import edu.ijse.strtgst.util.View;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 
-public class SignUpPageController{
-    public AnchorPane signUpAnc;
+public class SignUpController {
+    public AnchorPane ancSignUpForm;
+    public VBox ancFields;
     public TextField txtUsername;
     public TextField txtEmail;
-    public TextField txtPassword;
-    public Button btnSignUp;
+    public PasswordField txtPassword;
 
     private final StudentModel studentModel = new StudentModel();
     private final AppContext appContext = AppContext.getInstance();
+    private final IntroPageController introPageController = appContext.getIntroPageController();
     private final String usernamePattern = "^[a-zA-Z0-9_-]{3,}$";
     private final String emailPattern = "^((?!\\.)[\\w\\-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$";
     private final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\\-_*])[a-zA-Z0-9@#$%^&+=.\\-_]{6,}$";
-    private final String errorStyle = "-fx-border-color: #ce0101; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
-    private final String normalStyle = "-fx-border-color: #000000; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
+    private final String errorStyle = "-fx-border-color: #ce0101; -fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
+    private final String normalStyle = "-fx-border-color: #000000; -fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px";
 
-
-    public void visitLoginPage(ActionEvent actionEvent) {
-        Navigation.navigateTo(signUpAnc, View.LOGIN);
-    }
-
-    public void signUpStudent(ActionEvent event) {
+    public void signUpUser(ActionEvent actionEvent) {
         String studentId = loadNextId();
         String username = txtUsername.getText();
         String email = txtEmail.getText();
@@ -46,7 +43,7 @@ public class SignUpPageController{
                 if (studentModel.addStudent(studentDto)) {
                     AlertUtil.setInfoAlert("Successfully Saved user");
                     appContext.setUsername(username);
-                    Navigation.navigateTo(signUpAnc, View.MAIN);
+                    introPageController.visitDashboard();
                 } else { AlertUtil.setErrorAlert("Failed when saving user"); }
             } catch (Exception e) {
                 AlertUtil.setErrorAlert("Failed when saving user");
@@ -54,7 +51,6 @@ public class SignUpPageController{
             }
         }
     }
-
     public String loadNextId() {
         try {
             return IdLoader.getNextID("Student", "stud_id");
