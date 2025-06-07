@@ -4,6 +4,10 @@ module edu.ijse.strtgst {
     requires com.calendarfx.view;
     requires static lombok;
     requires java.desktop;
+    requires google.genai;
+    requires org.checkerframework.checker.qual;
+    requires java.mail;
+    requires javafx.media;
 
 
     opens edu.ijse.strtgst.controller to javafx.fxml;

@@ -2,7 +2,9 @@ package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.context.AppContext;
 import edu.ijse.strtgst.dto.AssignmentDto;
+import edu.ijse.strtgst.dto.SubjectDto;
 import edu.ijse.strtgst.dto.tm.AssignmentTM;
+import edu.ijse.strtgst.model.AcademicModel;
 import edu.ijse.strtgst.model.AssignmentModel;
 import edu.ijse.strtgst.util.AlertUtil;
 import edu.ijse.strtgst.util.IdLoader;
@@ -18,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -38,14 +41,31 @@ public class AssignmentFormController implements Initializable {
     private final AssignmentModel assignmentModel = new AssignmentModel();
     private final AppContext appContext = AppContext.getInstance();
     private final AssignmentPageController assignmentPageController = appContext.getAssignmentPageController();
+    private final AcademicModel academicModel = new AcademicModel();
 
     private ObservableList<String> statusOptions = FXCollections.observableArrayList("Pending", "Completed", "Overdue");
-    private ObservableList<String> subjectOptions = FXCollections.observableArrayList("Maths", "Science");
+    private ObservableList<String> subjectOptions = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appContext.setAssignmentFormController(this);
+        loadSubjects();
         setupFormDefaults();
+    }
+
+    private void loadSubjects() {
+        try {
+            ArrayList<SubjectDto> subjects = academicModel.getAllSubjects();
+            for (SubjectDto dto : subjects) {
+                subjectOptions.add(dto.getSubName());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (subjectOptions.isEmpty()) {
+            AlertUtil.setErrorAlert("Please add some subjects before adding an assignment.");
+            return;
+        }
     }
 
     public void cancelTask(ActionEvent actionEvent) {
@@ -100,6 +120,7 @@ public class AssignmentFormController implements Initializable {
                     assignmentPageController.setupTableColumn();
                     setupFormDefaults();
                     AlertUtil.setInfoAlert("Successfully deleted an assignment");
+                    Navigation.navigateTo(ancAddNewTask, View.DEFAULT_ASSIGNMENT);
                 } else { AlertUtil.setErrorAlert("Failed to deleted an assignment"); }
             } catch (SQLException e) {
                 AlertUtil.setErrorAlert("Error when deleting an assignment");
@@ -202,10 +223,7 @@ public class AssignmentFormController implements Initializable {
             return false;
         }
 
-        if (!status.equals("Overdue") && date.isBefore(LocalDate.now())){
-            AlertUtil.setErrorAlert("Assignments due before today must be marked as overdue. ");
-            return false;
-        } else if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
+        if (status.equals("Overdue") && date.isAfter(LocalDate.now())){
             AlertUtil.setErrorAlert("Cannot mark a future assignment as overdue.");
             return false;
         }

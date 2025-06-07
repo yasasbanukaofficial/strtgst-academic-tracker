@@ -13,9 +13,10 @@ import java.sql.Timestamp;
 
 public class ExamDto {
     private int examId;
-    private String subId;
-    private Date date;
-    private Timestamp startTime;
-    private Timestamp endTime;
-    private String examType; // "written", "practical", or "oral"
+    private String examTitle;
+    private String examLocation;
+    private Boolean isFullDay;
+    private Timestamp fromDateTime;
+    private Timestamp toDateTime;
+    private String repeatType;
 }

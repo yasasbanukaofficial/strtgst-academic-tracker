@@ -18,10 +18,11 @@ CREATE TABLE student(
 
 -- Table Subject
 CREATE TABLE subject (
-    sub_id VARCHAR(5) NOT NULL,
+    sub_id VARCHAR(6) NOT NULL,
     stud_id VARCHAR(4),
     sub_name VARCHAR(50) NOT NULL,
-    total_marks INT,
+    description VARCHAR(200),
+    total_marks INT DEFAULT 0,
     PRIMARY KEY (sub_id),
     FOREIGN KEY (stud_id) REFERENCES student(stud_id)
         ON UPDATE CASCADE
@@ -43,10 +44,14 @@ CREATE TABLE assignment (
 -- Table Grade
 CREATE TABLE grade (
     grade_id VARCHAR(5),
+    sub_id VARCHAR(6),
     marks INT,
     grade VARCHAR(2),
-    received_date DATE,
-    PRIMARY KEY (grade_id)
+    received_date DATETIME,
+    PRIMARY KEY (grade_id),
+    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 -- Table Lecture
@@ -55,9 +60,9 @@ CREATE TABLE lecture (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (lec_id)
 );
 
@@ -67,9 +72,9 @@ CREATE TABLE exam (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (exam_id)
 );
 
@@ -85,11 +90,13 @@ CREATE TABLE tasks (
 
 -- Table StudySession
 CREATE TABLE study_session (
-    ss_id INT AUTO_INCREMENT,
-    ss_name VARCHAR(255) NOT NULL,
-    date DATE NOT NULL,
-    start_time DATETIME NOT NULL,
-    end_time DATETIME NOT NULL,
+    ss_id VARCHAR(50),
+    title VARCHAR(250),
+    location VARCHAR(100) DEFAULT 'SCHOOL',
+    full_day BOOLEAN DEFAULT FALSE,
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (ss_id)
 );
 
@@ -99,59 +106,16 @@ CREATE TABLE event (
     title VARCHAR(250),
     location VARCHAR(100) DEFAULT 'SCHOOL',
     full_day BOOLEAN DEFAULT FALSE,
-    from_date DATETIME,
-    to_date DATETIME,
-    repeat_type VARCHAR(50) DEFAULT 'None',
+    from_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    repeat_type VARCHAR(50) DEFAULT NULL,
     PRIMARY KEY (event_id)
 );
 
--- * Associate Tables * --
 
--- Table Subject_Scores (Subject -> Grade) -> Grade History/Updating
-CREATE TABLE subject_scores (
-    score_id INT AUTO_INCREMENT,
-    sub_id VARCHAR(5),
-    grade_id VARCHAR(5),
-    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (score_id),
-    FOREIGN KEY (sub_id) REFERENCES subject(sub_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    FOREIGN KEY (grade_id) REFERENCES grade(grade_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);
-
--- Table Student Study Sessions (Student -> Study Sessions)
-CREATE TABLE student_study_sessions (
-    stud_ss_id INT AUTO_INCREMENT,
-    stud_id VARCHAR(4),
-    ss_id INT,
-    PRIMARY KEY (stud_ss_id),
-    FOREIGN KEY (stud_id) REFERENCES student(stud_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    FOREIGN KEY (ss_id) REFERENCES study_session(ss_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);
-
--- Table Subject Study Sessions (Subject -> Study Sessions)
-CREATE TABLE subject_study_sessions (
-    subject_ss_id INT AUTO_INCREMENT,
-    stud_id VARCHAR(4),
-    ss_id INT,
-    PRIMARY KEY (subject_ss_id),
-    FOREIGN KEY (stud_id) REFERENCES student(stud_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    FOREIGN KEY (ss_id) REFERENCES study_session(ss_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);
-
-
+-- Quick Entry purpose.
+INSERT INTO student (stud_id, username, email, password)
+VALUES ('S001', 'yasas', 'studyyixb@gmail.com', 'Yasas@123');
 
 /*
 DROP TABLE student;

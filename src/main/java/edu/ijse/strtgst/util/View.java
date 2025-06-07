@@ -5,21 +5,26 @@ public enum View {
     CALENDAR("CalendarPage.fxml"),
     TASK("TaskPage.fxml"),
     ASSIGNMENT("AssignmentPage.fxml"),
-    ACADEMICS("AcademicsPage.fxml"),
+    SUBJECT("SubjectPage.fxml"),
     SETTINGS("SettingsPage.fxml"),
-    LOGIN("LoginPage.fxml"),
-    SIGNUP("SignUpPage.fxml"),
     MAIN("MainPage.fxml"),
 
     ADD_ASSIGNMENT("AssignmentForm.fxml"),
     ADD_EVENT("AddNewEvent.fxml"),
     ADD_TASK("TaskForm.fxml"),
+    ADD_SUBJECT("SubjectForm.fxml"),
 
-    ACADEMIC_CHOICE("AcademicChoice.fxml"),
     LECTURES_FORM("LecturesForm.fxml"),
+    LOGIN_FORM("LoginForm.fxml"),
+    FORGOT_PASSWORD("ForgotPasswordPage.fxml"),
+    UPDATE_PASSWORD("UpdatePasswordPage.fxml"),
 
     DEFAULT_ASSIGNMENT("DefaultAssignmentDisplay.fxml"),
-    DEFAULT_TASK("DefaultTaskDisplay.fxml");
+    DEFAULT_TASK("DefaultTaskDisplay.fxml"),
+    DEFAULT_SUBJECT("DefaultSubjectDisplay.fxml"),
+
+    INTRO("IntroPage.fxml"),
+    SIGNUP_FORM("SignUpForm.fxml");
 
 
     private final String fileName;
