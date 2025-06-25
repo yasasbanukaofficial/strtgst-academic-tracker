@@ -8,6 +8,7 @@ module edu.ijse.strtgst {
     requires org.checkerframework.checker.qual;
     requires java.mail;
     requires javafx.media;
+    requires net.sf.jasperreports.core;
 
 
     opens edu.ijse.strtgst.controller to javafx.fxml;

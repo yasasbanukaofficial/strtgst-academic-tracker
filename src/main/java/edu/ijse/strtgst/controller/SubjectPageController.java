@@ -1,6 +1,7 @@
 package edu.ijse.strtgst.controller;
 
 import edu.ijse.strtgst.context.AppContext;
+import edu.ijse.strtgst.db.DBConnection;
 import edu.ijse.strtgst.dto.SubjectDto;
 import edu.ijse.strtgst.dto.tm.SubjectTM;
 import edu.ijse.strtgst.model.SubjectModel;
@@ -17,10 +18,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.sql.Connection;
+import java.util.*;
 
 public class SubjectPageController implements Initializable {
     public AnchorPane ancSubject;
@@ -134,4 +139,29 @@ public class SubjectPageController implements Initializable {
     private void updateDateLabel() {
         labelDate.setText(DateUtil.setDate());
     }
+
+    public void generateReport() {
+        String jasperPath = "D:\\Projects\\strtgst-academic-tracker\\src\\main\\java\\edu\\ijse\\strtgst\\reports\\Blank_A4.jasper";
+
+        try {
+            JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(jasperPath);
+
+            Connection connection = DBConnection.getInstance().getConnection();
+            Map<String, Object> parameters = new HashMap<>();
+
+            // 💡 VERY IMPORTANT: manually set the REPORT_CONNECTION parameter
+            parameters.put("REPORT_CONNECTION", connection);
+
+            // 💡 Use JREmptyDataSource for outer report (since there's no main query)
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            AlertUtil.setErrorAlert("Error when generating report");
+            e.printStackTrace();
+        }
+    }
+
+
 }
