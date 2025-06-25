@@ -38,7 +38,7 @@ public class ForgotPasswordController {
     public void sendOTP(ActionEvent actionEvent) {
         userEmail = txtUserEmail.getText().trim();
         Random random = new Random();
-        otpCode = random.nextInt(9999) > 999 ? 1000 : random.nextInt(9999);
+        otpCode = random.nextInt(9000) + 1000;
         try {
             boolean isEmailExisting = forgotPasswordModel.checkIfEmailExisting(userEmail);
             if (!isEmailExisting){
@@ -70,7 +70,7 @@ public class ForgotPasswordController {
                 message.setFrom(new InternetAddress(systemEmail));
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
                 message.setSubject("OTP Code for Forgot Password is " + otpCode);
-                message.setText("Your otp code is " + otpCode + "never share it with anyone. \n Enjoy using Strtgst to your heart's content...");
+                message.setText("Your otp code is " + otpCode + " never share it with anyone. \n Enjoy using Strtgst to your heart's content...");
 
                 Transport.send(message);
 

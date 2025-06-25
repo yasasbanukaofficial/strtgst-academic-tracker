@@ -110,9 +110,9 @@
                                     <Glow />
                                  </effect>
                               </Label>
-                              <Label prefHeight="23.0" prefWidth="663.0" text="Add entries with just text. But remember to add only a single entry at a time. " textFill="WHITE">
+                              <Label prefHeight="23.0" prefWidth="663.0" text="Add entries with just text." textFill="WHITE">
                                  <font>
-                                    <Font name="Ink Free" size="19.0" />
+                                    <Font name="Ink Free" size="22.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="25.0" />

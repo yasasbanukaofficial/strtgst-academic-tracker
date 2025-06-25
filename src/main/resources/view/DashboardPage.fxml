@@ -203,15 +203,15 @@
                            <children>
                               <Label prefHeight="32.0" prefWidth="475.0" text="🤖 Study AI Bot ( Beta )" textFill="WHITE">
                                  <font>
-                                    <Font name="Ink Free" size="22.0" />
+                                    <Font name="Ink Free" size="26.0" />
                                  </font>
                                  <effect>
                                     <Glow level="0.4" />
                                  </effect>
                               </Label>
-                              <Label prefHeight="23.0" prefWidth="713.0" text="Ask any issues you have when studying and the bot will provide summarized answers." textFill="WHITE">
+                              <Label prefHeight="23.0" prefWidth="713.0" text="Ask any issues you have, when studying" textFill="WHITE">
                                  <font>
-                                    <Font name="Ink Free" size="22.0" />
+                                    <Font name="Ink Free" size="26.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="25.0" />

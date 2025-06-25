@@ -115,7 +115,7 @@ CREATE TABLE event (
 
 -- Quick Entry purpose.
 INSERT INTO student (stud_id, username, email, password)
-VALUES ('S001', 'yasas', 'studyyixb@gmail.com', 'Yasas@123');
+VALUES ('S001', 'yasas', 'yasasbanukaofficial@gmail.com', 'Yasas@123');
 
 /*
 DROP TABLE student;
